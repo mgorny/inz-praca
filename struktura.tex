@@ -53,3 +53,29 @@ techniki zależna jest również od~narzędzi dostępnych w~fazie projektowej
 (wykorzystywanych do~analizy układu) oraz~złożoności rozpatrywanego
 obiektu. Przy~obiegach bardzo złożonych i~braku wyspecjalizowanych
 narzędzi, bardziej opłacalna może~być jedna z~metod dynamicznych.
+
+
+\subsection{Metoda zbioru maksimum}
+
+Rozszerzenie powyższego rozwiązania do~rozwiązywania układów
+quasi-dynamicznych możliwe jest poprzez zastosowanie tzw.~,,zbioru
+maksimum''. Wówczas, zamiast konkretnego, rzeczywistego obiektu,
+w~projekcie tworzy~się obieg przewymiarowany, zawierający znaczną
+liczbę nadmiarowych elementów w~różnych konfiguracjach.
+
+Następnie, parametry poszczególnych elementów dobiera~się w~taki sposób,
+by~elementy niepotrzebne ,,wyłączyć'', a~z~pozostałych uformować
+oczekiwany obieg. Choć w~procedurze obliczeniowej biorą udział wszystkie
+elementy, elementy zbędne nie~wpływają na~wynik, charakteryzując~się
+chociażby zerowym przepływem.
+
+Zaletą tego rozwiązania jest również względna prostota implementacji
+przy~jednoczesnej możliwości modyfikowania kształtu modelowanego obiegu.
+Niestety, zmiany ograniczone są ,,z~góry'' pierwotnym kształtem układu,
+a~sposób ich wprowadzania może~być uznany za~nieporęczny.
+
+Złożoność obliczeniowa programu jest zależna głównie od~kształtu
+podstawowego obiegu. Tym~samym, modelowanie względnie prostych obiektów
+może wymagać podobnego nakładu obliczeń jak~obiektów bardzo złożonych.
+Podobnie, koszt wykonania programu będzie zbliżony jak dla~programu
+operującego na~podstawowym (najbardziej złożonym) układzie.
