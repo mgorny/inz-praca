@@ -2,80 +2,205 @@
 
 \subsection{Problem}
 
-Pierwszym problemem, jaki powinien zostać rozpatrzony przed~rozpoczęciem
-projektowania programu, jest ogólny wybór sposobu modelowanie obiegów.
-Od~decyzji tej zależy praktycznie cała struktura programu; co za~tym
-idzie, późniejsza zmiana metodyki może wiązać~się z~koniecznością
-porzucenia dotychczasowych rezultatów i~rozpoczęcia pracy od~początku.
+W~tematyce obiegów cieplnych, najbardziej podstawowym zagadnieniem
+obliczeniowym jest bilansowanie. Może ono zostać wykorzystane
+do~weryfikacji wcześniej uzyskanych danych bądź~do~wyliczenia
+niezbędnych parametrów na~podstawie przyjętych założeń.
 
-Najogólniej rzecz biorąc, wybór określonej metodyki implikuje sposób
-przenoszenia struktury obiegu, jego parametrów i~charakterystyk
-do~postaci cyfrowej, a~w~dalszej części algorytm dokonywania obliczeń.
-Z~reguły, metody bardziej złożone (a~co za~tym idzie, bardziej
-kosztowne) posiadają mniejsze ograniczenia niż~metody prostsze.
+Wykonywanie obliczeń bilansowych można najogólniej podzielić na~dwa
+etapy:
+
+\begin{enumerate}
+
+\item utworzenie układu równań, opisującego rozpatrywany obieg cieplny;
+
+\item rozwiązanie otrzymanego układu równań.
+
+\end{enumerate}
+
+Drugie z~wymienionych zagadnień można zamknąć ściśle w~domenie
+matematyki, dlatego też praca ta nie~będzie wnikała w~nie bardziej
+szczegółowo. Znacznie istotniejszy z~punktu widzenia rozpatrywanych
+zagadnień jest~sposób tworzenia układu równań.
+
+Rozpatrując bilans układu, w~pierwszej kolejności wyznacza~się
+tzw.~osłony bilansowe. Są to umyślne bariery, zakładające, że~wymiana
+energii pomiędzy urządzeniem bądź~zespołem urządzeń wyznaczonym osłoną,
+a~otoczeniem, następuje jedynie w~ściśle wyznaczony i~mierzalny sposób.
+
+Zastosowanie osłon bilansowych pozwala praktycznie ograniczyć rozważania
+do~strumieni wypływających i~wpływających do~układu, względnie
+parametrów na~pograniczu i~ogólnych właściwości samego układu. Zaniedbać
+można natomiast szczegółowy opis procesów zachodzących wewnątrz
+poszczególnych maszyn oraz~przepływy pomiędzy nimi, włączając w~to,
+przykładowo, rozpływ czynnika pomiędzy pracujące równolegle skraplacze.
+
+Wybór lokalizacji osłon bilansowych ma znaczny wpływ na~dalszy przebieg
+procedury obliczeniowej. Wybór taki powinien~być podyktowany:
+
+\begin{itemize}
+
+\item dostępnymi danymi wejściowymi;
+
+\item poszukiwanymi danymi wyjściowymi;
+
+\item cechami charakterystycznymi i~sposobem połączenia poszczególnych
+	maszyn.
+
+\end{itemize}
+
+Przy~założeniu, że~w~bilansie obiegu uwzględnione mają zostać wszystkie
+jego elementy, zastosowanie mniejszej liczby osłon bilansowych
+(obejmujących jednostkowo większą liczbę urządzeń) zmniejsza liczbę
+otrzymanych równań. Jednakże implikuje to~również zmniejszenie liczby
+zmiennych, czego skutkiem może~być niemożność uwzględnienia posiadanych
+danych bądź~otrzymania poszukiwanych parametrów wprost.
+
+Z~punktu widzenia obliczeń komputerowych w~zakresie objętym tematem
+tej~pracy, wielkość układu równań nie~ma znacznego wpływu na~wydajność
+programu. Istotne staje~się natomiast uczynienie procesu obliczeniowego
+deterministycznym; uwzględnienie większej liczby zmiennych w~układzie
+równań pozwala na~poszerzenie funkcjonalności programu bez~konieczności
+rozbudowy algorytmu obliczeniowego. Dlatego~też zdecydowano, by~każdy
+z~elementów rozpatrywanego układu otoczony~był oddzielną osłoną
+bilansową.
+
+Kolejnym krokiem po~ustanowieniu osłon bilansowych jest~zestawienie
+równań bilansujących dla~każdego zespołu maszyn, wyznaczonego osłoną.
+Równania te~odnoszą~się do~parametrów wewnętrznych zespołu
+(jak~na~przykład sprawność) oraz~do~parametrów czynnika
+na~wyprowadzeniach.
+
+Najogólniej metody wyznaczania równań podzielić można na~dwie grupy:
+metody statyczne oraz~dynamiczne. Metody statyczne charakteryzują~się
+tym, że~rozpatrywany układ wyznaczany jest w~fazie projektowania
+programu i~zostaje zapisany w~kodzie w~postaci stałych. W~metodach
+dynamicznych układ równań tworzony jest podczas pracy programu,
+na~podstawie danych wejściowych.
 
 
-\subsection{Metoda statyczna}
+\subsection{Metody statyczne}
 
-Podstawowym założeniem dla~metody statycznej jest~niezmienność struktury
-rozpatrywanego obiegu. Pozwala to na~przeprowadzenie analizy schematu
-i~utworzenie układu równań opisującego przemiany jeszcze na~etapie
-projektowania programu, a~co za~tym idzie ograniczenia jego logiki
-do~rozwiązania stałego układu równań.
+Podstawowym założeniem dla~metod statycznych jest niezmienność schematu
+rozpatrywanego obiegu cieplnego. Wówczas możliwe staje~się przyjęcie,
+że~konstrukcja rozpatrywanego układu równań jest~niezmienna; zmianie
+ulegają jedynie wartości zmiennych, względnie współczynników.
 
-Najważniejszą więc zaletą tej~techniki jest~mniejsza złożoność kodu
-programu, a~co za~tym idzie krótszy czas i~mniejszy koszt jego
-wykonania. Dalsze uproszczenia uzyskać można na~drodze ograniczenia
-logiki obliczeniowej, na~przykład poprzez ograniczenie możliwości wyboru
-danych i~szukanych.
+Układ równań może zostać wykonany na~etapie projektowania programu
+przy~pomocy dowolnych dostępnych metod, a~następnie wprowadzony
+w~postaci stałych. Program nie~musi wówczas dysponować logiką
+umożliwiającą przetwarzanie schematu obiegu cieplnego; algorytm
+ogranicza~się do~przyjęcia danych, rozwiązania układu równań
+oraz~wyprowadzenia wyników obliczeń.
 
-Należy również podkreślić, że~technika ta pozwala na~całkowicie
-indywidualne podejście do~rozpatrywanego układu. Ze~względu na~brak
-możliwości wykorzystania programu do~modelowania innych obiegów, jego
-kod może zostać w~zupełności dostosowany do~charakterystyk rzeczywistych
-urządzeń, i~zoptymalizowany dla~uzyskania największej dokładności
-i~wydajności.
+Koszt wykonania programu, korzystającego z~metod statycznych,
+charakteryzują~się względnie mniejszą składową stałą oraz~składową
+zmienną zależną od~złożoności (liczby elementów) rozpatrywanego układu.
+Należy jednak wziąć pod~uwagę, że~każdorazowa zmiana schematu wiązać~się
+będzie z~kolejnymi kosztami oraz~koniecznością oczekiwania na~ukończenie
+modyfikacji kodu programu. W~zasadniczej postaci, metody te
+nie~sprawdzą~się w~zastosowaniach, gdzie układ techniczny ulega częstym
+zmianom.
 
-Podstawową wadą metody statycznej jest~brak możliwości zmiany
-modelowanego układu bez~konieczności wprowadzania znacznych (a~co za~tym
-idzie, kosztownych) zmian do~struktury programu. Metoda ta
-nie~może zostać zastosowana również, gdy~struktura obiegu nie~jest
-jeszcze ustalona, tj.~do~projektowania nowych instalacji.
+Powyższy problem może zostać częściowo rozwiązany poprzez~zastosowanie
+wariantu nazywanego ,,metodą zbioru maksimum''. Wówczas układ równań
+nie~jest odnoszony do~rzeczywistego obiegu, lecz do~teoretycznego,
+celowo przewymiarowanego ,,schematu uniwersalnego''. Poprzez właściwy
+dobór parametrów obiegu, możliwe jest skierowanie obliczeniowych
+przepływów przez~część z~maszyn i~,,wyłączenie'' pozostałych, tym~samym
+uzyskując obieg równoważny rzeczywistemu.
 
-Podsumowując, metoda ta może znaleźć przede~wszystkim zastosowanie
-przy~analizie pracy istniejących układów oraz~rozważaniu nieznacznych
-ich modyfikacji; w~sytuacji, kiedy zmiany konstrukcji są na~tyle
-rzadkie, iż~koszt wykonania uniwersalnego programu przewyższyłby
-przyszłe koszty modernizacji prostszego rozwiązania.
-
-Należy również zwrócić uwagę na~fakt, że~rzeczywista przewaga tej
-techniki zależna jest również od~narzędzi dostępnych w~fazie projektowej
-(wykorzystywanych do~analizy układu) oraz~złożoności rozpatrywanego
-obiektu. Przy~obiegach bardzo złożonych i~braku wyspecjalizowanych
-narzędzi, bardziej opłacalna może~być jedna z~metod dynamicznych.
+Wykonany w~tej technice program charakteryzuje~się większą
+elastycznością. Dobór właściwego schematu uniwersalnego pozwala
+na~wykorzystanie go do~obliczeń obiegów, których kształt może~ulegać
+zmianom w~krótkich okresach czasu, a~nawet realizację zadań projektowych
+w~ograniczonym zakresie. Należy jednak zwrócić, że~większa złożoność
+schematu uniwersalnego zwiększa koszty wykonania programu oraz~czyni
+jego obsługę trudniejszą.
 
 
-\subsection{Metoda zbioru maksimum}
+\subsection{Metody dynamiczne}
 
-Rozszerzenie powyższego rozwiązania do~rozwiązywania układów
-quasi-dynamicznych możliwe jest poprzez zastosowanie tzw.~,,zbioru
-maksimum''. Wówczas, zamiast konkretnego, rzeczywistego obiektu,
-w~projekcie tworzy~się obieg przewymiarowany, zawierający znaczną
-liczbę nadmiarowych elementów w~różnych konfiguracjach.
+W~metodach dynamicznych układ równań tworzony jest w~trakcie pracy
+programu. Tym~samym, usuwane są teoretyczne ograniczenia co do~wielkości
+obiegu bądź~zastosowanego w~nim układu połączeń. Jednakże jednocześnie
+staje~się konieczne zaprojektowanie i~wykonanie modułu umożliwiającego
+wprowadzenie schematu obiegu cieplnego oraz~jego analizę.
 
-Następnie, parametry poszczególnych elementów dobiera~się w~taki sposób,
-by~elementy niepotrzebne ,,wyłączyć'', a~z~pozostałych uformować
-oczekiwany obieg. Choć w~procedurze obliczeniowej biorą udział wszystkie
-elementy, elementy zbędne nie~wpływają na~wynik, charakteryzując~się
-chociażby zerowym przepływem.
+Istnieją dwie główne metody opisu schematów:
 
-Zaletą tego rozwiązania jest również względna prostota implementacji
-przy~jednoczesnej możliwości modyfikowania kształtu modelowanego obiegu.
-Niestety, zmiany ograniczone są ,,z~góry'' pierwotnym kształtem układu,
-a~sposób ich wprowadzania może~być uznany za~nieporęczny.
+\begin{itemize}
+	\item za~pomocą teorii grafów,
 
-Złożoność obliczeniowa programu jest zależna głównie od~kształtu
-podstawowego obiegu. Tym~samym, modelowanie względnie prostych obiektów
-może wymagać podobnego nakładu obliczeń jak~obiektów bardzo złożonych.
-Podobnie, koszt wykonania programu będzie zbliżony jak dla~programu
-operującego na~podstawowym (najbardziej złożonym) układzie.
+	\item za~pomocą macierzy strukturalnych.
+\end{itemize}
+
+Obie wymienione metody można określić jako~równoważne. Choć różnią~się
+sposobem opisu zagadnień, możliwe jest wierne przeniesienie opisu
+z~dowolnie wybranej metody na~metodę alternatywną.
+
+W~zakresie tej~pracy rozważona zostanie jedynie metoda wykorzystująca
+teorię grafów. Przy~podejmowaniu tej~decyzji, autor pokierował~się
+przede~wszystkim dotychczas posiadaną wiedzą oraz~dostępnością narzędzi,
+wykorzystujących teorię grafów.
+
+
+\subsection{Zastosowanie teorii grafów do~modelowania obiegu}
+
+Podstawowym pojęciem teorii grafów jest~graf. Każdy graf składa~się
+ze~zbioru wierzchołków i~zbioru krawędzi. Adaptacja grafu do~modelowania
+układu wymaga przypisania wierzchołkom i~krawędziom określonej funkcji.
+
+Istnieją w~tej kwestii dwa rozwiązania:
+
+\begin{enumerate}
+	\item modelowanie punktów stanu za~pomocą węzłów, i~przemian
+		termodynamicznych za~pomocą krawędzi,
+
+	\item modelowanie punktów stanu za~pomocą krawędzi, i~maszyn
+		technicznych za~pomocą węzłów.
+\end{enumerate}
+
+Pierwsze z~wyliczonych rozwiązań często traktowano jest jako bardziej
+naturalne. Wówczas poszczególne węzły modelują statyczny stan czynnika
+w~określonym punkcie układu, a~krawędzie realizują zmianę tego stanu
+wskutek przemian termodynamicznych w~maszynach technicznych
+i~rurociągach.
+
+Niestety, sytuacji komplikuje~się w~odniesieniu do~maszyn przepływowych,
+dla~których rozważany jest więcej niż~jeden obieg czynnika. Przykładem
+takich maszyn są~wymienniki ciepła. Modelowanie tego typu maszyny wymaga
+zastosowania wielu wierzchołków, a~także wprowadzenia dodatkowej
+zależności pomiędzy nimi, która nie~może~być wyrażona wprost za~pomocą
+zasadniczego grafu.
+
+Przykładowym rozwiązaniem tego problemu jest~wprowadzenie dodatkowego
+grafu, w~którym krawędzie grafu zasadniczego zostaną przekształcone
+w~wierzchołki, natomiast wymiana energii pomiędzy odrębnymi obiegami
+cieplnymi zostanie wyrażona za~pomocą wierzchołków.
+
+Wadą tego rozwiązania jest~wprowadzenie pośredniej warstwy w~odnoszeniu
+schematu fizycznego do~grafu. Choć wierzchołki grafu zasadniczego
+mogą~być traktowane jako~wyprowadzenia poszczególnych maszyn,
+wyróżnienie maszyn wymaga zarówno uwzględnienia krawędzi grafu
+zasadniczego, jak~i~dodatkowych połączeń między nimi w~grafie
+pomocniczym.
+
+Rozwiązanie alternatywne stosuje praktycznie odwrotną logikę.
+Poszczególne maszyny przepływowe realizowane~są za~pomocą wierzchołków,
+zaś~krawędzie wyrażają połączenia pomiędzy nimi. Przemiany
+termodynamiczne traktowane~są punktowo, podczas gdy~stan czynnika
+zestawiany jest na~łuku.
+
+Rozważany powyżej wymiennik ciepła zestawiony będzie na~grafie za~pomocą
+jednego węzła, z~którym połączone będą cztery krawędzie. W~dalszym ciągu
+konieczne jest~zestawienie dodatkowych informacji koniecznych
+do~rozdzielenia obiegu pierwotnego i~wtórnego, jednakże informacje
+te~można zamknąć w~obrębie jednego węzła.
+
+W~tym~przypadku, każda maszyna przepływowa (oraz~rurociąg, jeśli
+jest~uwzględniany w~obliczenich) reprezentowana jest na~grafie za~pomocą
+dokładnie jednego wierzchołka, zaś~łuki wyrażają wprost przepływ
+czynnika (energii) pomiędzy nimi. Dla~wiernego odwzorowania schematu
+konieczne~jest uwzględnienie również przepon oddzielających obiegi,
+na~przykład poprzez wyznaczenie w~grafie dróg.
