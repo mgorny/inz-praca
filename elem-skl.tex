@@ -1,1 +1,144 @@
 \section{MODELE ELEMENTÓW SKŁADOWYCH}
+
+\subsection{Elementy składowe grafu}
+
+Jak~przedstawiono w~poprzednim rozdziale, podstawowymi elementami grafu
+w~zastosowanej metodzie są:
+
+\begin{itemize}
+
+	\item wierzchołki, reprezentujące maszyny robocze;
+
+	\item krawędzie, wyrażające przepływ czynnika pomiędzy maszynami.
+
+\end{itemize}
+
+Każdy z~tych elementów modelowany jest w~postaci abstrakcyjnego obiektu,
+charakteryzującego~się co~najmniej:
+
+\begin{enumerate}
+
+	\item zbiorem parametrów (zmiennych),
+
+	\item zbiorem równań bilansowych.
+
+\end{enumerate}
+
+W~rozdziale tym zestawione zostaną elementy składowe obiegów cieplnych,
+które zastosowane mogą~być w~programie modelowania obiegów cieplnych.
+
+
+\subsection{Podstawy fizyczne modelu}
+
+Podstawą fizyczną dla~wszystkich równań bilansowych są~tzw.~,,zasady
+zachowania'':
+
+\begin{enumerate}
+
+	\item zasada zachowania masy,
+
+	\item zasada zachowania pędu,
+
+	\item zasada zachowania momentu pędu,
+
+	\item zasada zachowania energii,
+
+	\item zasada bilansu entropii.
+
+\end{enumerate}
+
+TODO: rozwinąć, wzorki
+
+
+\subsection{Modele stanu czynnika}
+
+\subsubsection{Czynnik termodynamiczny -- woda}
+
+Parametry:
+
+\begin{enumerate}
+
+	\item strumień masy czynnika $\dot m$,
+
+	\item entalpia jednostkowa czynnika $h$,
+
+	\item entropia jednostkowa czynnika $s$,
+
+	\item ciśnienie czynnika $p$,
+
+	\item temperatura czynnika $T$.
+
+\end{enumerate}
+
+Zależności pomiędzy parametrami czynnika zrealizowane zostały w~oparciu
+o~tablice ,,IAPWS Industrial Formulation 1997''. Program wykorzystuje
+implementację zależności IF97 wykonaną wcześniej przez~autora.
+
+
+\subsubsection{Model paliwa}
+
+Parametry:
+
+\begin{enumerate}
+
+	\item strumień energii zawartej w~paliwie $\dot Q_f$,
+
+	\item strumień masy paliwa $\dot m_f$,
+
+	\item wartość kaloryczna paliwa $q_{LHV}$.
+
+\end{enumerate}
+
+Równania bilansowe:
+
+\begin{enumerate}
+
+	\item $\dot Q_f = \dot m_f q_{LHV}$.
+
+\end{enumerate}
+
+
+\subsection{Modele maszyn roboczych}
+
+\subsubsection{Kocioł}
+
+\begin{wrapfigure}{r}{4cm}
+	\centering
+
+	\begin{tikzpicture}
+		\node[boiler] (K) at (0,0) {K};
+
+		{ [blue]
+			\draw[stealth-] (K.s) -- ++(0,-1)
+				node[pos=.5, left] {$\dot m_i$}
+				node[pos=.5, right] {$h_i$};
+			\draw[-stealth] (K.n) -- ++(0,1)
+				node[pos=.5, left] {$\dot m_o$}
+				node[pos=.5, right] {$h_o$};
+		}
+
+		{ [red, dashed]
+			\draw[stealth-] (K.w) -- ++(-1.5,0)
+				node[pos=.5, above] {$\dot m_f$}
+				node[pos=.5, below] {$q_{LHV}$};
+		}
+	\end{tikzpicture}
+\end{wrapfigure}
+
+Parametry:
+
+\begin{enumerate}
+
+	\item sprawność kotła $\eta_B$.
+
+\end{enumerate}
+
+Równania bilansowe:
+
+\begin{enumerate}
+
+	\item $\dot m_i = \dot m_o$,
+
+	\item $\dot m_i h_i = \eta_B \dot m_f q_{LHV} + \dot m_o h_o$.
+
+\end{enumerate}

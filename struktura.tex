@@ -204,10 +204,18 @@ W~tym~przypadku, każda maszyna przepływowa (oraz~rurociąg, jeśli
 jest~uwzględniany w~obliczenich) reprezentowana jest na~grafie za~pomocą
 dokładnie jednego wierzchołka, zaś~łuki wyrażają wprost przepływ
 czynnika (energii) pomiędzy nimi. Dla~wiernego odwzorowania schematu
-konieczne~jest uwzględnienie również przepon oddzielających obiegi,
-na~przykład poprzez wyznaczenie w~grafie dróg.
+konieczne~jest uwzględnienie również przepon oddzielających obiegi.
+Problem ten rozwiązać można przykładowo poprzez~abstrakcyjny podział
+krawędzi w~otoczeniu węzła.
 
 Na~rys.~\ref{metody-teorii-grafow-przyklad} zestawiony został prosty
 przykład obiegu cieplnego wyrażonego za~pomocą obu wymienionych metod.
 W~obu przypadkach uwzględniona została strata na~rurociągu
 wyprowadzającym parę świeżą oraz~mieszanie skroplin.
+
+Na~rys.~\ref{metody-teorii-grafow-przyklad.w1} barwą niebieską
+wyróżniono dodatkowe przepływy energii, które musiałyby zostać
+uwzględnione w~bilansie układu. W~wariancie alternatywnym, przepływy te
+zostają zamknięte we~właściwym węźle, co~upraszcza zewnętrzną strukturę
+układu i~tym~samym kod programu. Jest to~główna przyczyna, dla~której
+autor zdecydował~się na~realizację projektu przy~pomocy tej metody.
