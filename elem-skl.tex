@@ -52,93 +52,330 @@ TODO: rozwinąć, wzorki
 
 \subsection{Modele stanu czynnika}
 
-\subsubsection{Czynnik termodynamiczny -- woda}
+\subsubsection{Czynnik termodynamiczny --- woda}
 
-Parametry:
+\begin{description}
 
-\begin{enumerate}
+	\item[Parametry:] \hfill
 
-	\item strumień masy czynnika $\dot m$,
+		\begin{itemize}
 
-	\item entalpia jednostkowa czynnika $h$,
+			\item strumień masy czynnika $\dot m$,
 
-	\item entropia jednostkowa czynnika $s$,
+			\item entalpia jednostkowa czynnika $h$,
 
-	\item ciśnienie czynnika $p$,
+			\item entropia jednostkowa czynnika $s$,
 
-	\item temperatura czynnika $T$.
+			\item ciśnienie czynnika $p$,
 
-\end{enumerate}
+			\item temperatura czynnika $T$,
 
-Zależności pomiędzy parametrami czynnika zrealizowane zostały w~oparciu
-o~tablice ,,IAPWS Industrial Formulation 1997''. Program wykorzystuje
+			\item suchość pary $x$.
+
+		\end{itemize}
+
+\end{description}
+
+Obsługiwane parametry umożliwiają bilansowanie obiegu przy~wykorzystaniu
+typowych danych wejściowych oraz~wykonywanie wykresów. Zależności
+pomiędzy nimi dla~pary wodnej zrealizowane zostały w~oparciu o~tablice
+,,IAPWS Industrial Formulation 1997''. Program wykorzystuje
 implementację zależności IF97 wykonaną wcześniej przez~autora.
+
+Możliwe jest również wykonanie obliczeń dla~czynnika, dla~którego
+nie~zostały zaimplementowane właściwe zależności. Konieczne jest wówczas
+wprowadzenie wszystkich niezbędnych do~obliczeń parametrów.
 
 
 \subsubsection{Model paliwa}
 
-Parametry:
 
-\begin{enumerate}
+\begin{description}
 
-	\item strumień energii zawartej w~paliwie $\dot Q_f$,
+	\item[Parametry:] \hfill
 
-	\item strumień masy paliwa $\dot m_f$,
+		\begin{itemize}
 
-	\item wartość kaloryczna paliwa $q_{LHV}$.
+			\item strumień energii zawartej w~paliwie $\dot Q_f$,
 
-\end{enumerate}
+			\item strumień masy [objętości] paliwa $\dot m_f$,
 
-Równania bilansowe:
+			\item jednostkowa wartość kaloryczna paliwa $q_{LHV}$.
 
-\begin{enumerate}
+		\end{itemize}
 
-	\item $\dot Q_f = \dot m_f q_{LHV}$.
+	\item[Równania bilansowe:] \hfill
 
-\end{enumerate}
+		\begin{itemize}
+
+			\item $\dot Q_f = \dot m_f q_{LHV}$.
+
+		\end{itemize}
+
+\end{description}
+
+Model paliwa zaprojektowany został z~myślą o~uniwersalności.
+W~obliczeniach bilansowych wykorzystywana jest wyłącznie wartość
+strumienia energii; dwa pozostałe parametry służą jedynie zwiększeniu
+wygody użytkownika.
+
+Ze~względu na~ogólną postać wyrażonego równania, może zostać ono
+wykorzystane zarówno dla~paliwa w~postaci stałej (wówczas energia
+odniesiona jest do~masy paliwa), jak~i~płynu (energia odniesiona jest
+do~objętości). Co~więcej, w~przypadku innych źródeł ciepła parametry
+pomocnicze mogą zostać zaniedbane i~zadana może zostać wprost energia
+dostarczona do~kotła.
 
 
 \subsection{Modele maszyn roboczych}
 
 \subsubsection{Kocioł}
 
-\begin{wrapfigure}{r}{4cm}
+\begin{figure}[H]
+	\centering
+
+	\subfloat[][Symbol]{
+		\begin{tikzpicture}
+			\node[boiler] (K) at (0,0) {K};
+
+			{ [blue]
+				\draw[stealth-] (K.s) -- ++(0,-1.5)
+					node[pos=.5, left] {$\dot m_i$}
+					node[pos=.5, right] {$h_i$};
+				\draw[-stealth] (K.n) -- ++(0,1.5)
+					node[pos=.5, left] {$\dot m_o$}
+					node[pos=.5, right] {$h_o$};
+			}
+
+			{ [red, dashed]
+				\draw[stealth-] (K.w) -- ++(-2,0)
+					node[pos=.5, above] {$\dot Q_f$};
+			}
+		\end{tikzpicture}
+	}%
+	~ %
+	\subfloat[][Wykres T-s przemiany]{
+		\begin{tikzpicture}
+			\begin{axis}[
+				xtick=\empty,
+				ytick=\empty,
+				axis lines=left,
+				ylabel=T,
+				xlabel=s,
+				height=5cm,
+				every axis x label/.style={at={(xticklabel cs:.95,.2cm)}},
+				every axis y label/.style={at={(yticklabel cs:.9,.2cm)}}
+			]
+				\addplot+[no marks, smooth] table {wykresy/_nasyc/Ts.txt};
+				\addplot+[no marks] table {wykresy/kociol/Ts.txt};
+			\end{axis}
+		\end{tikzpicture}
+	}
+
+	\caption{Model kotła}
+	\label{elem:kociol}
+\end{figure}
+
+\begin{description}
+
+	\item[Parametry:] \hfill
+
+		\begin{itemize}
+
+			\item sprawność kotła $\eta_B$.
+
+		\end{itemize}
+
+	\item[Równania bilansowe:] \hfill
+
+		\begin{itemize}
+
+			\item \eq$\dot m_i = \dot m_o$,
+
+			\item \eq$\dot m_i h_i = \eta_B \dot Q_f + \dot m_o h_o$.
+
+		\end{itemize}
+
+\end{description}
+
+Kocioł zamodelowany jest w~postaci prostej maszyny przepływowej,
+w~której energia zawarta w~paliwie wykorzystywana jest do~zwiększenia
+entropii czynnika. Model umożliwia uwzględnienie strat energii w~postaci
+stałej sprawności.
+
+\subsubsection{Turbina (jednostkowa)}
+
+\begin{figure}[H]
+	\centering
+
+	\subfloat[][Symbol]{
+		\begin{tikzpicture}
+			\node[turbine] (T) at (0,0) {T$_i$};
+
+			{ [blue]
+				\draw[stealth-] (T.nw) -- ++(0,1.5)
+					node[pos=.5, left] {$\dot m_i$}
+					node[pos=.5, right] {$h_i$};
+				\draw[-stealth] (T.se) -- ++(0,-1.5)
+					node[pos=.5, left] {$\dot m_o$}
+					node[pos=.5, right] {$h_o'$};
+			}
+
+			{ [blue, dashed, looseness=1, bend right=45, scale=.48, rotate=-45]
+				\draw[-stealth] (T.ne) to ++(1,1) to ++(-1,1)
+					to ++(-1,-1) to ++(1,-1);
+					\node[above right] at (T.ne) {$h_o$};
+			}
+
+			{ [red, dashed, double distance=.5mm]
+				\draw[-stealth, double] (T.e) -- ++(2,0)
+					node[pos=.5, above] {$P_m$};
+			}
+		\end{tikzpicture}
+	}%
+	~ %
+	\subfloat[][Wykres T-s przemiany]{
+		\begin{tikzpicture}
+			\begin{axis}[
+				xtick=\empty,
+				ytick=\empty,
+				axis lines=left,
+				ylabel=T,
+				xlabel=s,
+				height=5cm,
+				every axis x label/.style={at={(xticklabel cs:.95,.2cm)}},
+				every axis y label/.style={at={(yticklabel cs:.9,.2cm)}}
+			]
+				\addplot+[no marks, smooth] table {wykresy/_nasyc/Ts.txt};
+				\addplot+[no marks] table {wykresy/turbina/Ts.txt};
+				\addplot+[no marks, smooth] table {wykresy/turbina/Ts2.txt};
+			\end{axis}
+		\end{tikzpicture}
+	}
+
+	\caption{Model turbiny}
+	\label{elem:turbina}
+\end{figure}
+
+\begin{description}
+
+	\item[Parametry:] \hfill
+
+		\begin{itemize}
+
+			\item sprawność izentropowa turbiny $\eta_i$,
+
+			\item sprawność mechaniczna turbiny $\eta_m$.
+
+		\end{itemize}
+
+	\item[Równania bilansowe:] \hfill
+
+		\begin{itemize}
+
+			\item \eq$\dot m_i = \dot m_o$,
+
+			\item \eq$p_o' = p_o$,%
+				\label{turb.petla.p}
+
+			\item \eq$s_o = s_i$,%
+				\label{turb.petla.s}
+
+			\item \eq$h_o' = h_i + \eta_i ( h_o - h_i )$,%
+				\label{turb.wyj.h}
+
+			\item \eq$\dot m_i h_i = \dot m_o h_o + \frac{P_m}{\eta_m}$.
+
+		\end{itemize}
+
+\end{description}
+
+Model turbiny realizuje proces rozprężenia czynnika od~stanu
+początkowego do~zadanego ciśnienia. Proces rozprężania dzieli~się
+umyślnie na~dwa etapy:
+
+\begin{enumerate}
+
+	\item izentropowe rozprężanie czynnika do~zadanego ciśnienia $p_o$,
+
+	\item wprowadzenie korekty ze~względu na~nieizentropowość
+		rzeczywistego procesu rozprężania.
+
+\end{enumerate}
+
+Realizacji pierwszego z~wymienionych etapów dokonuje~się z~pomocą
+tzw.~pętli izentropowej. Równania \eqref{turb.petla.p}
+i~\eqref{turb.petla.s} wymuszają zamodelowanie stanu czynnika
+po~izentropowym rozprężaniu $S_o(p_o, s_o=s_i)$.
+
+Następnie, równanie~\eqref{turb.wyj.h} wykorzystywane jest
+do~wyznaczenia entalpii czynnika po~rzeczywistym rozprężaniu $h_o'$,
+przy~uwzględnieniu zadanej sprawności izentropowej $\eta_i$. Wyznaczony
+może zostać wyjściowy stan czynnika $S_o'(p_o, h_o')$.
+
+Model turbiny jednostkowej charakteryzuje~się pojedynczym wyjściem
+czynnika. Realizacja turbiny upustowo-kondensacyjnej
+oraz~upustowo-przeciwprężnej wymaga szeregowego połączenia elementów,
+z~uwzględnieniem upustów w~postaci odgałęzień, oraz~węzła sumacyjnego
+dla~wyprowadzeń mocy. Schematycznie układ taki zaprezentowany został
+na~rys.~\ref{turb.upustowa}.
+
+\begin{figure}[H]
 	\centering
 
 	\begin{tikzpicture}
-		\node[boiler] (K) at (0,0) {K};
+		\node[turbine] (T1) at (0,0) {T$_1$};
+		\node[turbine] (T2) at (4,0) {T$_2$};
+		\node[turbine] (T3) at (8,0) {T$_3$};
 
 		{ [blue]
-			\draw[stealth-] (K.s) -- ++(0,-1)
+			\draw[stealth-] (T1.nw) -- ++(0,1.5)
 				node[pos=.5, left] {$\dot m_i$}
 				node[pos=.5, right] {$h_i$};
-			\draw[-stealth] (K.n) -- ++(0,1)
+
+			\draw[-stealth] (T1.se) -- ++(0,-1.5)
+				node[pos=.5, left] {$\dot m_{x1}$}
+				node[pos=.5, right] {$h_{x1}$}
+				node[pos=.25, heatnode] (T1x) {};
+
+			\draw[stealth-] (T2.nw) |- ++(-.1,.5) |- (T1x);
+
+			\draw[-stealth] (T2.se) -- ++(0,-1.5)
+				node[pos=.5, left] {$\dot m_{x2}$}
+				node[pos=.5, right] {$h_{x2}$}
+				node[pos=.25, heatnode] (T2x) {};
+
+			\draw[stealth-] (T3.nw) |- ++(-.1,.5) |- (T2x);
+
+			\draw[-stealth] (T3.se) -- ++(0,-1.5)
 				node[pos=.5, left] {$\dot m_o$}
-				node[pos=.5, right] {$h_o$};
+				node[pos=.5, right] {$h_o'$};
 		}
 
-		{ [red, dashed]
-			\draw[stealth-] (K.w) -- ++(-1.5,0)
-				node[pos=.5, above] {$\dot m_f$}
-				node[pos=.5, below] {$q_{LHV}$};
+		{ [red, double distance=.5mm]
+			\node[sumnode] (S2) at (6.5,1.5) {};
+			\node[sumnode] (S3) at (10.5,1.5) {};
+
+			\draw[-stealth, double] (T1.e) -| (2.5,1.5)
+				node[pos=0, above right] {$P_{m1}$}
+				-- (S2.w);
+
+			\draw[-stealth, double] (T2.e) -| (S2.s)
+				node[pos=0, above right] {$P_{m2}$};
+
+			\draw[-stealth, double] (S2.e) -- (S3.w);
+
+			\draw[-stealth, double] (T3.e) -| (S3.s)
+				node[pos=0, above right] {$P_{m3}$};
+
+			\draw[-stealth, double] (S3.e) -- ++(1.5,0)
+				node[pos=1, above left] {$P_m$};
 		}
 	\end{tikzpicture}
-\end{wrapfigure}
 
-Parametry:
+	\caption{Schematyczne przedstawienie połączeń dla~modelowania
+		turbiny upustowo-kondensacyjnej}
+	\label{turb.upustowa}
+\end{figure}
 
-\begin{enumerate}
 
-	\item sprawność kotła $\eta_B$.
-
-\end{enumerate}
-
-Równania bilansowe:
-
-\begin{enumerate}
-
-	\item $\dot m_i = \dot m_o$,
-
-	\item $\dot m_i h_i = \eta_B \dot m_f q_{LHV} + \dot m_o h_o$.
-
-\end{enumerate}

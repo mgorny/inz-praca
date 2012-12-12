@@ -47,8 +47,11 @@
 		\pgf@y=-.5\ht\pgfnodeparttextbox
 	}
 	\anchor{nw}{\nw}
+	\anchor{ne}{\ne}
 	\anchor{se}{\se}
 	\anchor{sw}{\sw}
+	\anchor{w}{\pgfpoint{-.75cm}{0cm}}
+	\anchor{e}{\pgfpoint{.75cm}{0cm}}
 
 	\backgroundpath{
 		\pgfpathmoveto{\nw}
@@ -212,6 +215,31 @@
 	\backgroundpath{
 		\pgfpathcircle{\center}{.5mm}
 		\pgfusepath{fill}
+	}
+}
+
+\pgfdeclareshape{sumnode}
+{
+	\savedanchor{\center}{\pgfpointorigin}
+	\savedanchor{\nw}{\pgfpoint{-.177cm}{.177cm}}
+	\savedanchor{\ne}{\pgfpoint{.177cm}{.177cm}}
+	\savedanchor{\se}{\pgfpoint{.177cm}{-.177cm}}
+	\savedanchor{\sw}{\pgfpoint{-.177cm}{-.177cm}}
+
+	\anchor{center}{\center}
+	\anchor{n}{\pgfpoint{0cm}{.25cm}}
+	\anchor{s}{\pgfpoint{0cm}{-.25cm}}
+	\anchor{w}{\pgfpoint{-.25cm}{0cm}}
+	\anchor{e}{\pgfpoint{.25cm}{0cm}}
+
+	\backgroundpath{
+		\pgfpathcircle{\center}{.25cm}
+
+		\pgfpathmoveto{\nw}
+		\pgfpathlineto{\se}
+		\pgfpathmoveto{\sw}
+		\pgfpathlineto{\ne}
+		\pgfusepath{stroke}
 	}
 }
 
