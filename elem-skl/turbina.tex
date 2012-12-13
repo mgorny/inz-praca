@@ -1,0 +1,160 @@
+\subsubsection{Turbina (jednostkowa)}
+
+\begin{figure}[H]
+	\centering
+
+	\subfloat[][Symbol]{
+		\begin{tikzpicture}
+			\node[turbine] (T) at (0,0) {T$_i$};
+
+			{ [blue]
+				\draw[stealth-] (T.nw) -- ++(0,1.5)
+					node[pos=.5, left] {$\dot m_i$}
+					node[pos=.5, right] {$h_i$};
+				\draw[-stealth] (T.se) -- ++(0,-1.5)
+					node[pos=.5, left] {$\dot m_o$}
+					node[pos=.5, right] {$h_o$};
+			}
+
+			{ [blue, dashed, looseness=1, bend right=45, scale=.48, rotate=-45]
+				\draw[-stealth] (T.ne) to ++(1,1) to ++(-1,1)
+					to ++(-1,-1) to ++(1,-1);
+					\node[above right] at (T.ne) {$h_o'$};
+			}
+
+			{ [red, dashed, double distance=.5mm]
+				\draw[-stealth, double] (T.e) -- ++(2,0)
+					node[pos=.5, above] {$P_m$};
+			}
+		\end{tikzpicture}
+	}%
+	~ %
+	\wykresTs{
+		\addplot+[no marks] table[x=s,y=T] {wykresy/turbina-i.txt};
+		\addplot+[no marks, smooth] table[x=s,y=T] {wykresy/turbina.txt};
+	}
+
+	\caption{Model turbiny}
+	\label{elem:turbina}
+\end{figure}
+
+\begin{description}
+
+	\item[Parametry:] \hfill
+
+		\begin{itemize}
+
+			\item sprawność izentropowa turbiny $\eta_i$,
+
+			\item sprawność mechaniczna turbiny $\eta_m$.
+
+		\end{itemize}
+
+	\item[Równania bilansowe:] \hfill
+
+		\begin{itemize}
+
+			\item \eq$\dot m_i = \dot m_o$,
+
+			\item \eq$p_o' = p_o$,%
+				\label{turb.petla.p}
+
+			\item \eq$s_o' = s_i$,%
+				\label{turb.petla.s}
+
+			\item \eq$h_o = h_i + \eta_i ( h_o' - h_i )$,%
+				\label{turb.wyj.h}
+
+			\item \eq$\dot m_i h_i = \dot m_o h_o + \frac{P_m}{\eta_m}$.
+
+		\end{itemize}
+
+\end{description}
+
+Model turbiny realizuje proces rozprężenia czynnika od~stanu
+początkowego do~zadanego ciśnienia. Proces rozprężania dzieli~się
+umyślnie na~dwa etapy:
+
+\begin{enumerate}
+
+	\item izentropowe rozprężanie czynnika do~zadanego ciśnienia $p_o$,
+
+	\item wprowadzenie korekty ze~względu na~nieizentropowość
+		rzeczywistego procesu rozprężania.
+
+\end{enumerate}
+
+Realizacji pierwszego z~wymienionych etapów dokonuje~się z~pomocą
+tzw.~pętli izentropowej. Równania \eqref{turb.petla.p}
+i~\eqref{turb.petla.s} wymuszają zamodelowanie stanu czynnika
+po~izentropowym rozprężaniu $S_o'(p_o, s_o'=s_i)$.
+
+Następnie, równanie~\eqref{turb.wyj.h} wykorzystywane jest
+do~wyznaczenia entalpii czynnika po~rzeczywistym rozprężaniu $h_o$,
+przy~uwzględnieniu zadanej sprawności izentropowej $\eta_i$. Wyznaczony
+może zostać wyjściowy stan czynnika $S_o(p_o, h_o)$.
+
+Model turbiny jednostkowej charakteryzuje~się pojedynczym wyjściem
+czynnika. Realizacja turbiny upustowo-kondensacyjnej
+oraz~upustowo-przeciwprężnej wymaga szeregowego połączenia elementów,
+z~uwzględnieniem upustów w~postaci odgałęzień, oraz~węzła sumacyjnego
+dla~wyprowadzeń mocy. Schematycznie układ taki zaprezentowany został
+na~rys.~\ref{turb.upustowa}.
+
+\begin{figure}[H]
+	\centering
+
+	\begin{tikzpicture}
+		\node[turbine] (T1) at (0,0) {T$_1$};
+		\node[turbine] (T2) at (4,0) {T$_2$};
+		\node[turbine] (T3) at (8,0) {T$_3$};
+
+		{ [blue]
+			\draw[stealth-] (T1.nw) -- ++(0,1.5)
+				node[pos=.5, left] {$\dot m_i$}
+				node[pos=.5, right] {$h_i$};
+
+			\draw[-stealth] (T1.se) -- ++(0,-1.5)
+				node[pos=.5, left] {$\dot m_{x1}$}
+				node[pos=.5, right] {$h_{x1}$}
+				node[pos=.25, heatnode] (T1x) {};
+
+			\draw[stealth-] (T2.nw) |- ++(-.1,.5) |- (T1x);
+
+			\draw[-stealth] (T2.se) -- ++(0,-1.5)
+				node[pos=.5, left] {$\dot m_{x2}$}
+				node[pos=.5, right] {$h_{x2}$}
+				node[pos=.25, heatnode] (T2x) {};
+
+			\draw[stealth-] (T3.nw) |- ++(-.1,.5) |- (T2x);
+
+			\draw[-stealth] (T3.se) -- ++(0,-1.5)
+				node[pos=.5, left] {$\dot m_o$}
+				node[pos=.5, right] {$h_o'$};
+		}
+
+		{ [red, double distance=.5mm]
+			\node[sumnode] (S2) at (6.5,1.5) {};
+			\node[sumnode] (S3) at (10.5,1.5) {};
+
+			\draw[-stealth, double] (T1.e) -| (2.5,1.5)
+				node[pos=0, above right] {$P_{m1}$}
+				-- (S2.w);
+
+			\draw[-stealth, double] (T2.e) -| (S2.s)
+				node[pos=0, above right] {$P_{m2}$};
+
+			\draw[-stealth, double] (S2.e) -- (S3.w);
+
+			\draw[-stealth, double] (T3.e) -| (S3.s)
+				node[pos=0, above right] {$P_{m3}$};
+
+			\draw[-stealth, double] (S3.e) -- ++(1.5,0)
+				node[pos=1, above left] {$P_m$};
+		}
+	\end{tikzpicture}
+
+	\caption{Schematyczne przedstawienie połączeń dla~modelowania
+		turbiny upustowo-kondensacyjnej}
+	\label{turb.upustowa}
+\end{figure}

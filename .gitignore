@@ -1,3 +1,7 @@
 *.aux
 *.pdf
 *.log
+*.out
+*.toc
+wykresy/*.txt
+wykresy/.stamp

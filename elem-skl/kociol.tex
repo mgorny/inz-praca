@@ -1,0 +1,59 @@
+\subsubsection{Kocioł}
+
+\begin{figure}[H]
+	\centering
+
+	\subfloat[][Symbol]{
+		\begin{tikzpicture}
+			\node[boiler] (K) at (0,0) {K};
+
+			{ [blue]
+				\draw[stealth-] (K.s) -- ++(0,-1.5)
+					node[pos=.5, left] {$\dot m_i$}
+					node[pos=.5, right] {$h_i$};
+				\draw[-stealth] (K.n) -- ++(0,1.5)
+					node[pos=.5, left] {$\dot m_o$}
+					node[pos=.5, right] {$h_o$};
+			}
+
+			{ [red, dashed]
+				\draw[stealth-] (K.w) -- ++(-2,0)
+					node[pos=.5, above] {$\dot Q_f$};
+			}
+		\end{tikzpicture}
+	}%
+	~ %
+	\wykresTs{
+		\addplot+[no marks] table[x=s,y=T] {wykresy/kociol.txt};
+	}
+
+	\caption{Model kotła}
+	\label{elem:kociol}
+\end{figure}
+
+\begin{description}
+
+	\item[Parametry:] \hfill
+
+		\begin{itemize}
+
+			\item sprawność kotła $\eta_B$.
+
+		\end{itemize}
+
+	\item[Równania bilansowe:] \hfill
+
+		\begin{itemize}
+
+			\item \eq$\dot m_i = \dot m_o$,
+
+			\item \eq$\dot m_i h_i = \eta_B \dot Q_f + \dot m_o h_o$.
+
+		\end{itemize}
+
+\end{description}
+
+Kocioł zamodelowany jest w~postaci prostej maszyny przepływowej,
+w~której energia zawarta w~paliwie wykorzystywana jest do~zwiększenia
+entropii czynnika. Model umożliwia uwzględnienie strat energii w~postaci
+stałej sprawności.

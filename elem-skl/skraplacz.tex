@@ -1,0 +1,60 @@
+\subsubsection{Skraplacz}
+
+\begin{figure}[H]
+	\centering
+
+	\subfloat[][Symbol]{
+		\begin{tikzpicture}
+			\node[condenser] (Sk) at (0,0) {Sk};
+
+			{ [blue]
+				\draw[stealth-] (Sk.n) -- ++(0,1.5)
+					node[pos=.5, left] {$\dot m_i$}
+					node[pos=.5, right] {$h_i$}
+					node[pos=1] (tn) {};
+				\draw[-stealth] (Sk.s) -- ++(0,-1.5)
+					node[pos=.5, left] {$\dot m_o$}
+					node[pos=.5, right] {$h_o$}
+					node[pos=1] (ts) {};
+			}
+
+			{ [green!50!black]
+				\draw[-stealth] (tn) ++(1.75,0) |- (Sk.ne)
+					node[pos=.225, left] {$\dot m_i'$}
+					node[pos=.225, right] {$h_i'$};
+				\draw[stealth-] (ts) ++(1.75,0) |- (Sk.se)
+					node[pos=.225, left] {$\dot m_o'$}
+					node[pos=.225, right] {$h_o'$};
+			}
+		\end{tikzpicture}
+	}%
+	~ %
+	\wykresTs{
+		\addplot+[no marks] table[x=s,y=T] {wykresy/skraplacz.txt};
+	}
+
+	\caption{Model skraplacza}
+	\label{elem:skraplacz}
+\end{figure}
+
+\begin{description}
+
+	\item[Parametry:] \hfill
+
+		\begin{itemize}
+
+			\item sprawność kotła $\eta_B$.
+
+		\end{itemize}
+
+	\item[Równania bilansowe:] \hfill
+
+		\begin{itemize}
+
+			\item \eq$\dot m_i = \dot m_o$,
+
+			\item \eq$\dot m_i h_i = \eta_B \dot Q_f + \dot m_o h_o$.
+
+		\end{itemize}
+
+\end{description}
