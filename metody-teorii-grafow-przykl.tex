@@ -45,8 +45,8 @@
 				\draw (R1.s) |- (6,-.5) -- ++(0,1.75) -- (S.s);
 			}
 		\end{tikzpicture}
-	} ~%
-%
+	}
+
 	\subfloat[][Wariant łukowy maszyn]{
 		\label{metody-teorii-grafow-przyklad.w1}
 		\begin{tikzpicture}
@@ -58,19 +58,19 @@
 				\node[heatnode] (P2) at (5.75,3) {};
 				\node[above] at (P2) {2};
 				\node[heatnode] (P3k) at (5.75,.75) {};
-				\node[heatnode] (P3) at (5,0) {};
-				\node[below] at (P3) {3};
-				\node[heatnode] (P4) at (3.5,.75) {};
+				\node[heatnode] (P3) at (5,-.25) {};
+				\node[above] at (P3) {3};
+				\node[heatnode] (P4) at (2.75,.75) {};
 				\node[left] at (P4) {4};
-				\node[heatnode] (P5) at (3.5,3) {};
+				\node[heatnode] (P5) at (2.75,3) {};
 				\node[above] at (P5) {5};
 				\node[heatnode] (P6) at (4.25,3) {};
 				\node[above right] at (P6) {6};
 				\node[heatnode] (P7) at (4.25,.75) {};
 				\node[above right] at (P7) {7};
-				\node[heatnode] (Pi) at (6.5,3) {};
+				\node[heatnode] (Pi) at (7.25,3) {};
 				\node[above] at (Pi) {II};
-				\node[heatnode] (Pii) at (6.5,.75) {};
+				\node[heatnode] (Pii) at (7.25,.75) {};
 				\node[below] at (Pii) {I};
 			}
 
@@ -80,36 +80,46 @@
 				\draw (P6) -- (P2);
 				\draw (P2) -- (P3k);
 				\draw (P3k) -- (P3);
-				\draw (P3) -| (P4) node[above right, pos=.5] {PS};
+				\draw (P3) -| (P4) node[above right, pos=.4] {PS};
 				\draw (P4) -- (P5);
-				\draw (P5) -| (P0) node[above right, pos=.5, font=\small] {K};
+				\draw (P5) -| (P0) node[above right, pos=.7, font=\small] {K};
 				\draw (P6) -- (P7);
 				\draw (P7) -- (P3);
 				\draw (Pii) -- (Pi);
 			}
 
-			{ [color=red, dashdotted, font=\small]
-				\draw (P6) +(-.1,-.1) rectangle (5.85,5.1)
-					node[below left] {T};
+			{ [color=red, dashdotted, font=\small, rounded corners]
+				\draw (P6) +(-.1,-.1) rectangle (5.85,5.1);
+				\path (P6) -- (5.85,5.1) node[pos=.5] {T};
 				\draw (P4) +(-.1,-.1) rectangle (4.35,3.1);
-				\draw (P3k) +(-.1,-.1) rectangle (6.6,3.1);
-				\draw (P7) +(-.1,.1) rectangle (5.85,-.1);
-				\path (P7) -- (P3k) node[pos=.5, font=\scriptsize] {(miesz.)};
+				\draw (P3k) +(-.1,-.1) rectangle (7.35,3.1);
+				\draw (P7) +(-.1,.1) rectangle (5.85,-.35);
+				\path (P7) +(0,-.25) -- (P7 -| P3k)
+					node[pos=.5, font=\scriptsize] {(miesz.)};
 			}
 
 			{ [color=blue, -stealth, shorten >=1mm, shorten <=1mm, font=\small]
-				\draw (P7) ++(0,.75) -- ++(-.75,0);
-				\draw (P7) ++(0,1) -- ++(-.75,0);
-				\draw (P7) ++(0,1.25) -- ++(-.75,0)
+				\path (P7) ++(0,.75) node (R1a) {};
+				\path (P7) ++(0,1) node (R1b) {};
+				\path (P7) ++(0,1.25) node (R1c) {};
+
+				\draw (R1a.center) -- (R1a -| P5);
+				\draw (R1b.center) -- (R1b -| P5);
+				\draw (R1c.center) -- (R1c -| P5)
 					node[above, pos=.5, color=red] {R1};
-				\draw (P3k) ++(0,.75) -- ++(.75,0);
-				\draw (P3k) ++(0,1) -- ++(.75,0);
-				\draw (P3k) ++(0,1.25) -- ++(.75,0)
+
+				\path (P3k) ++(0,.75) node (Ska) {};
+				\path (P3k) ++(0,1) node (Skb) {};
+				\path (P3k) ++(0,1.25) node (Skc) {};
+
+				\draw (Ska.center) -- (Ska -| Pi);
+				\draw (Skb.center) -- (Skb -| Pi);
+				\draw (Skc.center) -- (Skc -| Pi)
 					node[above, pos=.5, color=red] {Sk};
 			}
 		\end{tikzpicture}
-	}
-
+	}%
+	~ %
 	\subfloat[][Wariant węzłowy maszyn]{
 		\label{metody-teorii-grafow-przyklad.w2}
 		\begin{tikzpicture}
