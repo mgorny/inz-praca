@@ -43,7 +43,20 @@
 
 		\begin{itemize}
 
-			\item sprawność kotła $\eta_B$.
+			\item różnica temperatur na~wyprowadzeniach obiegu wtórnego
+				$\Delta T$.
+
+		\end{itemize}
+
+	\item[Przemiany termodynamiczne:] \hfill
+
+		\begin{itemize}
+
+			\item $\mathbf{S_i} \rightarrow \mathbf{S_o}$,
+				izobaryczne skraplanie czynnika;
+
+			\item $\mathbf{S_i'} \rightarrow \mathbf{S_o'}$,
+				izobaryczne ogrzewanie czynnika chłodzącego.
 
 		\end{itemize}
 
@@ -53,8 +66,30 @@
 
 			\item \eq$\dot m_i = \dot m_o$,
 
-			\item \eq$\dot m_i h_i = \eta_B \dot Q_f + \dot m_o h_o$.
+			\item \eq$\dot m_i' = \dot m_o'$,
+
+			\item \eq$p_i = p_o$,
+
+			\item \eq$p_i' = p_o'$,
+
+			\item \eq$x_o = 0$,%
+				\label{skraplacz-x0}
+
+			\item \eq$T_o' = T_i' + \Delta T$,%
+				\label{skraplacz-DT}
+
+			\item \eq$\dot m_i h_i + \dot m_i' h_i'
+				= \dot m_o h_o + \dot m_o' h_o'$.
 
 		\end{itemize}
 
 \end{description}
+
+Skraplacz modelowany jest jako~przeponowy wymiennik ciepła pracujący
+w~dwóch obiegach. Model uwzględnia izobaryczną wymianę ciepła pomiędzy
+czynnikami bez~ich mieszania. Równanie~\eqref{skraplacz-x0} dodatkowo
+wymusza skroplenie czynnika roboczego (w~obiegu pierwotnym).
+
+Dla~uproszczenia typowych obliczeń wprowadzona została dodatkowa
+wielkość w~postaci różnicy temperatur czynnika na~początku i~na~końcu
+obiegu chłodzącego. Przyjmuje ona domyślnie wartość \SI{10}{\kelvin}.
