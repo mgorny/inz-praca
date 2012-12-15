@@ -30,7 +30,12 @@
 	}%
 	~ %
 	\wykresTs{
-		\addplot+[no marks] table[x=s,y=T] {wykresy/skraplacz.txt};
+		\addplot+[no marks] table[x=s,y=T] {wykresy/skraplacz.txt}
+			node[heatnode, pos=0] (st) {}
+			node[heatnode, pos=1] (en) {};
+
+		\node[right] at (st) {$\mathbf{S}_i$};
+		\node[right] at (en) {$\mathbf{S}_o$};
 	}
 
 	\caption{Model skraplacza}

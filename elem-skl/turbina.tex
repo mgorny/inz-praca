@@ -30,8 +30,15 @@
 	}%
 	~ %
 	\wykresTs{
-		\addplot+[no marks] table[x=s,y=T] {wykresy/turbina-i.txt};
-		\addplot+[no marks, smooth] table[x=s,y=T] {wykresy/turbina.txt};
+		\addplot+[no marks] table[x=s,y=T] {wykresy/turbina-i.txt}
+			node[heatnode, pos=1] (en-i) {};
+		\addplot+[no marks, smooth] table[x=s,y=T] {wykresy/turbina.txt}
+			node[heatnode, pos=0] (st) {}
+			node[heatnode, pos=1] (en) {};
+
+		\node[right] at (st) {$\mathbf{S}_i$};
+		\node[right] at (en) {$\mathbf{S}_o$};
+		\node[left] at (en-i) {$\mathbf{S}_o'$};
 	}
 
 	\caption{Model turbiny}
@@ -96,12 +103,12 @@ umyślnie na~dwa etapy:
 Realizacji pierwszego z~wymienionych etapów dokonuje~się z~pomocą
 tzw.~pętli izentropowej. Równania \eqref{turb.petla.p}
 i~\eqref{turb.petla.s} wymuszają zamodelowanie stanu czynnika
-po~izentropowym rozprężaniu $S_o'(p_o, s_o'=s_i)$.
+po~izentropowym rozprężaniu $\mathbf{S}_o'(p_o, s_o'=s_i)$.
 
 Następnie, równanie~\eqref{turb.wyj.h} wykorzystywane jest
 do~wyznaczenia entalpii czynnika po~rzeczywistym rozprężaniu $h_o$,
 przy~uwzględnieniu zadanej sprawności izentropowej $\eta_i$. Wyznaczony
-może zostać wyjściowy stan czynnika $S_o(p_o, h_o)$.
+może zostać wyjściowy stan czynnika $\mathbf{S}_o(p_o, h_o)$.
 
 Model turbiny jednostkowej charakteryzuje~się pojedynczym wyjściem
 czynnika. Realizacja turbiny upustowo-kondensacyjnej
