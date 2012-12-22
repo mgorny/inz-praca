@@ -1,1 +1,125 @@
 \section{Program modelowania obiegów}
+
+\subsection{Wybór języka programowania}
+
+Język programowania wykorzystany do~wykonania programu powinien
+charakteryzować~się szeregiem cech, ułatwiających potencjalnemu
+użytkownikowi instalację i~późniejsze utrzymanie zainstalowanego
+programu. Najogólniej określić je można następującymi pojęciami:
+
+\begin{enumerate}
+
+	\item minimalna liczba zewnętrznych zależności (modularność),
+
+	\item rozpowszechnienie programów pisanych w~danym języku,
+
+	\item stabilność języka oraz~infrastruktury koniecznej
+	do~uruchamiania programów,
+
+	\item przenośność języka.
+
+\end{enumerate}
+
+Najogólniej założyć można, że~wybór danego języka implikuje szereg
+zależności, jakie muszą zostać spełnione nim możliwe będzie uruchomienie
+danego programu. Są to~najczęściej tzw.~biblioteki uruchomieniowe,
+rzadziej kompletne programy. Modularność języka umożliwia wykorzystanie
+minimalnego podzbioru struktury języka, umożliwiającej realizację zadań
+bez~konieczności wprowadzenia zależności niezwiązanych z~funkcjami
+programu.
+
+Rozpowszechnienie programów wyraża prawdopodobieństwo, że~potencjalny
+użytkownik będzie posiadać zainstalowane niezbędne zależności, tym~samym
+mogąc uruchomić wykonany program bez~dodatkowych czynności.
+
+Stabilność określa przede~wszystkim zmienność struktury języka w~czasie,
+oraz~częstotliwość odnajdywania błędów w~oprogramowaniu towarzyszącym.
+Język mało stabilny może wymagać od~programisty regularnego wprowadzania
+zmian w~programie, zmuszając użytkownika do~niepotrzebnie częstych
+aktualizacji.
+
+Przenośność najogólniej oznacza zdolność programów do~pracy na~znacznej
+liczbie platform sprzętowych oraz~systemów operacyjnych. Program
+powinien być~zgodny z~systemami operacyjnymi zgodnymi ze~standardem
+POSIX oraz~systemem Windows.
+
+Zwrócono uwagę również na~szereg innych cech eksploatacyjnych:
+
+\begin{enumerate}
+
+	\item dostępność niezbędnych bibliotek,
+
+	\item możliwość uzyskania dobrej wydajności oraz~małego zużycia
+	pamięci,
+
+	\item możliwość wykonywania rozszerzalnych komponentów.
+
+\end{enumerate}
+
+Ze~względu na~realizowane przez~program zadania, konieczne staje~się
+wykorzystanie procedur przeliczeniowych dla~parametrów czynnika
+oraz~funkcji matematycznych dla~rozwiązywania układów równań. Dostępność
+bibliotek realizujących te~funkcje zmniejsza ilość pracy oraz~redukuje
+powielanie kodu. Często wiąże~się również z~wykonaniem danych funkcji
+przez~osoby bardziej kompetentne w~danej dziedzinie niż~autor.
+
+Dobra wydajność jest najczęściej cechą charakterystyczną języków
+kompilowanych. Ogranicza wymagania sprzętowe programu oraz~czas
+oczekiwania na~wyniki.
+
+Rozszerzalność programu oznacza możliwość łatwego dodawania nowych
+funkcji i~rozszerzania istniejących komponentów. W~przypadku
+realizowanego programu oznacza to możliwość wprowadzenia nowego czynnika
+roboczego czy~elementów składowych obiegu. Rozszerzalność realizowana
+jest najczęściej przy~pomocy technik programowania obiektowego.
+
+Ze~względu na~wszystkie wyżej wymienione kryteria, autor podjął decyzję
+o~wykonaniu programu w~języku C++, w~wariancie opisanym normą
+ISO/IEC~14882:1998. Język ten spełnia wszystkie z~postawionych
+postulatów.
+
+Do~budowy programu wykorzystane zostały następujące biblioteki
+pomocnicze:
+
+\begin{enumerate}
+
+	\item biblioteka funkcji dla~algebry liniowej \textbf{Eigen}, udostępniona
+		na~otwartej licencji MPL2,
+
+	\item biblioteka funkcji stanu dla~pary wodnej \textbf{libh2oxx},
+		wykonana wcześniej przez~autora na~otwartej licencji BSD.
+
+\end{enumerate}
+
+
+\subsection{Realizacja elementów obiegu}
+
+Kolejnym istotnym krokiem w~realizacji programu jest wybór sposobu
+wykonania przedstawionych wcześniej modeli elementów obiegu. Jest to
+zagadnienie ściśle związane z~programowaniem, a~dostępne rozwiązania
+uzależnione są w~dużym stopniu od~wyboru języka programowania.
+
+Jednym z~najstarszych i~najbardziej uniwersalnych rozwiązań jest
+wykonanie modelu tzw.~,,maszyny uniwersalnej''. Wówczas obieg modelowany
+jest za~pomocą szeregu identycznych elementów, które~poprzez wybór
+właściwych opcji modelują określone maszyny.
+
+Choć jest to~rozwiązanie względnie proste, jego główną wadą jest
+ograniczona uniwersalność. Wprowadzenie każdej kolejnej maszyny wymaga
+ingerencji w~model podstawowy, i~czyni go bardziej skomplikowanym.
+
+Rozwiązaniem alternatywnym, charakterystycznym dla~obiektowych języków
+programowania, jest wykorzystanie abstrakcyjnych klas bazowych.
+Wykonywany wówczas jest podstawowy, abstrakcyjny model ,,maszyny'',
+określający jej ogólne cechy charakterystyczne oraz~metody, jakie
+model szczegółowy powinien udostępniać.
+
+Poszczególne maszyny wykonywane są w~postaci modeli szczegółowych,
+spełniających kryteria postawione przez~model postawowy. Każdy z~takich
+modeli zachowuje odrębność kodu, jednocześnie mogąc~być zastosowanym
+w~miejsce modelu podstawowego.
+
+
+\subsection{Metody rozwiązywania układu równań}
+
+\label{rozw-ukl-rown}

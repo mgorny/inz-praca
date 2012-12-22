@@ -1,0 +1,37 @@
+\subsubsection{Model paliwa}
+
+\begin{description}
+
+	\item[Parametry:] \hfill
+
+		\begin{itemize}
+
+			\item strumień energii zawartej w~paliwie $\dot Q_f$,
+
+			\item strumień masy [objętości] paliwa $\dot m_f$,
+
+			\item jednostkowa wartość kaloryczna paliwa $q_{LHV}$.
+
+		\end{itemize}
+
+	\item[Równania bilansowe:] \hfill
+
+		\begin{itemize}
+
+			\item $\dot Q_f = \dot m_f q_{LHV}$.
+
+		\end{itemize}
+
+\end{description}
+
+Model paliwa zaprojektowany został z~myślą o~uniwersalności.
+W~obliczeniach bilansowych wykorzystywana jest wyłącznie wartość
+strumienia energii; dwa pozostałe parametry służą jedynie zwiększeniu
+wygody użytkownika.
+
+Ze~względu na~ogólną postać wyrażonego równania, może zostać ono
+wykorzystane zarówno dla~paliwa w~postaci stałej (wówczas energia
+odniesiona jest do~masy paliwa), jak~i~płynu (energia odniesiona jest
+do~objętości). Co~więcej, w~przypadku innych źródeł ciepła parametry
+pomocnicze mogą zostać zaniedbane i~zadana może zostać wprost energia
+dostarczona do~kotła.

@@ -80,83 +80,13 @@ Zależności definiowane przez~elementy obiegu pełnią dwojaką funkcję:
 
 \subsection{Modele stanu czynnika}
 
-\subsubsection{Czynnik termodynamiczny --- woda}
-
-\begin{description}
-
-	\item[Parametry:] \hfill
-
-		\begin{itemize}
-
-			\item strumień masy czynnika $\dot m$,
-
-			\item entalpia jednostkowa czynnika $h$,
-
-			\item entropia jednostkowa czynnika $s$,
-
-			\item ciśnienie czynnika $p$,
-
-			\item temperatura czynnika $T$,
-
-			\item suchość pary $x$.
-
-		\end{itemize}
-
-\end{description}
-
-Obsługiwane parametry umożliwiają bilansowanie obiegu przy~wykorzystaniu
-typowych danych wejściowych oraz~wykonywanie wykresów. Zależności
-pomiędzy nimi dla~pary wodnej zrealizowane zostały w~oparciu o~tablice
-,,IAPWS Industrial Formulation 1997''. Program wykorzystuje
-implementację zależności IF97 wykonaną wcześniej przez~autora.
-
-Możliwe jest również wykonanie obliczeń dla~czynnika, dla~którego
-nie~zostały zaimplementowane właściwe zależności. Konieczne jest wówczas
-wprowadzenie wszystkich niezbędnych do~obliczeń parametrów.
-
-
-\subsubsection{Model paliwa}
-
-\begin{description}
-
-	\item[Parametry:] \hfill
-
-		\begin{itemize}
-
-			\item strumień energii zawartej w~paliwie $\dot Q_f$,
-
-			\item strumień masy [objętości] paliwa $\dot m_f$,
-
-			\item jednostkowa wartość kaloryczna paliwa $q_{LHV}$.
-
-		\end{itemize}
-
-	\item[Równania bilansowe:] \hfill
-
-		\begin{itemize}
-
-			\item $\dot Q_f = \dot m_f q_{LHV}$.
-
-		\end{itemize}
-
-\end{description}
-
-Model paliwa zaprojektowany został z~myślą o~uniwersalności.
-W~obliczeniach bilansowych wykorzystywana jest wyłącznie wartość
-strumienia energii; dwa pozostałe parametry służą jedynie zwiększeniu
-wygody użytkownika.
-
-Ze~względu na~ogólną postać wyrażonego równania, może zostać ono
-wykorzystane zarówno dla~paliwa w~postaci stałej (wówczas energia
-odniesiona jest do~masy paliwa), jak~i~płynu (energia odniesiona jest
-do~objętości). Co~więcej, w~przypadku innych źródeł ciepła parametry
-pomocnicze mogą zostać zaniedbane i~zadana może zostać wprost energia
-dostarczona do~kotła.
+\input{elem-skl/czynnik}
+\input{elem-skl/paliwo}
 
 
 \subsection{Modele maszyn roboczych}
 
-\newcommand\wykresTs[1]{
+\newcommand\wykresTs[2][]{
 	\subfloat[][Wykres T-s przemiany]{
 		\begin{tikzpicture}
 			\begin{axis}[
@@ -168,10 +98,11 @@ dostarczona do~kotła.
 				height=5cm,
 				clip=false,
 				every axis x label/.style={at={(xticklabel cs:.95,.2cm)}},
-				every axis y label/.style={at={(yticklabel cs:.9,.2cm)}}
+				every axis y label/.style={at={(yticklabel cs:.9,.2cm)}},
+				#1
 			]
 				\addplot+[no marks, smooth] table[x=s, y=T] {wykresy/_nasyc.txt};
-				#1
+				#2
 			\end{axis}
 		\end{tikzpicture}
 	}
@@ -180,3 +111,4 @@ dostarczona do~kotła.
 \input{elem-skl/kociol}
 \input{elem-skl/turbina}
 \input{elem-skl/skraplacz}
+\input{elem-skl/pompa}

@@ -32,10 +32,14 @@
 	\wykresTs{
 		\addplot+[no marks] table[x=s,y=T] {wykresy/skraplacz.txt}
 			node[heatnode, pos=0] (st) {}
+			node[pos=.5] (as) {}
+			node[pos=.5005] (ae) {}
 			node[heatnode, pos=1] (en) {};
 
 		\node[right] at (st) {$\mathbf{S}_i$};
 		\node[right] at (en) {$\mathbf{S}_o$};
+
+		\draw[red, thick, -latex] (as.center) -- (ae.center);
 	}
 
 	\caption{Model skraplacza}

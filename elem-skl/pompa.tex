@@ -1,0 +1,106 @@
+\subsubsection{Pompa}
+
+\begin{figure}[H]
+	\centering
+
+	\subfloat[][Symbol]{
+		\begin{tikzpicture}
+			\node[pump] (P) at (0,0) {P};
+
+			{ [blue]
+				\draw[stealth-] (P.w) -- ++(-1.5,0)
+					node[pos=.5, above] {$\dot m_i$}
+					node[pos=.5, below] {$h_i$};
+				\draw[-stealth] (P.e) -- ++(1.5,0)
+					node[pos=.5, above] {$\dot m_o$}
+					node[pos=.5, below] {$h_o$};
+			}
+
+			{ [blue, dashed, looseness=1, bend right=45, scale=.48, rotate=-45]
+%				\draw[-stealth] (P.sw) to ++(1,1) to ++(-1,1)
+%					to ++(-1,-1) to ++(1,-1);
+%					\node[below left] at (P.sw) {$h_o'$};
+			}
+
+			{ [red, dashed, double distance=.5mm]
+				\draw[stealth-, double] (P.s) -- ++(0,-1.5)
+					node[pos=.5, right] {$P_m$};
+			}
+		\end{tikzpicture}
+	}%
+	~ %
+	\wykresTs[
+		restrict x to domain=0.5:0.55,
+		xmin=0.505,
+		xmax=0.545,
+		clip=true
+	]{
+		\addplot+[no marks] table[x=s,y=T] {wykresy/pompa-i.txt}
+			node[pos=.75] (as-i) {}
+			node[pos=.7505] (ae-i) {}
+			node[heatnode, pos=1] (en-i) {};
+		\addplot+[no marks, smooth] table[x=s,y=T] {wykresy/pompa.txt}
+			node[heatnode, pos=0] (st) {}
+			node[pos=.6] (as) {}
+			node[pos=.6005] (ae) {}
+			node[heatnode, pos=1] (en) {};
+
+		\addplot+[no marks, dashed, black]
+			table[x=s,y=T] {wykresy/izobara-10.txt};
+
+		\node[below right] at (st) {$\mathbf{S}_i$};
+		\node[above left] at (en) {$\mathbf{S}_o$};
+		\node[above left] at (en-i) {$\mathbf{S}_o'$};
+
+		\draw[red, thick, -latex] (as-i.center) -- (ae-i.center);
+		\draw[brown, thick, -latex] (as.center) -- (ae.center);
+
+	}
+
+	\caption{Model pompy}
+	\label{elem:pompa}
+\end{figure}
+
+\begin{description}
+
+	\item[Parametry:] \hfill
+
+		\begin{itemize}
+
+			\item sprawność izentropowa pompy $\eta_i$,
+
+			\item sprawność mechaniczna pompy $\eta_m$.
+
+		\end{itemize}
+
+	\item[Przemiany termodynamiczne:] \hfill
+
+		\begin{itemize}
+
+			\item $\mathbf{S_i} \rightarrow \mathbf{S_o}$,
+				adiabatyczne sprężanie czynnika.
+
+		\end{itemize}
+
+	\item[Równania bilansowe:] \hfill
+
+		\begin{itemize}
+
+			\item \eq$\dot m_i = \dot m_o$,
+
+			\item \eq$p_o' = p_o$,%
+				\label{pompa.petla.p}
+
+			\item \eq$s_o' = s_i$,%
+				\label{pompa.petla.s}
+
+			\item \eq$h_o' = h_i + \eta_i ( h_o - h_i )$,%
+				\label{pompa.wyj.h}
+
+			\item \eq$\dot m_i h_i + \frac{P_m}{\eta_m} = \dot m_o h_o$.
+
+		\end{itemize}
+
+\end{description}
+
+

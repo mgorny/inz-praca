@@ -18,76 +18,79 @@ class Tab(object):
 		self._f.close()
 		return False
 
-class SatCurve(object):
-	def __iter__(self):
-		Tmin = 273.15
-		Tkr = 647.096
+def Isobar(p, s1, s2):
+	s = s1
+	step = (s2 - s1) / 100
+	while s <= s2:
+		yield h2o.H2O(p=p, s=s)
+		s += step
 
-		T = Tmin
-		while T < Tkr:
-			yield h2o.H2O(x=0, T=T)
+def SatCurve():
+	Tmin = 273.15
+	Tkr = 647.096
 
-			if T >= 645.15:
-				T += .2
-			else:
-				T += 1
+	T = Tmin
+	while T < Tkr:
+		yield h2o.H2O(x=0, T=T)
 
-		# punkt krytyczny
-		yield h2o.H2O(x=0, T=Tkr)
-
-		while T > Tmin:
-			if T > 645.15:
-				T -= .2
-			else:
-				T -= 1
-
-			yield h2o.H2O(x=1, T=T)
-
-class Boiler(object):
-	def __init__(self, st, T2):
-		self.st = st
-		self.T2 = T2
-
-	def __iter__(self):
-		p = self.st.p
-		T = self.st.T
-		T2 = self.T2
-
-		while T <= T2:
-			yield h2o.H2O(p, T)
+		if T >= 645.15:
+			T += .2
+		else:
 			T += 1
 
-class Turbine(object):
-	def __init__(self, st, p2, etai = 1):
-		self.st = st
-		self.p2 = p2
-		self.etai = etai
+	# punkt krytyczny
+	yield h2o.H2O(x=0, T=Tkr)
 
-	def __iter__(self):
-		st = self.st
+	while T > Tmin:
+		if T > 645.15:
+			T -= .2
+		else:
+			T -= 1
 
-		p = st.p
-		p2 = self.p2
-		eff = self.etai
-		while p >= p2:
-			yield st.expand(p, eff)
+		yield h2o.H2O(x=1, T=T)
 
-			if p > 1:
-				p -= 1
-			elif p > .11:
-				p -= .1
-			elif p >= .011:
-				p -= .01
-			else:
-				p -= .001
+def Boiler(st, T2):
+	p = st.p
+	T = st.T
 
-class Condenser(object):
-	def __init__(self, st):
-		self.st = st
+	while T <= T2:
+		yield h2o.H2O(p, T)
+		T += 1
 
-	def __iter__(self):
-		yield self.st
-		yield h2o.H2O(p=self.st.p, x=0)
+def Turbine(st, p2, eff = 1):
+	p = st.p
+
+	while p >= p2:
+		yield st.expand(p, eff)
+
+		if p > 1:
+			p -= 1
+		elif p > .11:
+			p -= .1
+		elif p >= .011:
+			p -= .01
+		else:
+			p -= .001
+
+def Pump(st, p2, etai = 1):
+	eff = 1/etai
+
+	p = st.p
+	while p < p2:
+		yield st.expand(p, eff)
+
+		if p < 1:
+			p += 1
+		elif p <= .09:
+			p += .6
+		elif p < .009:
+			p += .06
+		else:
+			p += .006
+
+def Condenser(st):
+	yield st
+	yield h2o.H2O(p=st.p, x=0)
 
 def wr(f, c):
 	with Tab(f) as t:
@@ -101,10 +104,14 @@ with open('.stamp', 'w'):
 	pass
 
 wr('_nasyc.txt', SatCurve())
-s0 = h2o.H2O(10, 333.15)
-s1 = wr('kociol.txt', Boiler(s0, 773.15))
+s1 = h2o.H2O(10, 773.15)
 wr('turbina-i.txt', Turbine(s1, .006))
 s2 = wr('turbina.txt', Turbine(s1, .006, .8))
-wr('skraplacz.txt', Condenser(s2))
+s3 = wr('skraplacz.txt', Condenser(s2))
+wr('pompa-i.txt', Pump(s3, s1.p))
+s0 = wr('pompa.txt', Pump(s3, s1.p, .8))
+wr('kociol.txt', Boiler(s0, s1.T))
+
+wr('izobara-10.txt', Isobar(s1.p, .5, .55))
 
 assert(s2.T <= s0.T)
