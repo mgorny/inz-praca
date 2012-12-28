@@ -216,6 +216,11 @@
 	\savedanchor{\center}{\pgfpointorigin}
 
 	\anchor{center}{\center}
+	\anchor{text}{
+		\pgf@x=-.5\wd\pgfnodeparttextbox
+		\pgf@y=.05cm
+		\advance \pgf@y by \ht\pgfnodeparttextbox
+	}
 
 	\backgroundpath{
 		\pgfpathcircle{\center}{.5mm}

@@ -30,22 +30,22 @@
 	}%
 	~ %
 	\wykresTs{
-		\addplot+[no marks] table[x=s,y=T] {wykresy/turbina-i.txt}
-			node[pos=.55] (as-i) {}
-			node[pos=.5505] (ae-i) {}
-			node[heatnode, pos=1] (en-i) {};
 		\addplot+[no marks, smooth] table[x=s,y=T] {wykresy/turbina.txt}
 			node[heatnode, pos=0] (st) {}
 			node[pos=.55] (as) {}
 			node[pos=.5505] (ae) {}
 			node[heatnode, pos=1] (en) {};
+		\addplot+[no marks] table[x=s,y=T] {wykresy/turbina-i.txt}
+			node[pos=.55] (as-i) {}
+			node[pos=.5505] (ae-i) {}
+			node[heatnode, pos=1] (en-i) {};
 
 		\node[right] at (st) {$\mathbf{S}_i$};
 		\node[right] at (en) {$\mathbf{S}_o$};
 		\node[left] at (en-i) {$\mathbf{S}_o'$};
 
-		\draw[red, thick, -latex] (as-i.center) -- (ae-i.center);
-		\draw[brown, thick, -latex] (as.center) -- (ae.center);
+		\draw[brown, thick, -latex] (as-i.center) -- (ae-i.center);
+		\draw[red, thick, -latex] (as.center) -- (ae.center);
 	}
 
 	\caption{Model turbiny}

@@ -35,47 +35,43 @@ podzielić na:
 
 \begin{enumerate}
 
-	\item równania bilansowe,
-
 	\item równania opisujące przemiany termodynamiczne,
+
+	\item równania bilansowe,
 
 	\item równania pomocnicze.
 
 \end{enumerate}
 
-Równania bilansowe opisują zależności pomiędzy stanami termodynamicznymi
-układu w~oparciu o~podstawowe prawa fizyki. Do~najważniejszych
-z~wykorzystywanych praw należą:
+Równania opisujące przemiany termodynamiczne wskazują na~niezmienność
+parametrów termodynamicznych czynnika podczas określonej przemiany,
+względnie wyrażają zależność według której następują zmiany.
+Przykładowo, przemiana izobaryczna opisana jest~równaniem:
 
-\begin{enumerate}
+\begin{equation}
+	p_i = p_o
+\end{equation}
 
-	\item Zasada zachowania masy,
+Zależności tego typu wykorzystywane są przede~wszystkim na~wczesnym
+etapie obliczeń. Pozwalają na~uzupełnienie brakujących parametrów
+w~poszczególnych gałęziach obiegu, tym~samym umożliwiając wyznaczenie
+potrzebnych do~obliczeń bilansowych wartości entalpii czynnika.
 
-	\item Zasada zachowania energii,
+Równania bilansowe przede~wszystkim wyrażają fundamentalne prawa fizyki,
+takie jak zasada zachowania masy (bilans masowy) i~zasada zachowania
+energii (bilans energetyczny). Pozwalają wyznaczyć właściwy dla~stanu
+ustalonego przepływ masy i~energii w~obiegu.
 
-	\item Pierwsza zasada termodynamiki.
+Przykładowo, bilans energetyczny wyrażony może~być ogólną zależnością:
 
-\end{enumerate}
+\begin{equation}
+	\sum_{k=1}^{N_{Qi}}{\dot Q_{ik}} + \sum_{k=1}^{N_{Pi}}{P_{ik}}
+	= \sum_{k=1}^{N_{Qo}}{\dot Q_{ok}} + \sum_{k=1}^{N_{Po}}{P_{ok}}
+\end{equation}
 
-Równania opisujące przemiany termodynamiczne określają zależności
-pomiędzy parametrami czynnika na~początku i~na~końcu przemiany.
-Określają, w~zależności od~rodzaju przemiany, które z~właściwości
-są~niezmienne, a~które podlegają zmianom.
-
-Równania pomocnicze wprowadzają i~definiują dodatkowe parametry, których
-istnienie nie~jest konieczne z~punktu widzenia obliczeń obiegu. Grupa ta
-służy przede~wszystkim zwiększeniu wygody użytkowania programu.
-
-Zależności definiowane przez~elementy obiegu pełnią dwojaką funkcję:
-
-\begin{enumerate}
-
-	\item narzucają spełnienie praw fizyki przy~obliczaniu bilansu,
-
-	\item umożliwiają automatyczne wyznaczenie brakujących parametrów
-		bez~konieczności ich wielokrotnego wprowadzania.
-
-\end{enumerate}
+Równania pomocnicze obejmują zależności, wprowadzające wielkości
+pomocnicze. Ich istnienie nie~jest niezbędne dla~bilansowania układu,
+mają na~celu ułatwienie wprowadzania danych i~odczytywania wyników.
 
 
 \subsection{Modele stanu czynnika}
