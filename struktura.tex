@@ -1,29 +1,6 @@
 \section{Modelowanie struktury obiegu}
 
-\subsection{Problem}
-
-W~tematyce obiegów cieplnych, najbardziej podstawowym zagadnieniem
-obliczeniowym jest bilansowanie. Może ono zostać wykorzystane
-do~weryfikacji wcześniej uzyskanych danych bądź~do~wyliczenia
-niezbędnych parametrów na~podstawie przyjętych założeń.
-
-Wykonywanie obliczeń bilansowych można najogólniej podzielić na~dwa
-etapy:
-
-\begin{enumerate}
-
-\item utworzenie układu równań, opisującego rozpatrywany obieg cieplny;
-
-\item rozwiązanie otrzymanego układu równań.
-
-\end{enumerate}
-
-Drugie z~wymienionych zagadnień w~znacznej mierze zależne jest
-od~struktury układu równań. Omówienie go wymaga wcześniejszej znajomości
-nie~tylko metodyki jego~tworzenia, ale~również postaci równań w~nim
-występujących. Dlatego~też omówione zostanie
-w~rozdziale~\ref{rozw-ukl-rown}. W~tym rozdziale natomiast rozpatrzony
-zostanie~sposób tworzenia układu równań.
+\subsection{Wykorzystanie osłon bilansowych}
 
 Rozpatrując bilans układu, w~pierwszej kolejności wyznacza~się
 tzw.~osłony bilansowe. Są to umyślne bariery, zakładające, że~wymiana
@@ -67,6 +44,11 @@ rozbudowy algorytmu obliczeniowego. Dlatego~też zdecydowano, by~każdy
 z~elementów rozpatrywanego układu otoczony~był oddzielną osłoną
 bilansową.
 
+
+\subsection{Metody wyznaczania układu równań}
+
+\subsubsection{Podział metod wyznacznia układu równań}
+
 Kolejnym krokiem po~ustanowieniu osłon bilansowych jest~zestawienie
 równań bilansujących dla~każdego zespołu maszyn, wyznaczonego osłoną.
 Równania te~odnoszą~się do~parametrów wewnętrznych zespołu
@@ -81,7 +63,7 @@ dynamicznych układ równań tworzony jest podczas pracy programu,
 na~podstawie danych wejściowych.
 
 
-\subsection{Metody statyczne}
+\subsubsection{Metody statyczne}
 
 Podstawowym założeniem dla~metod statycznych jest niezmienność schematu
 rozpatrywanego obiegu cieplnego. Wówczas możliwe staje~się przyjęcie,
@@ -121,7 +103,7 @@ schematu uniwersalnego zwiększa koszty wykonania programu oraz~czyni
 jego obsługę trudniejszą.
 
 
-\subsection{Metody dynamiczne}
+\subsubsection{Metody dynamiczne}
 
 W~metodach dynamicznych układ równań tworzony jest w~trakcie pracy
 programu. Tym~samym, usuwane są teoretyczne ograniczenia co do~wielkości
@@ -147,7 +129,7 @@ przede~wszystkim dotychczas posiadaną wiedzą oraz~dostępnością narzędzi,
 wykorzystujących teorię grafów.
 
 
-\subsection{Zastosowanie teorii grafów do~modelowania obiegu}
+\subsubsection{Zastosowanie teorii grafów}
 
 Podstawowym pojęciem teorii grafów jest~graf. Każdy graf składa~się
 ze~zbioru wierzchołków i~zbioru krawędzi. Adaptacja grafu do~modelowania
@@ -220,4 +202,216 @@ wyróżniono dodatkowe przepływy energii, które musiałyby zostać
 uwzględnione w~bilansie układu. W~wariancie alternatywnym, przepływy te
 zostają zamknięte we~właściwym węźle, co~upraszcza zewnętrzną strukturę
 układu i~tym~samym kod programu. Jest to~główna przyczyna, dla~której
-autor zdecydował~się na~realizację projektu przy~pomocy tej metody.
+zdecydowano~się na~realizację projektu przy~pomocy tej metody.
+
+
+\subsection{Programowa realizacja elementów obiegu}
+
+\subsubsection{Wybór metodyki}
+
+Istotnym krokiem w~realizacji programu jest wybór sposobu wykonania
+modeli elementów obiegu. Jest to zagadnienie ściśle związane
+z~programowaniem, a~dostępne rozwiązania uzależnione są w~dużym stopniu
+od~wyboru języka programowania.
+
+Jednym z~najstarszych i~najbardziej uniwersalnych rozwiązań jest
+wykonanie modelu tzw.~,,maszyny uniwersalnej''. Wówczas obieg modelowany
+jest za~pomocą szeregu identycznych elementów, które~poprzez wybór
+właściwych opcji modelują określone maszyny.
+
+Choć jest to~rozwiązanie względnie proste, jego główną wadą jest
+ograniczona uniwersalność. Wprowadzenie każdej kolejnej maszyny wymaga
+ingerencji w~model podstawowy, i~czyni go bardziej skomplikowanym.
+
+Rozwiązaniem alternatywnym, charakterystycznym dla~obiektowych języków
+programowania, jest wykorzystanie abstrakcyjnych klas bazowych.
+W~programie wykonany zostaje wówczas podstawowy, abstrakcyjny obrys
+klasy takiej jak~,,maszyna''. Określony zostaje szereg metod, które
+powinny~być udostępnione przez~każdą maszynę.
+
+Poszczególne maszyny wówczas wykonywane są w~postaci klas podrzędnych,
+które implementują wymagane przez~ogólny model metody. W~ten sposób
+stają~się zgodne z~owym modelem i~mogą~być zamiennie z~nim
+wykorzystywane. Umożliwia to~stworzenie algorytmu, który w~oparciu
+o~ogólny zarys maszyny będzie mógł dokonywać obliczeń dla~każdej
+z~maszyn na~jego podstawie stworzonych.
+
+Istotną zaletą takiego rozwiązania jest~uniezależnienie zasadniczego
+kodu programu od~implementacji maszyn. Możliwe staje~się wprowadzenie
+modeli nowych maszyn bez~konieczności ingerencji w~kod zasadniczej
+części programu bądź~innych maszyn. Za~sprawą dziediczenia jest możliwe
+również rozszerzanie modeli istniejących maszyn.
+
+Zalety te~sprawiły, iż~zdecydowano~się wykonać program w~technice
+obiektowej.
+
+
+\subsubsection{Modelowanie podstawowych elementów obiegu}
+
+Dla~zamodelowania obiegu termodynamicznego konieczne w~wybranej technice
+konieczne jest wykonanie przynajmniej dwóch klas podstawowych ---
+reprezentujących odpowiednio wierzchołki i~krawędzie grafu,
+bądź~urządzenia i~połączenia pomiędzy nimi.
+
+Klasa podstawowa \textit{Urządzenie} (\textit{Device}) może
+reprezentować dowolną maszynę pracującą w~obiegu. W~tym celu umożliwia
+dostarczenie zbioru zmiennych charakterystycznych dla~maszyny oraz
+układu równań, wiążącego je ze~zmiennymi stanu czynnika i~energii
+wpływającej i~wypływającej z~maszyny.
+
+Klasa podstawowa \textit{Połączenie} (\textit{Connection}) stanowi
+skierowane powiązanie pomiędzy dwoma maszynami. Operuje na~zmiennych
+stanu czynnika bądź~energii przepływającej przez~nie; może dostarczać
+również równania wiążące te~zmienne.
+
+Model oparty na~dwóch wyżej wymienionych klasach nie~jest wystarczający
+dla~precyzyjnego przedstawienia maszyn posiadających większą liczbę
+różnych funkcyjnie wyprowadzeń. Przykład stanowią wymienniki przeponowe,
+gdzie konieczne jest~przypisanie połączeń do~obiegu pierwotnego
+bądź~wtórnego.
+
+Dlatego też wprowadzono trzecią, pośrednią klasę podstawową,
+\textit{Wyprowadzenie} (\textit{Pin}). Każda maszyna posiada szereg
+ściśle zdefiniowanych wyprowadzeń, między którymi wykonywane są
+połączenia.
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+
+		{
+			\node[heatnode] at (0,0) (K-in) {};
+			\node[right] at (K-in.center) {in};
+			\node[heatnode] at (3,0) (K-out) {};
+			\node[left] at (K-out.center) {out};
+			\node[heatnode] at (0,-1) (K-fin) {};
+			\node[right] at (K-fin.center) {fuel-in};
+
+			\draw (-.25,-2.5) rectangle (3.25,1.5);
+			\node[below] at (1.5,1.5) {\textit{Boiler}};
+			\node[above] at (1.5,-2.5) {$\eta_B$};
+		}
+
+		\begin{scope}[shift={(5,0)}]
+			\node[heatnode] at (0,0) (T-in) {};
+			\node[right] at (T-in.center) {in};
+			\node[heatnode] at (3,0) (T-out) {};
+			\node[left] at (T-out.center) {out};
+			\node[heatnode] at (3,-1) (T-eout) {};
+			\node[left] at (T-eout.center) {energy-out};
+
+			\draw (-.25,-2.5) rectangle (3.25,1.5);
+			\node[below] at (1.5,1.5) {\textit{Turbine}};
+			\node[above] at (1.5,-2.5) {$\eta_i$, $\eta_m$};
+		\end{scope}
+
+		\begin{scope}[shift={(10,0)}]
+			\node[heatnode] at (0,0) (S-in) {};
+			\node[right] at (S-in.center) {in};
+			\node[heatnode] at (3,0) (S-out) {};
+			\node[left] at (S-out.center) {out};
+			\node[heatnode] at (0,-1) (S-sin) {};
+			\node[right] at (S-sin.center) {sec-in};
+			\node[heatnode] at (3,-1) (S-sout) {};
+			\node[left] at (S-sout.center) {sec-out};
+
+			\draw (-.25,-2.5) rectangle (3.25,1.5);
+			\node[below] at (1.5,1.5) {\textit{Condenser}};
+			\node[above] at (1.5,-2.5) {$\Delta T$};
+		\end{scope}
+
+		\begin{scope}[-stealth]
+			\begin{scope}[blue]
+				\draw (K-out) -- (T-in)
+					node[above right,pos=.1] {$\mathbf{S}_1$}
+					node[above left,pos=.9] {$\mathbf{S}_1^*$};
+				\draw (T-out) -- (S-in)
+					node[above right,pos=.1] {$\mathbf{S}_2$}
+					node[above left,pos=.9] {$\mathbf{S}_2^*$};
+				\draw (S-out) -- ++(1,0)
+					node[above right,pos=.2] {$\mathbf{S}_3$};
+			\end{scope}
+
+			\draw[red] (T-eout) -| ++(.75,-1)
+				node[above right,pos=.125] {$P_m$};
+
+			\draw[brown] (S-sout) -| ++(.75,-1)
+				node[above right,pos=.125] {$\mathbf{S}_{II}$};
+		\end{scope}
+
+		\begin{scope}[stealth-]
+			\draw[blue] (K-in) -- ++(-1,0)
+				node[above left,pos=.2] {$\mathbf{S}_0^*$};
+
+			\draw[green!50!black] (K-fin) -| ++(-.75,-1)
+				node[above left,pos=.125] {$\dot Q_f^*$};
+
+			\draw[brown] (S-sin) -| ++(-.75,-1)
+				node[above left,pos=.125] {$\mathbf{S}_I^*$};
+			\end{scope}
+
+	\end{tikzpicture}
+
+	\caption{Przykładowy fragment obiegu cieplnego przedstawiony
+		za~pomocą klas}
+	\label{klasy-przykl}
+\end{figure}
+
+Na~rys.~\ref{klasy-przykl} przedstawiony został przykładowy fragment
+obiegu cieplnego wykonany w~oparciu o~model trzech klas. Zaprezentowane
+zostały trzy wybrane urządzenia, każde posiadające szereg wyprowadzeń
+oraz~parametrów.
+
+Należy zwrócić uwagę, iż~zmienne stanu czynnika (w~tym strumień masy) są
+cechą wyprowadzenia. Tym~samym, na~obu końcach połączenia występują inne
+zmienne stanu. Są one równe co do~wartości, lecz wielkości strumieni
+mają przeciwny znak.
+
+W~praktyce pozwala to na~założenie, że~ujemne wartości strumieni
+oznaczają energię wpływającą do~maszyny (zużywaną), zaś~dodatnie ---
+wypływającą (wytwarzaną).
+
+W~modelu trójklasowym, równania opisujące bilans maszyny mogą
+odnosić~się do~jej parametrów oraz~zmiennych stanu wyprowadzeń
+tej~maszyny. Równania opisujące połączenia mogą natomiast odwoływać~się
+do~zmiennych stanu należących do~wyprowadzeń stanowiących jego końce.
+W~obu przypadkach zespół tych wyprowadzeń nazywa~się
+\textit{otoczeniem}.
+
+
+\subsubsection{Możliwość zastosowania alternatywnego czynnika}
+
+Przedstawiony powyżej model może zostać w~prosty sposób rozszerzony
+o~możliwość zastosowania alternatywnego czynnika (innego niż~para wodna)
+w~obiegu. Możliwe staje~się wówczas modelowanie chociażby organicznego
+obiegu Rankine'a.
+
+Aby~możliwe było stosowanie dowolnego czynnika, elementy układu muszą
+spełnić następujące założenia:
+
+\begin{enumerate}
+
+	\item maszyny nie~mogą odnosić~się wprost do~właściwości czynnika,
+		mogą natomiast wykorzystywać jego uogólnione parametry,
+
+	\item połączenia muszą dostarczać układ równań uzależniony
+		od~zastosowanego czynnika,
+
+	\item dodatkowo, urządzenia powinny określać wewnętrzny przepływ
+		czynnika pomiędzy wyprowadzeniami.
+
+\end{enumerate}
+
+Pierwsze z~wymienionych wymagań spełnione jest poprzez wprowadzenie
+szeregu zmiennych stanu czynnika (sekcja~\ref{czynnik-woda}), włączając
+w~to entropię właściwą ($s$) oraz~suchość ($x$). Właściwe operowanie
+tymi wielkościami pozwala na~wymuszanie określonych przemian
+termodynamicznych bez~konieczności włączania równań czynnika do~modelu
+maszyny.
+
+Każde z~połączeń uzupełnione zostało o~dodatkową właściwość,
+umożliwiającą wybór czynnika (podklasy klasy bazowej
+\textit{Substance}). Do~modelu urządzeń dodano również metodę
+określającą, czy~dwa wybrane wyprowadzenia są ze~sobą wewnętrznie
+połączone. W~ten sposób możliwe staje~się wyznaczenie drogi wśród
+połączeń i~wymuszenie występowania na~niej jednolitego czynnika.

@@ -1,0 +1,31 @@
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+		{ [thick]
+			\node[boiler] (K) at (0,3.5) {K};
+			\node[turbine] (T1) at (2,4) {T$_1$};
+			\node[turbine] (T2) at (5,4) {T$_2$};
+			\node[condenser, font=\scriptsize] (S) at (5.75,2) {Sk};
+			\node[pumpl, font=\scriptsize] (PS) at (4.5,.5) {PS};
+			\node[heatxchg, font=\scriptsize] (R1) at (2.75,.5) {R1};
+			\node[heatnode] (T1s) at (2.75,2.75) {};
+			\node[heatnode] (Sm) at (5.75,1.25) {};
+		}
+
+		{ [-stealth]
+			\draw (K.n) |- (1,5) -| (T1.nw);
+			\draw (T1s.center) -| (3.75,5) -| (T2.nw);
+			\draw (T2.se) -- (S.n);
+			\draw (S.s) |- (PS.e);
+			\draw (PS.w) -- (R1.e);
+			\draw (R1.w) -| (K.s);
+
+			\draw (T1.se) -| (R1.n);
+			\draw (R1.s) |- (6,-.5) |- (Sm.e);
+		}
+	\end{tikzpicture}
+
+	\caption{Przykładowy obieg dla~zilustrowania problemów rozwiązywania
+	układu równań}
+	\label{ukl-rown-przykl}
+\end{figure}

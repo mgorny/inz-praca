@@ -1,0 +1,222 @@
+\section{Modelowanie układu równań bilansowych}
+
+\subsection{Kształt układu równań bilansowych}
+
+Po~zakończeniu pierwszego etapu działań bilansowych otrzymuje~się układ
+równań wraz z~szeregiem zadanych parametrów (wartości zmiennych). Układ
+ten musi zostać zamodelowany cyfrowo i~rozwiązany dla~otrzymania
+poszukiwanych parametrów.
+
+Dla~właściwego doboru sposobu modelowania układu równań oraz~metod jego
+rozwiązywania, należy w~pierwszej kolejności przedstawić ogólną
+charakterystykę układu równań otrzymywanego wskutek bilansowania
+zamodelowanej struktury obiegu.
+
+\input{ukl-rown-przykl}
+
+Zamodelowanie przykładowego obiegu termodynamicznego przedstawionego
+na~rys.~\ref{ukl-rown-przykl} wymaga rozwiązania układu ponad 150~równań
+liniowych oraz~wyznaczenia stanu czynnika w~15~połączeniach
+(rurociągach). Wszystko to wiąże łącznie ponad~200~zmiennych i~stałych.
+
+Tak znaczne liczby związana są przede~wszystkim z~nadmiarowością
+zmiennych. Zastosowanie prostego algorytmu upraszczającego równoważne
+zmienne pozwoliłoby nie~tylko znacznie zmniejszyć liczbę zmiennych,
+ale~również wyeliminować wiele równań, w~tym większość bilansów masy.
+
+Jednakże, z~praktycznego punktu widzenia, rozwiązanie układu równań
+tej~wielkości nie~stanowi problemu dla~współczesnych komputerów.
+Tym~samym, eliminacja zmiennych stanowiłaby jedynie niepotrzebną
+komplikację kodu programu.
+
+Znacznie większy problem stanowi fakt, że~rozpatrywany układ częstokroć
+jest~układem nieoznaczonym. Konieczne staje~się wyróżnienie
+i~rozwiązanie oznaczonego podzbioru równań przy~jednoczesnym zachowaniu
+pozostałych równań dla~ewentualnego późniejszego rozwiązania,
+bądź~prawidłowe stwierdzenie sprzeczności.
+
+Istotne staje~się również zagadnienie dokładności obliczeniowej.
+Rozwiązanie układu równań częstokroć skutkuje otrzymaniem wielu
+zbliżonych wartości dla~pojedynczej zmiennej. W~tej sytuacji konieczne
+jest trafne stwierdzenie, czy~otrzymany wynik jest~poprawny, czy~też
+układ równań jest~sprzeczny.
+
+
+\subsection{Wybór sposobu modelowania układów równań}
+
+Rozważone zostały dwie metody modelowania układów równań:
+
+\begin{enumerate}
+
+	\item modelowanie układu równań liniowych za~pomocą macierzy,
+
+	\item modelowanie układu równań za~pomocą klas.
+
+\end{enumerate}
+
+Model macierzowy to~standardowy sposób zapisu układu równań w~programach
+komputerowych. Charakteryzuje~się względną prostotą i~możliwością
+bezpośredniego rozwiązywania przy~pomocy dostępnych bibliotek. Jednakże
+model taki uwzględniać może jedynie równania liniowe.
+
+Dlatego też programy korzystające z~modelu macierzowego zmuszone są
+przeprowadzać dodatkowe obliczenia i~wyznaczać niezbędne parametry
+czynnika termodynamicznego niezależnie od~procedur rozwiązywania układu
+równań, najczęściej w~fazie wyznaczania go.
+
+Model oparty na~klasach wykorzystuje możliwości programowania
+obiektowego dla~opisu poszczególnych równań za~pomocą dedykowanych klas.
+Model ten jest bardziej złożony od~macierzowego, jednakże umożliwia
+modelowania dowolnych równań i~wykonywanie na~nich obliczeń.
+
+W~programie zdecydowano~się wykorzystać model oparty na~klasach. W~ten
+sposób wszystkie parametry obiegu przedstawione zostały przy~pomocy
+zmiennych.
+
+
+\subsection{Rodzaje równań}
+
+\subsubsection{Równanie stanu czynnika}
+
+Równania stanu czynnika stanowią szczególną grupę równań, określających
+zależności pomiędzy właściwościami termodynamicznymi czynnika roboczego.
+W~odniesieniu do~pary wodnej, równania te mają postać złożonych
+wielomianów.
+
+Ze~względów praktycznych, równania stanu czynnika nie~są rozpatrywane
+przez~program w~pełnej postaci. Są one traktowane jako~abstrakcyjny
+rodzaj równania, którego rozwiązanie zostaje zlecone zewnętrznej
+bibliotece.
+
+Równania stanu czynnika opisywane są w~programie za~pomocą funkcji:
+
+\begin{itemize}
+	\item $\mathbf{S}(p, T)$,
+	\item $\mathbf{S}(p, h)$,
+	\item $\mathbf{S}(p, s)$,
+	\item $\mathbf{S}(h, s)$,
+	\item $\mathbf{S}(p, x)$,
+	\item $\mathbf{S}(T, x)$.
+\end{itemize}
+
+
+\subsubsection{Równanie liniowo-iloczynowe}
+
+Równania liniowo-iloczynowe wykorzystywane są do~modelowania większości
+spośród zależności występujących w~programie. Najogólniej mają one
+postać:
+
+\begin{equation}
+	\sum_{k=1}^N C_k x_k y_k = 0
+\end{equation}
+
+$C_k$ stanowi dowolną stałą, natomiast $x_k$ i~$y_k$ zmienne (względnie
+stałe).
+
+Równanie tego typu może~być wykorzystane do~modelowania prostych równań
+liniowych (bilansy masy), równań bilansów energii oraz~zależności
+iloczynowych dwóch zmiennych.
+
+W~praktyce najczęściej wartość przynajmniej jednej ze~zmiennych
+(na~przykład entalpii właściwej) w~każdym członie jest znana. Wówczas
+równanie tego typu sprowadzić można do~równania liniowego:
+
+\begin{equation}
+	\sum_{k=1}^N C_k C_k' x_k = 0
+\end{equation}
+
+
+\subsection{Metody rozwiązywania układów równań}
+
+\subsubsection{Podział metod rozwiązywania układów równań}
+
+Najogólniej metody rozwiązywania układów równań podzielić można na~dwie
+grupy:
+
+\begin{enumerate}
+
+	\item metody nieiteracyjne (proste),
+
+	\item metody iteracyjne.
+
+\end{enumerate}
+
+Metody proste charakteryzują~się tym, że~przy~określonym zestawie danych
+wejściowych, każdorazowe wykonanie algorytmu skutkuje uzyskaniem jednego
+i~tego samego zestawu wyników o~określonej dokładności.
+
+Metody nieiteracyjne zwykle pozwalają uzyskać wyniki o~dużej dokładności
+i~powtarzalności. Ich zastosowanie jest jednak ograniczone do~układów
+równań spełniających określone warunki. W~przypadku większych układów
+równań ich wydajność może być~niezadowalająca.
+
+Metody iteracyjne operują na~przybliżeniach. Początkowy zestaw danych
+uzupełniony musi zostać o~dowolne przybliżenie wartości brakujących
+zmiennych. Każda kolejna iteracja (wykonanie algorytmu) wykorzystuje
+wyniki poprzedniej i~pozwala na~uzyskanie kolejnego przybliżenia
+wyników.
+
+Jeśli proces iteracyjny jest~zbieżny, kolejne iteracje prowadzą
+do~uzyskiwania coraz dokładniejszych wyników. Proces taki zwykle
+powtarza~się do~momentu, w~którym różnica pomiędzy kolejnymi
+przybliżeniami jest~mniejsza niż~zadana wartość graniczna --- wówczas
+zakłada~się, że~otrzymano wynik o~określonej dokładności.
+
+Jeśli proces iteracyjny jest~rozbieżny, uzyskanie wyniku metodą
+iteracyjną jest~niemożliwe i~może skutkować zapętleniem programu.
+Dlatego~też program winien być~zdolny wykryć rozbieżność procesu
+iteracyjnego bądź~posiadać ograniczenie dopuszczalnej liczby iteracji,
+po~której przekroczeniu proces iteracyjny zostanie~przerwany.
+
+
+\subsubsection{Metoda prosta jednorównaniowa}
+
+Przykładem metody nieiteracyjnej jest~metoda prosta jednorównaniowa.
+Metoda ta analizuje każde z~równań w~układzie indywidualnie. W~związku
+z~tym, wykorzystana może~być jedynie w~sytuacji, kiedy jednoznacznie
+określone są wartości minimalnej liczby zmiennych niezbędnych
+dla~rozwiązania równania.
+
+W~zależności od~rodzaju równania, są to:
+
+\begin{itemize}
+
+	\item dla~równań stanu czynnika --- wartości przynajmniej jednej
+		z~par zmiennych $(p, T)$, $(p, h)$, $(p, s)$, $(p, x)$,
+		$(T, x)$, $(h, s)$;
+
+	\item dla~równań liniowo-iloczynowych --- wartości wszystkich
+		z~wyjątkiem jednej (dowolnej) zmiennej.
+
+\end{itemize}
+
+Wartość zmiennej wynikowej wyznaczana jest~wprost na~podstawie znanych
+wartości zmiennych bądź~przy~pomocy elementarnych przekształceń
+arytmetycznych. Jeśli znana są wartości większej niż~minimalna liczby
+zmiennych, sprawdzana jest słuszność równania (zgodność wyników).
+
+Podstawową zaletą tej~metody jest możliwość jej zastosowania w~stosunku
+do~równań stanu czynnika. Nie~znajdzie ona natomiast zastosowania
+w~przypadku, gdy~określenie wartości zmiennej rozwiązania wzajemnie
+zależnych równań.
+
+
+\subsubsection{Metoda rozkładu LU}
+
+Metoda rozkładu~LU znajduje zastosowanie jedynie dla~równań liniowych.
+Dla~jej zastosowania wyznaczany jest~podzbiór równań, które sprowadzone
+mogą zostać do~równań liniowych.
+
+Wyznaczony zostaje wektor rozwiązań wybranego podzbioru równań.
+Analizowana jest~również cała przestrzeń rozwiązań w~celu wyróżnienia
+układu oznaczonego i~odrzucenia rozwiązań dla~zmiennych należących
+do~równań spoza tego podzbioru.
+
+Wykonywane jest również kontrolne mnożenie macierzy współczynników
+przez~wektor wyników dla~sprawdzenia poprawności rozwiązań. W~przypadku
+zbyt dużej rozbieżności wyniku w~stosunku do~wektora wyrazów wolnych,
+syngalizowana jest sprzeczność układu równań.
+
+Zaletą metody rozkładu~LU jest możliwość rozwiązywania szerokiego zbioru
+układów liniowych. Podstawową wadą --- brak możliwości wykorzystania
+w~stosunku do~równań innego typu.

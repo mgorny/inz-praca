@@ -1,0 +1,179 @@
+\section{Informacje wstępne}
+
+\subsection{Wymagania ogólne}
+
+Podstawowym zadaniem postawionym w~tej~pracy jest~wykonanie programu
+modelującego obieg cieplny elektrowni parowej w~celu wykonanie obliczeń
+bilansowych. Dla~wykonania programu o~potencjalnie dużym obszarze
+zastosowania, postawiono szereg wymagań dodatkowych.
+
+Wykonany program winien charakteryzować~się:
+
+\begin{enumerate}
+
+	\item możliwością modelowania dowolnych obiegów parowych
+	bez~konieczności modyfikowania kodu rdzenia programu,
+
+	\item możliwością wykonywania obliczeń przy~dowolnie wybranym
+	zbiorze parametrów zadanych oraz~zmiennych szukanych,
+
+	\item możliwością wykonywania obliczeń przy~niepełnym
+	bądź~nadmiarowym zestawie danych,
+
+	\item możliwością wprowadzania modeli nowych maszyn w~sposób
+	nie~wymagający zmian w~rdzeniu programu bądź~modelu maszyn
+	istniejących,
+
+	\item możliwością modelowanie czynnika termodynamicznego innego
+	niż~para wodna bez~konieczności wprowadzania zmian w~rdzeniu
+	programu i~modelach maszyn cieplnych.
+
+\end{enumerate}
+
+Spełnienie tych~wymagań umożliwi wykonanie programu o~elastycznej
+strukturze, który w~przyszłości będzie mógł zostać rozszerzony o~funkcje
+takie jak~modelowanie układów wykorzystujących organiczny obieg
+Rankine'a czy~nawet siłowni opartych o~turbiny gazowe.
+
+
+\subsection{Wybór języka programowania}
+
+\subsubsection{Wymagania}
+
+Język programowania wykorzystany do~wykonania programu powinien wybrany
+zostać ze~względu na~szereg cech projektowych i~eksploatacyjnych. Język
+taki powinien umożliwić realizację wcześniej postawionych zadań w~sposób
+optymalny, nie~stawiając zbędnych wymagań przed~projektantem,
+programistą bądź~użytkownikiem.
+
+Najważniejsze właściwości z~punktu widzenia programisty to:
+
+\begin{enumerate}
+
+	\item dostępność niezbędnych bibliotek (funkcji),
+
+	\item możliwość uzyskania dobrej wydajności oraz~małego zużycia
+	pamięci,
+
+	\item możliwość wykonywania rozszerzalnych komponentów.
+
+\end{enumerate}
+
+Ze~względu na~realizowane przez~program zadania, konieczne staje~się
+wykorzystanie procedur przeliczeniowych dla~parametrów czynnika
+oraz~funkcji matematycznych dla~rozwiązywania układów równań. Dostępność
+bibliotek realizujących te~funkcje zmniejsza ilość pracy oraz~redukuje
+powielanie kodu. Często wiąże~się również z~wykonaniem danych funkcji
+przez~osoby bardziej kompetentne w~danej dziedzinie niż~autor.
+
+Dobra wydajność jest najczęściej cechą charakterystyczną języków
+kompilowanych. Ogranicza wymagania sprzętowe programu oraz~czas
+oczekiwania na~wyniki.
+
+Rozszerzalność programu oznacza możliwość łatwego dodawania nowych
+funkcji i~rozszerzania istniejących komponentów. W~przypadku
+realizowanego programu oznacza to możliwość wprowadzenia nowego czynnika
+roboczego czy~elementów składowych obiegu. Rozszerzalność realizowana
+jest najczęściej przy~pomocy technik programowania obiektowego.
+
+Obok tych cech, język programowania powinien charakteryzować~się również
+łatwością instalacji i~utrzymania programu. Wyliczyć można szereg
+następujących wymagań:
+
+\begin{enumerate}
+
+	\item minimalna liczba zewnętrznych zależności (modularność),
+
+	\item rozpowszechnienie programów pisanych w~danym języku,
+
+	\item stabilność języka oraz~infrastruktury koniecznej
+	do~uruchamiania programów,
+
+	\item przenośność języka.
+
+\end{enumerate}
+
+Najogólniej założyć można, że~wybór danego języka implikuje szereg
+zależności, jakie muszą zostać spełnione nim możliwe będzie uruchomienie
+danego programu. Są to~najczęściej tzw.~biblioteki uruchomieniowe,
+rzadziej kompletne programy. Modularność języka umożliwia wykorzystanie
+minimalnego podzbioru struktury języka, umożliwiającej realizację zadań
+bez~konieczności wprowadzenia zależności niezwiązanych z~funkcjami
+programu.
+
+Rozpowszechnienie programów wyraża prawdopodobieństwo, że~potencjalny
+użytkownik będzie posiadać zainstalowane niezbędne zależności, tym~samym
+mogąc uruchomić wykonany program bez~dodatkowych czynności.
+
+Stabilność określa przede~wszystkim zmienność struktury języka w~czasie,
+oraz~częstotliwość odnajdywania błędów w~oprogramowaniu towarzyszącym.
+Język mało stabilny może wymagać od~programisty regularnego wprowadzania
+zmian w~programie, zmuszając użytkownika do~niepotrzebnie częstych
+aktualizacji.
+
+Przenośność najogólniej oznacza zdolność programów do~pracy na~znacznej
+liczbie platform sprzętowych oraz~systemów operacyjnych. Program
+powinien być~zgodny z~systemami operacyjnymi zgodnymi ze~standardem
+POSIX oraz~systemem Windows.
+
+
+\subsubsection{Uzasadnienie wyboru}
+
+Ze~względu na~wszystkie wyżej wymienione kryteria, zdecydowanie~się
+na~realizację programu w~języku C++, w~wariancie opisanym normą
+ISO/IEC~14882:1998. Język ten spełnia wszystkie z~postawionych
+postulatów.
+
+Jest to~popularny język programowania o~dużej stabilności. Dostępna jest
+znaczna liczba implementacji, a~biblioteki standardowe niezbędne
+do~uruchamiania aplikacji instalowane są razem z~większością popularnych
+systemów operacyjnych.
+
+C++ jest językiem obiektowym oraz~umożliwia budowanie bibliotek. Obie te
+cechy pozwalają na~wykonanie programu modularnego, o~strukturze
+umożliwiającej rozszerzanie o~nowe funkcje bez~konieczności wprowadzania
+zmian w~programie.
+
+Do~budowy programu wykorzystane zostały następujące biblioteki
+pomocnicze:
+
+\begin{enumerate}
+
+	\item biblioteka funkcji dla~algebry liniowej \textbf{Eigen}, udostępniona
+		na~otwartej licencji MPL2,
+
+	\item biblioteka funkcji stanu dla~pary wodnej \textbf{libh2oxx},
+		wykonana wcześniej przez~autora i~udostępniona na~otwartej
+		licencji BSD.
+
+\end{enumerate}
+
+
+\subsection{Przebieg procesu bilansowania}
+
+Proces wykonywania obliczeń bilansowych ma na~celu wyznaczenie wartości
+poszukiwanych zmiennych charakteryzujących określony obieg cieplny,
+przy~założeniu zadanego schematu i~parametrów. Najogólniej proces
+ten~podzielić można na~dwa etapy:
+
+\begin{enumerate}
+
+\item wykonanie układu równań, opisującego bilans układu;
+
+\item rozwiązanie wykonanego układu równań.
+
+\end{enumerate}
+
+Pierwszy z~wymienionych kroków obejmuje przede~wszystkim analizę
+schematu cieplnego układu. Program uwzględnić musi parametry i~sposób
+połączenia zainstalowanych maszyn, jak~również dodatkowe informacje
+dostarczone przez~użytkownika.
+
+W~oparciu o~te dane utworzony winien zostać układ równań, umożliwiający
+jednoznaczne wyznaczenie pozostałych parametrów obiegu. Struktura
+poszczególnych równań może być~silnie uzależniona zarówno od~schematu
+obiegu, jak~i~wyboru zadanych parametrów. Zastosowane w~programie
+algorytmy winne być w~stanie rozwiązać ten~układ, niezależnie od~wyboru
+zmiennych zadanych.
+
+Obydwa te~zagadnienia zostaną szerzej omówione w~dalszej części pracy.
