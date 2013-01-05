@@ -14,10 +14,13 @@
 \usepackage[hypcap]{caption}
 \usepackage{titlesec}
 \usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{longtable}
 
-\sisetup{output-decimal-marker={,}}
-
-\usetikzlibrary{shapes.multipart}
+\sisetup{forbid-literal-units,
+	output-decimal-marker={,},
+	group-decimal-digits=false,
+	per-mode=fraction}
 
 \setdefaultlanguage{polish}
 \frenchspacing
@@ -102,16 +105,16 @@
 \include{nomenklatura}
 
 \clearpage
-\include{wstepne}
+%\include{wstepne}
 
 \clearpage
-\include{struktura}
+%\include{struktura}
 
 \clearpage
-\include{ukl-rown}
+%\include{ukl-rown}
 
 \clearpage
-\include{elem-skl}
+%\include{elem-skl}
 
 \clearpage
 \include{test}

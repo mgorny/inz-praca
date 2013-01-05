@@ -1,33 +1,37 @@
 \section{Testowanie programu}
 
-Testowanie programu oparto o~uproszczony schemat bloku
-\SI{90}{\mega\watt}, oparty na~\cite[s.~121]{podstawy_proj}. Schemat
-cieplny układu przedstawiony został na~rys.~\ref{test-schemat}.
+Do~testowania programu wykorzystano uproszczony model bloku
+\SI{90}{\mega\watt}, oparty na~schemacie cieplnym zawartym
+w~\cite[s.~121]{podstawy_proj}.
+
+Wykorzystany schemat cieplny układu wraz z~zaznaczonymi zadanymi
+parametrami przedstawiony został na~rys.~\ref{test-schemat}.
 
 \begin{figure}[h]
 	\centering
 	\begin{tikzpicture}[thick]
 		\begin{scope}
-			\node[boiler] (K1) at (-.5,1) {K};
-			\node[reheater] (K2) at (1,1) {};
+			\node[boiler] (K1) at (-1,1) {K};
+			\node[reheater] (K2) at (.5,1) {};
 
 			\node[turbine] (WP) at (4,1.5) {WP};
 			\node[turbine] (NP) at (7,1.5) {NP};
 
-			\node[condenser] (Sk) at (7.75,-2.25) {};
-			\node[heatnode] (Skm) at (7.75,-3.5) {};
-			\node[pumpd] (PSk) at (7.75,-4.25) {};
-
 			\begin{scope}[font={\scriptsize}]
+				\node[condenser] (Sk) at (7.75,-2.75)
+					{$\Delta T = \SI{10}{\kelvin}$};
+				\node[heatnode] (Skm) at (7.75,-4) {};
+				\node[pumpd] (PSk) at (7.75,-4.5) {};
+
 				\node[heatxchg] (R5) at (6.5,-5) {R5};
 				\node[heatxchg] (R4) at (5,-5) {R4};
 				\node[deaerator] (R3) at (3.25,-3) {R3};
-				\node[heatxchg] (R2) at (2,-5) {R2};
-				\node[heatxchg] (R1) at (0.5,-5) {R1};
+				\node[heatxchg] (R2) at (1.75,-5) {R2};
+				\node[heatxchg] (R1) at (0,-5) {R1};
 			\end{scope}
 
-			\node[heatnode] (R3m) at (3.25,-3.5) {};
-			\node[pumpd] (P3) at (3.25,-4.25) {};
+			\node[heatnode] (R3m) at (3.25,-4) {};
+			\node[pumpd] (P3) at (3.25,-4.5) {};
 
 			\node[gen] (G) at (9,1.5) {$\sim$};
 			\node[above, font={\scriptsize}] at (G.n)
@@ -35,32 +39,41 @@ cieplny układu przedstawiony został na~rys.~\ref{test-schemat}.
 		\end{scope}
 
 		\begin{scope}[font={\scriptsize},
-			sloped,
-			shape=rectangle split,
-			rectangle split parts=2
+			inner sep=.75mm
 		]
 			\begin{scope}[-stealth]
 				\draw (K1.n) -- ++(0,.5) -| (WP.nw)
-					node[pos=0, right]
-						{\SI{10,2}{\mega\pascal}
-						\nodepart{two} \SI{538}{\degreeCelsius}};
+					node[pos=0, above right] {\SI{10,2}{\mega\pascal}}
+					node[pos=0, below right] {\SI{538}{\degreeCelsius}}
+					node[pos=.3, draw, fill=white] {1};
 				\draw (K2.n) -- ++(0,1) -| (NP.nw)
-					node[pos=0, right] {\SI{538}{\degreeCelsius}};
+					node[pos=0, above right] {\SI{538}{\degreeCelsius}}
+					node[pos=.25, draw, fill=white] {3};
 			\end{scope}
 
 			\draw (WP.se) -- ++(0,-.4) -| (K2.s)
-				node[pos=.499, right] {\SI{2,35}{\mega\pascal}};
+				node[pos=.499, above right] {\SI{2,35}{\mega\pascal}}
+				node[pos=.25, draw, fill=white] {2};
 			\draw[-stealth] (NP.se) -- (Sk.n)
-				node[pos=0, right] {\SI{3,5}{\kilo\pascal}};
+				node[pos=.95, sloped, above left] {\SI{3,5}{\kilo\pascal}}
+				node[pos=.5, draw, fill=white] {4};
 
-			\draw (Sk.s) -- (PSk.n);
-			\draw (PSk.s) |- (R5.e);
-			\draw (R5.w) -- (R4.e);
-			\draw[-stealth] (R4.w) -- ++(-.25,0) |- (R3.ne);
-			\draw (R3.s) -- (P3.n);
-			\draw (P3.s) |- (R2.e);
-			\draw (R2.w) -- (R1.e);
-			\draw (R1.w) -| (K1.s);
+			\draw (Sk.s) -- (PSk.n)
+				node[pos=.375, draw, fill=white] {5};
+			\draw (PSk.s) |- (R5.e)
+				node[pos=.825, draw, fill=white] {6};
+			\draw (R5.w) -- (R4.e)
+				node[pos=.5, draw, fill=white] {7};
+			\draw[-stealth] (R4.w) -- ++(-.25,0) |- (R3.ne)
+				node[pos=.25, draw, fill=white] {8};
+			\draw (R3.s) -- (P3.n)
+				node[pos=.375, draw, fill=white] {9};
+			\draw (P3.s) |- (R2.e)
+				node[pos=.8, draw, fill=white] {10};
+			\draw (R2.w) -- (R1.e)
+				node[pos=.5, draw, fill=white] {11};
+			\draw (R1.w) -| (K1.s)
+				node[pos=.825, draw, fill=white] {12};
 
 			% upusty
 			\path (NP.se) -- (NP.sw)
@@ -73,25 +86,41 @@ cieplny układu przedstawiony został na~rys.~\ref{test-schemat}.
 
 			\begin{scope}[-stealth]
 				\draw (u5.center) -- ++(0,-2) -| (R5.n)
-					node[pos=.95, left] {\SI{0,07}{\mega\pascal}};
+					node[pos=.95, sloped, above left]
+					{\SI{0,07}{\mega\pascal}}
+					node[pos=.55, draw, fill=white] {u5};
 				\draw (u4.center) -- ++(0,-1.8) -| (R4.n)
-					node[pos=.95, left] {\SI{0,2}{\mega\pascal}};
+					node[pos=.95, sloped, above left]
+					{\SI{0,2}{\mega\pascal}}
+					node[pos=.55, draw, fill=white] {u4};
 				\draw (u3.center) -- ++(0,-1.6) -| (R3.n)
-					node[pos=.95, left] {\SI{0,5}{\mega\pascal}};
+					node[pos=.95, sloped, above left]
+					{\SI{0,5}{\mega\pascal}}
+					node[pos=.45, draw, fill=white] {u3};
 				\draw (u2.center) -- ++(0,-1.4) -| (R2.n)
-					node[pos=.95, left] {\SI{1,37}{\mega\pascal}};
+					node[pos=.95, sloped, above left]
+					{\SI{1,37}{\mega\pascal}}
+					node[pos=.55, draw, fill=white] {u2};
 				\draw (u1.center) -- ++(0,-0.9) -| (R1.n)
-					node[pos=.95, left] {\SI{2,56}{\mega\pascal}};
+					node[pos=.95, sloped, above left]
+					{\SI{2,56}{\mega\pascal}}
+					node[pos=.55, draw, fill=white] {u1};
 
 				\path (Skm) -- ++(.65,0) node (SkmE) {};
 				\path (R5.s) -- ++(0,-.5) node[heatnode] (R5s) {};
-				\draw (R5.s) -- ++(0,-.5) -| (SkmE.center) -- (Skm);
-				\draw (R4.s) -- ++(0,-.5) -- (R5s);
+				\draw (R5.s) -- ++(0,-.5) -| (SkmE.center)
+					node[pos=.25, draw, fill=white] {k5}
+					-- (Skm);
+				\draw (R4.s) -- ++(0,-.5) -- (R5s)
+					node[pos=.5, draw, fill=white] {k4};
 
 				\path (R3m) -- ++(.65,0) node (R3mE) {};
 				\path (R2.s) -- ++(0,-.5) node[heatnode] (R2s) {};
-				\draw (R2.s) -- ++(0,-.5) -| (R3mE.center) -- (R3m);
-				\draw (R1.s) -- ++(0,-.5) -- (R2s);
+				\draw (R2.s) -- ++(0,-.5) -| (R3mE.center)
+					node[pos=.25, draw, fill=white] {k2}
+					-- (R3m);
+				\draw (R1.s) -- ++(0,-.5) -- (R2s)
+					node[pos=.5, draw, fill=white] {k1};
 			\end{scope}
 
 			% wały
@@ -103,3 +132,84 @@ cieplny układu przedstawiony został na~rys.~\ref{test-schemat}.
 	\caption{Schemat cieplny obiegu testowego}
 	\label{test-schemat}
 \end{figure}
+
+Obok parametrów zestawionych na~schemacie, założono:
+
+\begin{itemize}
+	\item różnicę temperatur pomiędzy skroplinami i~czynnikiem
+		podgrzewanym przez~podgrzewacz regeneracyjny na~poziomie
+		$\Delta T = \SI{5}{\kelvin}$,
+	\item sprawność kotła $\eta_B = \num{0,9}$,
+	\item izentropową sprawność maszyn wirujących $\eta_i = \num{0,8}$,
+	\item mechaniczną sprawność maszyn wirujących $\eta_m = \num{0,99}$,
+	\item wartość opałową paliwa $q_{LHV} =
+		\SI{22000}{\kilo\joule\per\kilogram}$.
+\end{itemize}
+
+Obieg zamodelowany został przy~pomocy programu wykonanego przez~autora
+oraz~programu Cycle-Tempo~5.0. Wyniki symulacji i~obliczeń, a~także
+dodatkowe parametry podane w~schemacie umieszczonym w~literaturze
+zestawione zostały w~tabeli~\ref{test-wyniki1}.
+
+\begin{longtable}{|*{10}{r|}}
+	\caption{Zestawienie porównawcze parametrów czynnika}
+	\label{test-wyniki1} \\
+
+	\hline
+		\multirow{2}{*}{Rurociąg} &
+		&
+		\multicolumn{2}{c|}{Program} &
+		\multicolumn{2}{c|}{Cycle-Tempo} &
+		\multicolumn{1}{c|}{Lit.} \\
+	\cline{3-7}
+		&
+		\multicolumn{1}{c|}{$p$ [\si{\mega\pascal}]} &
+		\multicolumn{1}{c|}{$T$ [\si{\degreeCelsius}]} &
+		\multicolumn{1}{c|}{$h$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$T$ [\si{\degreeCelsius}]} &
+		\multicolumn{1}{c|}{$h$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$T$ [\si{\degreeCelsius}]} \\
+	\hline
+	\endfirsthead
+	\caption{Zestawienie porównawcze parametrów czynnika (c.d.)} \\
+
+	\hline
+		\multirow{2}{*}{Rurociąg} &
+		&
+		\multicolumn{2}{c|}{Program} &
+		\multicolumn{2}{c|}{Cycle-Tempo} &
+		\multicolumn{1}{c|}{Lit.} \\
+	\cline{3-7}
+		&
+		\multicolumn{1}{c|}{$p$ [\si{\mega\pascal}]} &
+		\multicolumn{1}{c|}{$T$ [\si{\degreeCelsius}]} &
+		\multicolumn{1}{c|}{$h$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$T$ [\si{\degreeCelsius}]} &
+		\multicolumn{1}{c|}{$h$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$T$ [\si{\degreeCelsius}]} \\
+	\hline
+	\endhead
+	\hline
+	\endfoot
+		 1 & 10,2000 & 538,00 & 3469,74 & 538,00 & 3469,74 & 538 \\
+		 2 &  2,3500 & 345,08 & 3119,02 & 345,08 & 3119,02 & b/d \\
+		 3 &  2,3500 & 538,00 & 3548,83 & 538,00 & 3548,83 & 538 \\
+		 4 &  0,0035 &  26,67 & 2495,38 &  26,67 & 2495,38 & b/d \\
+		 5 &  0,0035 &  26,67 &  111,84 &  26,67 &  111,84 &  33 \\
+		 6 &  0,5000 &  26,76 &  112,57 &  26,71 &  112,46 & b/d \\
+		 7 &  0,5000 &  84,93 &  356,01 &  84,93 &  356,01 &  84 \\
+		 8 &  0,5000 & 115,21 &  483,69 & 115,21 &  483,69 & 116 \\
+		 9 &  0,5000 & 151,84 &  640,19 & 151,84 &  840,19 & 146 \\
+		10 & 10,2000 & 153,57 &  653,53 & 153,52 &  653,40 & b/d \\
+		11 & 10,2000 & 189,04 &  807,53 & 189,04 &  807,52 & 191 \\
+		12 & 10,2000 & 220,22 &  946,94 & 220,22 &  946,94 & 231 \\
+		u1 &  2,5600 & 354,70 & 3136,47 & 355,25 & 3137,72 & b/d \\
+		k1 &  2,5600 & 225,22 &  967,87 & 225,22 &  967,87 & b/d \\
+		u2 &  1,3700 & 464,86 & 3398,56 & 480,50 & 3432,51 & b/d \\
+		k2 &  1,3700 & 194,04 &  825,61 & 194,04 &  825,61 & b/d \\
+		u3 &  0,5000 & 346,95 & 3161,74 & 379,07 & 3228,55 & b/d \\
+		u4 &  0,2000 & 258,91 & 2989,18 & 293,45 & 3058,83 & b/d \\
+		k4 &  0,2000 & 120,21 &  504,68 & 120,21 &  504,68 & b/d \\
+		u5 &  0,0700 & 177,35 & 2832,41 & 203,49 & 2883,72 & b/d \\
+		k5 &  0,0700 &  89,93 &  376,68 &  89,93 &  376,68 & b/d \\
+\end{longtable}

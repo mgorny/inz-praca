@@ -119,8 +119,8 @@ może zostać wyjściowy stan czynnika $\mathbf{S}_o(p_o, h_o)$.
 
 Model turbiny jednostkowej charakteryzuje~się pojedynczym wyjściem
 czynnika. Realizacja turbiny upustowo-kondensacyjnej
-oraz~upustowo-przeciwprężnej wymaga szeregowego połączenia elementów,
-z~uwzględnieniem upustów w~postaci odgałęzień, oraz~węzła sumacyjnego
+oraz~upustowo-przeciwprężnej wymaga równoległego połączenia elementów,
+z~uwzględnieniem rozgałęzienia czynnika, oraz~węzła sumacyjnego
 dla~wyprowadzeń mocy. Schematycznie układ taki zaprezentowany został
 na~rys.~\ref{turb.upustowa}.
 
@@ -134,22 +134,22 @@ na~rys.~\ref{turb.upustowa}.
 
 		{ [blue]
 			\draw[stealth-] (T1.nw) -- ++(0,1.5)
-				node[pos=.5, left] {$\dot m_i$}
-				node[pos=.5, right] {$h_i$};
+				node[pos=.75, left] {$\dot m_i$}
+				node[pos=.75, right] {$h_i$};
+
+			\path (T1.nw) -- ++(0,.75) node[heatnode] (T1x) {};
+			\path (T2.nw) -- ++(0,.75) node[heatnode] (T2x) {};
+
+			\draw[-stealth] (T1x) -| (T2.nw);
+			\draw[-stealth] (T2x) -| (T3.nw);
 
 			\draw[-stealth] (T1.se) -- ++(0,-1.5)
-				node[pos=.5, left] {$\dot m_{x1}$}
-				node[pos=.5, right] {$h_{x1}$}
-				node[pos=.25, heatnode] (T1x) {};
-
-			\draw[stealth-] (T2.nw) |- ++(-.1,.5) |- (T1x);
+				node[pos=.5, left] {$\dot m_{b1}$}
+				node[pos=.5, right] {$h_{b1}$};
 
 			\draw[-stealth] (T2.se) -- ++(0,-1.5)
-				node[pos=.5, left] {$\dot m_{x2}$}
-				node[pos=.5, right] {$h_{x2}$}
-				node[pos=.25, heatnode] (T2x) {};
-
-			\draw[stealth-] (T3.nw) |- ++(-.1,.5) |- (T2x);
+				node[pos=.5, left] {$\dot m_{b2}$}
+				node[pos=.5, right] {$h_{b2}$};
 
 			\draw[-stealth] (T3.se) -- ++(0,-1.5)
 				node[pos=.5, left] {$\dot m_o$}
@@ -157,10 +157,10 @@ na~rys.~\ref{turb.upustowa}.
 		}
 
 		{ [red, double distance=.5mm]
-			\node[sumnode] (S2) at (6.5,1.5) {};
-			\node[sumnode] (S3) at (10.5,1.5) {};
+			\node[sumnode] (S2) at (6.5,1.75) {};
+			\node[sumnode] (S3) at (10.5,1.75) {};
 
-			\draw[-stealth, double] (T1.e) -| (2.5,1.5)
+			\draw[-stealth, double] (T1.e) -| (2.5,1.75)
 				node[pos=0, above right] {$P_{m1}$}
 				-- (S2.w);
 
