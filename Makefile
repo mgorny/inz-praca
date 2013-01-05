@@ -2,8 +2,8 @@ show: inz.pdf
 	xdg-open $<
 
 inz.pdf: inz.ltx inz.toc wstep.tex nomenklatura.tex wykresy/.stamp inz.bib
-	bibtexu inz
 	xelatex $<
+	bibtexu inz
 
 inz.toc: inz.ltx wykresy/.stamp
 	xelatex $<

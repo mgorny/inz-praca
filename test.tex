@@ -1,1 +1,105 @@
 \section{Testowanie programu}
+
+Testowanie programu oparto o~uproszczony schemat bloku
+\SI{90}{\mega\watt}, oparty na~\cite[s.~121]{podstawy_proj}. Schemat
+cieplny układu przedstawiony został na~rys.~\ref{test-schemat}.
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}[thick]
+		\begin{scope}
+			\node[boiler] (K1) at (-.5,1) {K};
+			\node[reheater] (K2) at (1,1) {};
+
+			\node[turbine] (WP) at (4,1.5) {WP};
+			\node[turbine] (NP) at (7,1.5) {NP};
+
+			\node[condenser] (Sk) at (7.75,-2.25) {};
+			\node[heatnode] (Skm) at (7.75,-3.5) {};
+			\node[pumpd] (PSk) at (7.75,-4.25) {};
+
+			\begin{scope}[font={\scriptsize}]
+				\node[heatxchg] (R5) at (6.5,-5) {R5};
+				\node[heatxchg] (R4) at (5,-5) {R4};
+				\node[deaerator] (R3) at (3.25,-3) {R3};
+				\node[heatxchg] (R2) at (2,-5) {R2};
+				\node[heatxchg] (R1) at (0.5,-5) {R1};
+			\end{scope}
+
+			\node[heatnode] (R3m) at (3.25,-3.5) {};
+			\node[pumpd] (P3) at (3.25,-4.25) {};
+
+			\node[gen] (G) at (9,1.5) {$\sim$};
+			\node[above, font={\scriptsize}] at (G.n)
+				{\SI{90115}{\kilo\watt}};
+		\end{scope}
+
+		\begin{scope}[font={\scriptsize},
+			sloped,
+			shape=rectangle split,
+			rectangle split parts=2
+		]
+			\begin{scope}[-stealth]
+				\draw (K1.n) -- ++(0,.5) -| (WP.nw)
+					node[pos=0, right]
+						{\SI{10,2}{\mega\pascal}
+						\nodepart{two} \SI{538}{\degreeCelsius}};
+				\draw (K2.n) -- ++(0,1) -| (NP.nw)
+					node[pos=0, right] {\SI{538}{\degreeCelsius}};
+			\end{scope}
+
+			\draw (WP.se) -- ++(0,-.4) -| (K2.s)
+				node[pos=.499, right] {\SI{2,35}{\mega\pascal}};
+			\draw[-stealth] (NP.se) -- (Sk.n)
+				node[pos=0, right] {\SI{3,5}{\kilo\pascal}};
+
+			\draw (Sk.s) -- (PSk.n);
+			\draw (PSk.s) |- (R5.e);
+			\draw (R5.w) -- (R4.e);
+			\draw[-stealth] (R4.w) -- ++(-.25,0) |- (R3.ne);
+			\draw (R3.s) -- (P3.n);
+			\draw (P3.s) |- (R2.e);
+			\draw (R2.w) -- (R1.e);
+			\draw (R1.w) -| (K1.s);
+
+			% upusty
+			\path (NP.se) -- (NP.sw)
+				node[pos=.25] (u5) {}
+				node[pos=.5] (u4) {}
+				node[pos=.75] (u3) {}
+				node[pos=1] (u2) {};
+			\path (WP.se) -- (WP.sw)
+				node[pos=.5] (u1) {};
+
+			\begin{scope}[-stealth]
+				\draw (u5.center) -- ++(0,-2) -| (R5.n)
+					node[pos=.95, left] {\SI{0,07}{\mega\pascal}};
+				\draw (u4.center) -- ++(0,-1.8) -| (R4.n)
+					node[pos=.95, left] {\SI{0,2}{\mega\pascal}};
+				\draw (u3.center) -- ++(0,-1.6) -| (R3.n)
+					node[pos=.95, left] {\SI{0,5}{\mega\pascal}};
+				\draw (u2.center) -- ++(0,-1.4) -| (R2.n)
+					node[pos=.95, left] {\SI{1,37}{\mega\pascal}};
+				\draw (u1.center) -- ++(0,-0.9) -| (R1.n)
+					node[pos=.95, left] {\SI{2,56}{\mega\pascal}};
+
+				\path (Skm) -- ++(.65,0) node (SkmE) {};
+				\path (R5.s) -- ++(0,-.5) node[heatnode] (R5s) {};
+				\draw (R5.s) -- ++(0,-.5) -| (SkmE.center) -- (Skm);
+				\draw (R4.s) -- ++(0,-.5) -- (R5s);
+
+				\path (R3m) -- ++(.65,0) node (R3mE) {};
+				\path (R2.s) -- ++(0,-.5) node[heatnode] (R2s) {};
+				\draw (R2.s) -- ++(0,-.5) -| (R3mE.center) -- (R3m);
+				\draw (R1.s) -- ++(0,-.5) -- (R2s);
+			\end{scope}
+
+			% wały
+			\draw[double] (WP.e) -- (NP.w);
+			\draw[double] (NP.e) -- (G.w);
+		\end{scope}
+	\end{tikzpicture}
+
+	\caption{Schemat cieplny obiegu testowego}
+	\label{test-schemat}
+\end{figure}

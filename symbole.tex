@@ -33,6 +33,33 @@
 	}
 }
 
+\pgfdeclareshape{reheater}
+{
+	\savedanchor{\center}{\pgfpointorigin}
+	\savedanchor{\boxs}{\pgfpoint{0cm}{-.5cm}}
+	\savedanchor{\boxn}{\pgfpoint{0cm}{.5cm}}
+	\savedanchor{\ziga}{\pgfpoint{.25cm}{.75cm}}
+	\savedanchor{\zigb}{\pgfpoint{-.25cm}{.75cm}}
+	\savedanchor{\zigc}{\pgfpoint{0cm}{1cm}}
+
+	\anchor{center}{\center}
+	\anchor{text}{
+		\pgf@x=.5\wd\pgfnodeparttextbox
+		\pgf@y=-.5\ht\pgfnodeparttextbox
+	}
+	\anchor{s}{\boxn}
+	\anchor{n}{\zigc}
+	\anchor{w}{\zigb}
+
+	\backgroundpath{
+		\pgfpathmoveto{\boxn}
+		\pgfpathlineto{\ziga}
+		\pgfpathlineto{\zigb}
+		\pgfpathlineto{\zigc}
+		\pgfusepath{stroke}
+	}
+}
+
 \pgfdeclareshape{turbine}
 {
 	\savedanchor{\center}{\pgfpointorigin}
@@ -173,6 +200,42 @@
 	}
 }
 
+\pgfdeclareshape{pumpd}
+{
+	\savedanchor{\center}{\pgfpointorigin}
+	\savedanchor{\s}{\pgfpoint{0cm}{-.33cm}}
+	\savedanchor{\n}{\pgfpoint{0cm}{.33cm}}
+	\savedanchor{\arrs}{\pgfpoint{0cm}{-.25cm}}
+	\savedanchor{\arrn}{\pgfpoint{0cm}{.25cm}}
+	\savedanchor{\arrse}{\pgfpoint{.066cm}{-.1cm}}
+	\savedanchor{\arrsw}{\pgfpoint{-.066cm}{-.1cm}}
+
+	\anchor{center}{\center}
+	\anchor{text}{
+		\pgf@y=-.5\wd\pgfnodeparttextbox
+		\pgf@x=.25cm
+		\advance \pgf@x by \ht\pgfnodeparttextbox
+	}
+	\anchor{n}{\n}
+	\anchor{s}{\s}
+	\anchor{e}{\pgfpoint{.33cm}{0cm}}
+	\anchor{w}{\pgfpoint{-.33cm}{0cm}}
+
+	\backgroundpath{
+		\pgfpathcircle{\center}{.33cm}
+
+		\pgfpathmoveto{\arrn}
+		\pgfpathlineto{\arrs}
+		\pgfusepath{stroke}
+
+		\pgfpathmoveto{\arrs}
+		\pgfpathlineto{\arrsw}
+		\pgfpathlineto{\arrse}
+		\pgfpathclose
+		\pgfusepath{fill}
+	}
+}
+
 \pgfdeclareshape{heatxchg}
 {
 	\savedanchor{\center}{\pgfpointorigin}
@@ -207,6 +270,44 @@
 		\pgfpathlineto{\zn}
 		\pgfpathlineto{\zw}
 		\pgfpathlineto{\w}
+		\pgfusepath{stroke}
+	}
+}
+
+\pgfdeclareshape{deaerator}
+{
+	\savedanchor{\center}{\pgfpointorigin}
+
+	\savedanchor{\nw}{\pgfpoint{-.5cm}{.25cm}}
+	\savedanchor{\se}{\pgfpoint{.5cm}{-.25cm}}
+	\savedanchor{\nec}{\pgfpoint{.25cm}{.25cm}}
+	\savedanchor{\nwc}{\pgfpoint{-.25cm}{.25cm}}
+	\savedanchor{\net}{\pgfpoint{.25cm}{.5cm}}
+	\savedanchor{\nwt}{\pgfpoint{-.25cm}{.5cm}}
+
+	\anchor{w}{\pgfpoint{-.5cm}{0cm}}
+	\anchor{e}{\pgfpoint{.5cm}{0cm}}
+	\anchor{n}{\pgfpoint{0cm}{.75cm}}
+	\anchor{s}{\pgfpoint{0cm}{-.25cm}}
+	\anchor{nw}{\pgfpoint{-.25cm}{.425cm}}
+	\anchor{ne}{\pgfpoint{.25cm}{.425cm}}
+
+	\anchor{center}{\center}
+	\anchor{text}{
+		\pgf@x=-.5\wd\pgfnodeparttextbox
+		\pgf@y=-.5\ht\pgfnodeparttextbox
+	}
+
+	\backgroundpath{
+		\pgfpathmoveto{\nwt}
+		\pgfpathlineto{\nwc}
+		\pgfpathlineto{\nw}
+		\pgfpatharc{-90}{90}{-.25cm}
+		\pgfpathlineto{\se}
+		\pgfpatharc{-90}{90}{.25cm}
+		\pgfpathlineto{\nec}
+		\pgfpathlineto{\net}
+		\pgfpatharc{0}{180}{.25cm}
 		\pgfusepath{stroke}
 	}
 }
@@ -253,6 +354,46 @@
 		\pgfpathlineto{\se}
 		\pgfpathmoveto{\sw}
 		\pgfpathlineto{\ne}
+		\pgfusepath{stroke}
+	}
+}
+
+\pgfdeclareshape{gen}
+{
+	\savedanchor{\center}{\pgfpointorigin}
+	\savedanchor{\w}{\pgfpoint{-.33cm}{0cm}}
+	\savedanchor{\e}{\pgfpoint{.33cm}{0cm}}
+	\savedanchor{\n}{\pgfpoint{0cm}{.33cm}}
+	\savedanchor{\nn}{\pgfpoint{0cm}{1cm}}
+	\savedanchor{\Ra}{\pgfpoint{-.08cm}{.55cm}}
+	\savedanchor{\Rb}{\pgfpoint{.08cm}{.7cm}}
+	\savedanchor{\Sa}{\pgfpoint{-.08cm}{.65cm}}
+	\savedanchor{\Sb}{\pgfpoint{.08cm}{.8cm}}
+	\savedanchor{\Ta}{\pgfpoint{-.08cm}{.75cm}}
+	\savedanchor{\Tb}{\pgfpoint{.08cm}{.9cm}}
+
+	\anchor{center}{\center}
+	\anchor{text}{
+		\pgf@x=-.5\wd\pgfnodeparttextbox
+		\pgf@y=-.5\ht\pgfnodeparttextbox
+	}
+	\anchor{w}{\w}
+	\anchor{e}{\e}
+	\anchor{n}{\nn}
+	\anchor{s}{\pgfpoint{0cm}{-.33cm}}
+
+	\backgroundpath{
+		\pgfpathcircle{\center}{.33cm}
+
+		\pgfpathmoveto{\n}
+		\pgfpathlineto{\nn}
+
+		\pgfpathmoveto{\Ra}
+		\pgfpathlineto{\Rb}
+		\pgfpathmoveto{\Sa}
+		\pgfpathlineto{\Sb}
+		\pgfpathmoveto{\Ta}
+		\pgfpathlineto{\Tb}
 		\pgfusepath{stroke}
 	}
 }
