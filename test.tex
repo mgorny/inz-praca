@@ -147,9 +147,10 @@ Obok parametrów zestawionych na~schemacie, założono:
 \end{itemize}
 
 Obieg zamodelowany został przy~pomocy programu wykonanego przez~autora
-oraz~programu Cycle-Tempo~5.0. Wyniki symulacji i~obliczeń, a~także
-dodatkowe parametry podane w~schemacie umieszczonym w~literaturze
-zestawione zostały w~tabeli~\ref{test-wyniki1}.
+oraz~komercyjnego programu Cycle-Tempo~5.0. W~tabeli~\ref{test-wyniki1}
+zestawiono parametry czynnika przepływającego przez~poszczególne
+rurociągi, wyznaczone przy~pomocy obu programów oraz~dodatkowe
+informacje, zawarte na~schemacie cieplnym w~literaturze.
 
 \begin{longtable}{|*{10}{r|}}
 	\caption{Zestawienie porównawcze parametrów czynnika}
@@ -157,11 +158,11 @@ zestawione zostały w~tabeli~\ref{test-wyniki1}.
 
 	\hline
 		\multirow{2}{*}{Rurociąg} &
-		&
+		\multicolumn{1}{c|}{Zadane} &
 		\multicolumn{2}{c|}{Program} &
 		\multicolumn{2}{c|}{Cycle-Tempo} &
 		\multicolumn{1}{c|}{Lit.} \\
-	\cline{3-7}
+	\cline{2-7}
 		&
 		\multicolumn{1}{c|}{$p$ [\si{\mega\pascal}]} &
 		\multicolumn{1}{c|}{$T$ [\si{\degreeCelsius}]} &
@@ -175,11 +176,11 @@ zestawione zostały w~tabeli~\ref{test-wyniki1}.
 
 	\hline
 		\multirow{2}{*}{Rurociąg} &
-		&
+		\multicolumn{1}{c|}{Zadane} &
 		\multicolumn{2}{c|}{Program} &
 		\multicolumn{2}{c|}{Cycle-Tempo} &
 		\multicolumn{1}{c|}{Lit.} \\
-	\cline{3-7}
+	\cline{2-7}
 		&
 		\multicolumn{1}{c|}{$p$ [\si{\mega\pascal}]} &
 		\multicolumn{1}{c|}{$T$ [\si{\degreeCelsius}]} &
@@ -196,11 +197,11 @@ zestawione zostały w~tabeli~\ref{test-wyniki1}.
 		 3 &  2,3500 & 538,00 & 3548,83 & 538,00 & 3548,83 & 538 \\
 		 4 &  0,0035 &  26,67 & 2495,38 &  26,67 & 2495,38 & b/d \\
 		 5 &  0,0035 &  26,67 &  111,84 &  26,67 &  111,84 &  33 \\
-		 6 &  0,5000 &  26,76 &  112,57 &  26,71 &  112,46 & b/d \\
+		 6 &  0,5000 &  26,76 &  112,45 &  26,71 &  112,46 & b/d \\
 		 7 &  0,5000 &  84,93 &  356,01 &  84,93 &  356,01 &  84 \\
 		 8 &  0,5000 & 115,21 &  483,69 & 115,21 &  483,69 & 116 \\
 		 9 &  0,5000 & 151,84 &  640,19 & 151,84 &  840,19 & 146 \\
-		10 & 10,2000 & 153,57 &  653,53 & 153,52 &  653,40 & b/d \\
+		10 & 10,2000 & 153,57 &  653,40 & 153,52 &  653,40 & b/d \\
 		11 & 10,2000 & 189,04 &  807,53 & 189,04 &  807,52 & 191 \\
 		12 & 10,2000 & 220,22 &  946,94 & 220,22 &  946,94 & 231 \\
 		u1 &  2,5600 & 354,70 & 3136,47 & 355,25 & 3137,72 & b/d \\
@@ -213,3 +214,98 @@ zestawione zostały w~tabeli~\ref{test-wyniki1}.
 		u5 &  0,0700 & 177,35 & 2832,41 & 203,49 & 2883,72 & b/d \\
 		k5 &  0,0700 &  89,93 &  376,68 &  89,93 &  376,68 & b/d \\
 \end{longtable}
+
+Na~podstawie zestawionych w~tabeli~\ref{test-wyniki1} zaobserwować
+można, iż~program wykonany przez~autora w~większości przypadków wyznacza
+identyczne bądź~zbliżone parametry czynnika. Świadczy to o~poprawnej
+budowie i~wykorzystaniu modelu czynnika.
+
+Największe różnice wyznaczonych wartości entalpii właściwej występują
+dla~upustów turbin oraz~pomp. W~celu wyjaśnienia tych różnic,
+skontrolowano również parametry stanu czynnika przy~rozprężaniu
+izentropowym ($\eta_i = 1$) i~wyliczono rzeczywiste wartości entalpii
+właściwej.
+
+Wartość rzeczywistą dla~turbiny wyznaczono
+z~równania~\eqref{test-rown-turbina}, natomiast dla~pompy
+z~równania~\eqref{test-rown-pompa}.
+
+\begin{equation}
+	\label{test-rown-turbina}
+	h = h_i - \eta_i ( h_i - h' )
+\end{equation}
+
+\begin{equation}
+	\label{test-rown-pompa}
+	h = h_i + \frac{ h' - h_i }{ \eta_i }
+\end{equation}
+
+Wyznaczone oraz~wyliczone wartości zestawiono
+w~tabeli~\ref{test-wyniki2}.
+
+\begin{longtable}{|*{10}{r|}}
+	\caption{Zestawienie porównawcze obliczeń rozprężania}
+	\label{test-wyniki2} \\
+
+	\hline
+		\multirow{2}{*}{Rurociąg} &
+		\multicolumn{2}{c|}{Zadane} &
+		\multicolumn{2}{c|}{Program} &
+		\multicolumn{2}{c|}{Cycle-Tempo} &
+		\multicolumn{1}{c|}{Obl.} \\
+	\cline{2-8}
+		&
+		\multicolumn{1}{c|}{$p$ [\si{\mega\pascal}]} &
+		\multicolumn{1}{c|}{$h_i$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$h'$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$h$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$h'$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$h$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$h$ [\si{\kilo\joule\per\kilogram}]} \\
+	\hline
+	\endfirsthead
+	\caption{Zestawienie porównawcze obliczeń rozprężania (c.d.)} \\
+
+	\hline
+		\multirow{2}{*}{Rurociąg} &
+		\multicolumn{2}{c|}{Zadane} &
+		\multicolumn{2}{c|}{Program} &
+		\multicolumn{2}{c|}{Cycle-Tempo} &
+		\multicolumn{1}{c|}{Obl.} \\
+	\cline{2-8}
+		&
+		\multicolumn{1}{c|}{$p$ [\si{\mega\pascal}]} &
+		\multicolumn{1}{c|}{$h_i$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$h'$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$h$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$h'$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$h$ [\si{\kilo\joule\per\kilogram}]} &
+		\multicolumn{1}{c|}{$h$ [\si{\kilo\joule\per\kilogram}]} \\
+	\hline
+	\endhead
+	\hline
+	\endfoot
+		\multicolumn{8}{|c|}{\textit{Turbiny}} \\
+	\hline
+		u1 &  2,5600 & 3469,74 & 3053,15 & 3136,47 & 3053,14 & 3137,72 & 3136,47 \\
+		 2 &  2,3500 & 3469,74 & 3031,34 & 3119,02 & 3031,34 & 3119,02 & 3119,02 \\
+		u2 &  1,3700 & 3548,83 & 3360,99 & 3398,56 & 3360,99 & 3432,51 & 3398,56 \\
+		u3 &  0,5000 & 3548,83 & 3064,97 & 3161,74 & 3064,97 & 3228,55 & 3161,74 \\
+		u4 &  0,2000 & 3548,83 & 2849,26 & 2989,18 & 2849,26 & 3058,83 & 2989,17 \\
+		u5 &  0,0700 & 3548,83 & 2653,30 & 2832,41 & 2653,30 & 2883,72 & 2832,41 \\
+		 4 &  0,0035 & 3548,83 & 2232,02 & 2495,38 & 2232,01 & 2495,38 & 2495,38 \\
+	\hline
+		\multicolumn{8}{|c|}{\textit{Pompy}} \\
+	\hline
+		 6 &  0,5000 & 111,836 & 112,329 & 112,454 & 112,33 & 112,46 & 112,452 \\
+		10 & 10,2000 & 640,185 & 650,761 & 653,400 & 650,76 & 653,40 & 653,405 \\
+\end{longtable}
+
+Obliczenia wykonane przez~program zgodne są w~przybliżeniu
+z~obliczeniami wykonanymi na~podstawie zestawionych wyżej wzorów.
+Wynika stąd, że~implementacja zależności w~programie jest poprawna.
+
+W~przypadku upustów turbin wyniki dla~rozprężania izentropowego
+są~równe, niezgodność występuje natomiast dla~wyników rozprężania
+rzeczywistego. Wynika stąd, iż~program Cycle-Tempo wykorzystuje inny
+model obliczeń entalpii rozprężania rzeczywistego dla~upustów.
