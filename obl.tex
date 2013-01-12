@@ -1,0 +1,565 @@
+\subsection{Obliczenia}
+
+\renewcommand{\arraystretch}{1.5}
+
+\subsubsection{Przykładowe obliczenia entalpii rozprężania/sprężania}
+
+\begin{math}
+	\begin{array}{l}
+		h_{u1} = h_1 - \eta_i ( h_1 - h_{u1}' ) =
+			\num{3469,71} - \num{0,8} \cdot ( \num{3469,71} - \num{3053,15} ) =
+			\SI{3136,462}{\kilo\joule\per\kilogram} \\
+		h_{u4} = h_3 - \eta_i ( h_3 - h_{u4}' ) =
+			\num{3548,83} - \num{0,8} \cdot ( \num{3548,83} - \num{2849,26} ) =
+			\SI{2989,174}{\kilo\joule\per\kilogram} \\
+		\\
+		h_6 = h_5 + \dfrac{h_6' - h_5}{\eta_i} =
+			\num{111,836} + \dfrac{\num{112,329} - \num{111,836}}{\num{0,8}} =
+			\SI{112,4523}{\kilo\joule\per\kilogram} \\
+		h_{10} = h_9 + \dfrac{h_{10}' - h_9}{\eta_i} =
+			\num{640,185} + \dfrac{\num{650,761} - \num{640,185}}{\num{0,8}} =
+			\SI{653,405}{\kilo\joule\per\kilogram} \\
+	\end{array}
+\end{math}
+
+
+\subsubsection{Bilans obiegu cieplnego}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\node[heatxchg,font={\scriptsize}] (R) {R1};
+
+		{ [blue]
+			\draw[stealth-] (R.n) -- ++(0,1.5)
+				node[pos=.5, left] {$\dot m_{u1}$}
+				node[pos=.5, right] {$h_{u1}$};
+			\draw[-stealth] (R.se) |- ++(2.75,-1)
+				node[pos=.775, above] {$\dot m_{u1}$}
+				node[pos=.775, below] {$h_{k1}$};
+		}
+
+		{ [green!50!black]
+			\draw[stealth-] (R.e) -- ++(2.5,0)
+				node[pos=.5, above] {$\dot m$}
+				node[pos=.5, below] {$h_{11}$};
+			\draw[-stealth] (R.w) -- ++(-2.5,0)
+				node[pos=.5, above] {$\dot m$}
+				node[pos=.5, below] {$h_{12}$};
+		}
+	\end{tikzpicture}
+
+	\caption{Otoczenie wymiennika R1}
+\end{figure}
+
+\begin{math}
+	\begin{array}{l}
+		\dot m ( h_{11} - h_{12} ) + \dot m_{u1} ( h_{u1} - h_{k1} ) = 0 \\
+		h_{11} - h_{12} + \alpha_1 ( h_{u1} - h_{k1} ) = 0;
+			~~~ \alpha_1 = \frac{\dot m_{u1}}{\dot m} \\
+		\alpha_1 = \dfrac{h_{12} - h_{11}}{h_{u1} - h_{k1}}
+			= \dfrac{\num{946,94} - \num{807,53}}{\num{3136,47} - \num{967,87}}
+			= \num{0,06429} \\
+	\end{array}
+\end{math}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\node[heatxchg,font={\scriptsize}] (R) {R2};
+
+		{ [blue]
+			\draw[stealth-] (R.n) -- ++(0,1.5)
+				node[pos=.5, left] {$\dot m_{u2}$}
+				node[pos=.5, right] {$h_{u2}$};
+			\draw[-stealth] (R.se) |- ++(2.75,-1)
+				node[pos=.775, above] {$\dot m_{u1} + \dot m_{u2}$}
+				node[pos=.775, below] {$h_{k2}$};
+			\draw[stealth-] (R.sw) |- ++(-2.75,-1)
+				node[pos=.775, above] {$\dot m_{u1}$}
+				node[pos=.775, below] {$h_{k1}$};
+		}
+
+		{ [green!50!black]
+			\draw[stealth-] (R.e) -- ++(2.5,0)
+				node[pos=.5, above] {$\dot m$}
+				node[pos=.5, below] {$h_{10}$};
+			\draw[-stealth] (R.w) -- ++(-2.5,0)
+				node[pos=.5, above] {$\dot m$}
+				node[pos=.5, below] {$h_{11}$};
+		}
+	\end{tikzpicture}
+
+	\caption{Otoczenie wymiennika R2}
+\end{figure}
+
+\begin{math}
+	\begin{array}{l}
+		\dot m ( h_{10} - h_{11} ) + \dot m_{u2} h_{u2} + \dot m_{u1} h_{k1}
+			- (\dot m_{u1} + \dot m_{u2}) h_{k2} = 0 \\
+		\dot m ( h_{10} - h_{11} ) + \dot m_{u1} ( h_{k1} - h_{k2} )
+			+ \dot m_{u2} ( h_{u2} - h_{k2} ) = 0 \\
+		h_{10} - h_{11} + \alpha_1 ( h_{k1} - h_{k2} )
+			+ \alpha_2 ( h_{u2} - h_{k2} ) = 0;
+			~~~ \alpha_2 = \frac{\dot m_{u2}}{\dot m} \\
+
+		\alpha_2 = \dfrac{h_{11} - h_{10} - \alpha_1 (h_{k1} - h_{k2})}{
+				h_{u2} - h_{k2}} \\
+		\alpha_2 = \dfrac{\num{807,53} - \num{653,4} - \num{0,06429} \cdot
+				( \num{967,87} - \num{825,61} )}{\num{3398,56} - \num{825,61}}
+				= \num{0,05635} \\
+	\end{array}
+\end{math}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\node[deaerator,font={\scriptsize}] (R) {R3};
+
+		{ [blue]
+			\draw[stealth-] (R.n) -- ++(0,1.5)
+				node[pos=.5, left] {$\dot m_{u3}$}
+				node[pos=.5, right] {$h_{u3}$};
+			\draw[-stealth] (R.s) -- ++(0,-1.5)
+				node[pos=.5, left] {$\dot m$}
+				node[pos=.5, right] {$h_{9}$};
+			\draw[stealth-] (R.ne) -- ++(5,0)
+				node[pos=.5, above] {$\dot m - \dot m_{u1} - \dot m_{u2} - \dot m_{u3}$}
+				node[pos=.5, below] {$h_{8}$};
+			\draw[stealth-] (R.nw) -- ++(-5,0)
+				node[pos=.5, above] {$\dot m_{u1} + \dot m_{u2}$}
+				node[pos=.5, below] {$h_{k2}$};
+		}
+	\end{tikzpicture}
+
+	\caption{Otoczenie odgazowywacza R3}
+\end{figure}
+
+\begin{math}
+	\begin{array}{l}
+		(\dot m - \dot m_{u1} - \dot m_{u2} - \dot m_{u3}) h_8
+			+ (\dot m_{u1} + \dot m_{u2}) h_{k2} + \dot m_{u3} h_{u3}
+			- \dot m h_9 = 0 \\
+		\dot m ( h_8 - h_9 ) + (\dot m_{u1} + \dot m_{u2})(h_{k2} - h_8)
+			+ \dot m_{u3} (h_{u3} - h_8) = 0 \\
+		h_8 - h_9 + (\alpha_1 + \alpha_2)(h_{k2} - k_8)
+			+ \alpha_3 (h_{u3} - h_8) = 0;
+			~~~ \alpha_3 = \frac{\dot m_{u3}}{\dot m} \\
+
+		\alpha_3 = \dfrac{h_9 - h_8 + (\alpha_1 + \alpha_2)(h_8 - h_{k2})
+				}{h_{u3} - h_8} \\
+		\alpha_3 = \dfrac{\num{640,19} - \num{483,69} + (\num{0,06429}
+				+ \num{0,05635}) \cdot (\num{483,69} - \num{825,61})
+				}{\num{3161,74} - \num{483,69}} = \num{0,04304} \\
+	\end{array}
+\end{math}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\node[heatxchg,font={\scriptsize}] (R) {R4};
+
+		{ [blue]
+			\draw[stealth-] (R.n) -- ++(0,1.5)
+				node[pos=.5, left] {$\dot m_{u4}$}
+				node[pos=.5, right] {$h_{u4}$};
+			\draw[-stealth] (R.se) |- ++(2.75,-1)
+				node[pos=.775, above] {$\dot m_{u4}$}
+				node[pos=.775, below] {$h_{k4}$};
+		}
+
+		{ [green!50!black]
+			\draw[stealth-] (R.e) -- ++(5,0)
+				node[pos=.5, above] {$\dot m - \dot m_{u1} - \dot m_{u2} - \dot m_{u3}$}
+				node[pos=.5, below] {$h_{7}$};
+			\draw[-stealth] (R.w) -- ++(-5,0)
+				node[pos=.5, above] {$\dot m - \dot m_{u1} - \dot m_{u2} - \dot m_{u3}$}
+				node[pos=.5, below] {$h_{8}$};
+		}
+	\end{tikzpicture}
+
+	\caption{Otoczenie wymiennika R4}
+\end{figure}
+
+\begin{math}
+	\begin{array}{l}
+		(\dot m - \dot m_{u1} - \dot m_{u2} - \dot m_{u3})
+			( h_{7} - h_{8} ) + \dot m_{u4} ( h_{u4} - h_{k4} ) = 0 \\
+		(1 - \alpha_1 - \alpha_2 - \alpha_3)( h_7 - h_8 )
+			+ \alpha_4 ( h_{u4} - h_{k4} ) = 0 \\
+
+		\alpha_k = 1 - \alpha_1 - \alpha_2 - \alpha_3
+			= 1 - \num{0,06429} - \num{0,05635} - \num{0,04304}
+			= \num{0,83632} \\
+		\alpha_k ( h_7 - h_8 ) + \alpha_4 ( h_{u4} - h_{k4} ) = 0 \\
+
+		\alpha_4 = \dfrac{\alpha_k ( h_8 - h_7 )}{ h_{u4} - h_{k4} }
+			= \dfrac{\num{0,83632} \cdot ( \num{483,69} - \num{356,01} )
+				}{ \num{2989,18} - \num{504,68} }
+			= \num{0,04298} \\
+	\end{array}
+\end{math}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\node[heatxchg,font={\scriptsize}] (R) {R5};
+
+		{ [blue]
+			\draw[stealth-] (R.n) -- ++(0,1.5)
+				node[pos=.5, left] {$\dot m_{u5}$}
+				node[pos=.5, right] {$h_{u5}$};
+			\draw[-stealth] (R.se) |- ++(2.75,-1)
+				node[pos=.775, above] {$\dot m_{u4} + \dot m_{u5}$}
+				node[pos=.775, below] {$h_{k5}$};
+			\draw[stealth-] (R.sw) |- ++(-2.75,-1)
+				node[pos=.775, above] {$\dot m_{u4}$}
+				node[pos=.775, below] {$h_{k4}$};
+		}
+
+		{ [green!50!black]
+			\draw[stealth-] (R.e) -- ++(5,0)
+				node[pos=.5, above] {$\dot m - \dot m_{u1} - \dot m_{u2} - \dot m_{u3}$}
+				node[pos=.5, below] {$h_{6}$};
+			\draw[-stealth] (R.w) -- ++(-5,0)
+				node[pos=.5, above] {$\dot m - \dot m_{u1} - \dot m_{u2} - \dot m_{u3}$}
+				node[pos=.5, below] {$h_{7}$};
+		}
+	\end{tikzpicture}
+
+	\caption{Otoczenie wymiennika R5}
+\end{figure}
+
+\begin{math}
+	\begin{array}{l}
+		(\dot m - \dot m_{u1} - \dot m_{u2} - \dot m_{u3})( h_{6} - h_{7} )
+			+ \dot m_{u5} h_{u5} + \dot m_{u4} h_{k4}
+			- (\dot m_{u4} + \dot m_{u5}) h_{k5} = 0 \\
+		(\dot m - \dot m_{u1} - \dot m_{u2} - \dot m_{u3})(h_{6} - h_{7})
+			+ \dot m_{u4} ( h_{k4} - h_{k5} )
+			+ \dot m_{u5} ( h_{u5} - h_{k5} ) = 0 \\
+		(1 - \alpha_1 - \alpha_2 - \alpha_3)(h_{6} - h_{7})
+			+ \alpha_4 ( h_{k4} - h_{k5} )
+			+ \alpha_5 ( h_{u5} - h_{k5} ) = 0 \\
+		\alpha_k(h_{6} - h_{7}) + \alpha_4 ( h_{k4} - h_{k5} )
+			+ \alpha_5 ( h_{u5} - h_{k5} ) = 0 \\
+
+		\alpha_5 = \dfrac{
+			\alpha_k (h_7 - h_6)
+			- \alpha_4 ( h_{k4} - h_{k5} )
+			}{h_{u5} - h_{k5}} \\
+		\alpha_5 = \dfrac{
+			\num{0,83632} \cdot (\num{356,01} - \num{112,45})
+			- \num{0,04298} \cdot ( \num{504,68} - \num{376,68} )
+		}{ \num{2832,41} - \num{376,68} }
+			= \num{0,08071} \\
+	\end{array}
+\end{math}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\node[turbine] (WP) at (0,0) {WP};
+		\node[turbine] (NP) at (6,0) {NP};
+
+		{ [red, double distance=.5mm]
+			\draw[double] (WP.e) -- (NP.w);
+			\draw[double,-stealth] (NP.e) -- ++(2.05,0)
+				node[pos=.5, above] {$P_m$};
+		}
+
+		% upusty
+		\path (NP.se) -- (NP.sw)
+			node[pos=.25] (u5) {}
+			node[pos=.5] (u4) {}
+			node[pos=.75] (u3) {}
+			node[pos=1] (u2) {};
+		\path (WP.se) -- (WP.sw)
+			node[pos=.5] (u1) {};
+
+		{ [blue]
+			\draw[stealth-] (WP.nw) -- ++(0,1.5)
+				node[pos=.5, left] {$\dot m$}
+				node[pos=.5, right] {$h_1$};
+			\draw[-stealth] (u1.center) -- ++(0,-.75) -| ++(-.5,-1.5)
+				node[pos=.75, left] {$\dot m_{u1}$}
+				node[pos=.75, right] {$h_{u1}$};
+			\draw[-stealth] (WP.se) -- ++(0,-.55) -| ++(.5,-1.5)
+				node[pos=.75, left] {$\dot m_r$}
+				node[pos=.75, right] {$h_2$};
+
+			\draw[stealth-] (NP.nw) -- ++(0,1.5)
+				node[pos=.5, left] {$\dot m_r$}
+				node[pos=.5, right] {$h_3$};
+			\draw[-stealth] (u2.center) -- ++(0,-.95) -| ++(-2,-1.5)
+				node[pos=.75, left] {$\dot m_{u2}$}
+				node[pos=.75, right] {$h_{u2}$};
+			\draw[-stealth] (u3.center) -- ++(0,-1.2) -| ++(-1,-1.5)
+				node[pos=.85, left] {$\dot m_{u3}$}
+				node[pos=.85, right] {$h_{u3}$};
+			\draw[-stealth] (u4.center) -- ++(0,-3.5)
+				node[pos=.85, left] {$\dot m_{u4}$}
+				node[pos=.85, right] {$h_{u4}$};
+			\draw[-stealth] (u5.center) -- ++(0,-1) -| ++(1,-1.5)
+				node[pos=.85, left] {$\dot m_{u5}$}
+				node[pos=.85, right] {$h_{u5}$};
+			\draw[-stealth] (NP.se) -- ++(0,-.55) -| ++(2,-1.5)
+				node[pos=.75, left] {$\dot m_k$}
+				node[pos=.75, right] {$h_4$};
+		}
+
+	\end{tikzpicture}
+
+	\caption{Otoczenie turbin}
+\end{figure}
+
+\begin{math}
+	\begin{array}{l}
+		\dot m_r = \dot m - \dot m_{u1} \\
+		\dot m_k = \dot m - \sum\limits_{i=1}^5 \dot m_{ui} \\
+		\dot m h_1 + \dot m_r (h_3 - h_2) - \dot m_k h_4
+			- \sum\limits_{i=1}^5 \dot m_{ui} h_{ui} = \dfrac{P_m}{\eta_m} \\
+		\dot m h_1 + (\dot m - \dot m_{u1})(h_3 - h_2)
+			- (\dot m - \sum\limits_{i=1}^5 \dot m_{ui}) h_4
+			- \sum\limits_{i=1}^5 \dot m_{ui} h_{ui} = \dfrac{P_m}{\eta_m} \\
+		\dot m (h_1 + h_3 - h_2 - h_4) + \dot m_{u1} (h_2 - h_3)
+			- \sum\limits_{i=1}^5 \dot m_{ui} (h_{ui} - h_{4}) = \dfrac{P_m}{\eta_m} \\
+
+		h_1 + h_3 - h_2 - h_4 + \alpha_1 (h_2 - h_3)
+			- \sum\limits_{i=1}^5 \alpha_i (h_{ui} - h_{4}) = \dfrac{P_m}{\dot m \eta_m} \\
+
+		h_1 - h_4 + (1 - \alpha_1)(h_3 - h_2)
+			- \sum\limits_{i=1}^5 \alpha_i (h_{ui} - h_{4}) = \dfrac{P_m}{\dot m \eta_m} \\
+
+		\dot m = \dfrac{\frac{P_m}{\eta_m}}{
+			h_1 - h_4 + (1 - \alpha_1)(h_3 - h_2)
+			- \sum\limits_{i=1}^5 \alpha_i (h_{ui} - h_{4})
+		} \\
+	\end{array}
+\end{math}
+
+\renewcommand{\arraystretch}{1}
+\begin{math}
+	\begin{array}{lrr}
+		~~~~~
+		& \num{0,06429} \cdot ( \num{3136,47} - \num{2495,38} ) = & \num{41,2157} \\
+		& \num{0,05635} \cdot ( \num{3398,56} - \num{2495,38} ) = & \num{50,8942} \\
+		& \num{0,04304} \cdot ( \num{3161,74} - \num{2495,38} ) = & \num{28,6801} \\
+		& \num{0,04298} \cdot ( \num{2989,18} - \num{2495,38} ) = & \num{21,2235} \\
+		& \num{0,08071} \cdot ( \num{2832,41} - \num{2495,38} ) = & \num{27,2017} \\
+		\cline{2-3}
+		& \sum\limits_{i=1}^5 \alpha_i (h_{ui} - h_{4}) = & \num{169,2152} \\
+	\end{array}
+\end{math}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{math}
+	\begin{array}{l}
+		\dot m = \dfrac{\frac{90115}{0,99}}{
+			\num{3469,74} - \num{2495,38}
+			+ (1 - \num{0,06429}) \cdot (\num{3548,83} - \num{3119,02})
+			- \num{169,2152}
+		}
+			= \SI{75,3943}{\kilogram\per\second}
+	\end{array}
+\end{math}
+
+\renewcommand{\arraystretch}{1}
+\begin{math}
+	\left[
+		\begin{array}{l}
+			\dot m_{u1} \\
+			\dot m_{u2} \\
+			\dot m_{u3} \\
+			\dot m_{u4} \\
+			\dot m_{u5} \\
+			\dot m_k \\
+		\end{array}
+	\right] = \left[
+		\begin{array}{c}
+			\num{0,06429} \\
+			\num{0,05635} \\
+			\num{0,04304} \\
+			\num{0,04298} \\
+			\num{0,08071} \\
+			\num{0,71263} \\
+		\end{array}
+	\right] \cdot \num{75,3943} = \left[
+		\begin{array}{r}
+			\num{4,8471} \\
+			\num{4,2485} \\
+			\num{3,2450} \\
+			\num{3,2404} \\
+			\num{6,0851} \\
+			\num{53,7282} \\
+		\end{array}
+	\right] \si{\kilogram\per\second}
+\end{math}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\node[condenser] (Sk) at (0,0) {Sk};
+
+		{ [blue]
+			\draw[stealth-] (Sk.n) -- ++(0,1.5)
+				node[pos=.5, left] {$\dot m_k$}
+				node[pos=.5, right] {$h_4$}
+				node[pos=1] (tn) {};
+			\draw[-stealth] (Sk.s) -- ++(0,-1.5)
+				node[pos=.5, left] {$\dot m_k + \dot m_{u1} + \dot m_{u2}$}
+				node[pos=.5, right] {$h_5$}
+				node[pos=1] (ts) {};
+			\draw[stealth-,dashed] (Sk.nw) -- ++(-.25,.25)
+				-- ++(-3,0)
+				node[pos=.5, above] {$\dot m_{u1} + \dot m_{u2}$}
+				node[pos=.5, below] {$h_{k5}$};
+		}
+
+		{ [green!50!black]
+			\draw[-stealth] (tn) ++(2.25,0) |- (Sk.ne)
+				node[pos=.225, left] {$\dot m_{wch}$}
+				node[pos=.225, right] {$h_{10°C}$};
+			\draw[stealth-] (ts) ++(2.25,0) |- (Sk.se)
+				node[pos=.225, left] {$\dot m_{wch}$}
+				node[pos=.225, right] {$h_{20°C}$};
+		}
+	\end{tikzpicture}
+
+	\caption{Otoczenie skraplacza}
+\end{figure}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{math}
+	\begin{array}{l}
+		\dot m_k h_4 + (\dot m_{u1} + \dot m_{u2}) h_{k5}
+			- (\dot m_k + \dot m_{u1} + \dot m_{u2}) h_5
+			- \dot m_{wch} (h_{20°C} - h_{10°C}) = 0 \\
+		\dot m_k (h_4 - h_5) + (\dot m_{u1} + \dot m_{u2}) (h_{k5} - h_5)
+			- \dot m_{wch} (h_{20°C} - h_{10°C}) = 0 \\
+
+		\dot m_{wch} = \dfrac{\dot m_k (h_4 - h_5)
+			+ (\dot m_{u1} + \dot m_{u2})(h_{k5} - h_5)
+			}{h_{20°C} - h_{10°C}} \\
+		\dot m_{wch} = \dfrac{\num{53,7282} \cdot (\num{2495,38} - \num{111,84})
+				+ (\num{4,8471} + \num{4,2485}) \cdot (\num{376,68} - \num{111,84})
+				}{\num{84,0118} - \num{42,1174}} \\
+		\dot m_{wch} = \SI{3114,31}{\kilogram\per\second} \\
+	\end{array}
+\end{math}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\node[pump] (PSk) at (0,0) {P$_{Sk}$};
+
+		{ [blue]
+			\draw[stealth-] (PSk.w) -- ++(-4.5,0)
+				node[pos=.5, above] {$\dot m_k + \dot m_{u4} + \dot m_{u5}$}
+				node[pos=.5, below] {$h_5$};
+			\draw[-stealth] (PSk.e) -- ++(4.5,0)
+				node[pos=.5, above] {$\dot m_k + \dot m_{u4} + \dot m_{u5}$}
+				node[pos=.5, below] {$h_6$};
+		}
+
+		\draw[red, double, double distance=.5mm, stealth-] (PSk.s) -- ++(0,-1.5)
+				node[pos=.5, right] {$P_{PSk}$};
+	\end{tikzpicture}
+
+	\caption{Otoczenie pompy skroplin}
+\end{figure}
+
+\begin{math}
+	\begin{array}{l}
+		(\dot m_k + \dot m_{u4} + \dot m_{u5})(h_5 - h_6)
+			+ \dfrac{P_{PSk}}{\eta_m} = 0 \\
+		P_{PSk} = \dfrac{(\dot m_k + \dot m_{u4} + \dot m_{u5})(h_6 - h_5)
+			}{\eta_m} \\
+		P_{PSk} = \dfrac{(\num{53,7282} + \num{3,2404} + \num{6,0851})
+				\cdot (\num{112,45} - \num{111,84})
+			}{\num{0,99}}
+			= \SI{38,851}{\kilo\watt} \\
+	\end{array}
+\end{math}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\node[pump] (POdg) at (0,0) {P$_{Odg}$};
+
+		{ [blue]
+			\draw[stealth-] (POdg.w) -- ++(-3,0)
+				node[pos=.5, above] {$\dot m$}
+				node[pos=.5, below] {$h_{9}$};
+			\draw[-stealth] (POdg.e) -- ++(3,0)
+				node[pos=.5, above] {$\dot m$}
+				node[pos=.5, below] {$h_{10}$};
+		}
+
+		\draw[red, double, double distance=.5mm, stealth-] (POdg.s) -- ++(0,-1.5)
+			node[pos=.5, right] {$P_{POdg}$};
+	\end{tikzpicture}
+
+	\caption{Otoczenie pompy skroplin za~odgazowywaczem}
+\end{figure}
+
+\begin{math}
+	\begin{array}{l}
+		\dot m (h_{10} - h_9) + \dfrac{P_{POdg}}{\eta_m} = 0 \\
+		P_{POdg} = \dfrac{\dot m (h_{10} - h_9)}{\eta_m} \\
+		P_{POdg} = \dfrac{\num{75,3943} \cdot (\num{653,4} - \num{640,19})
+			}{\num{0,99}}
+			= \SI{1006,019}{\kilo\watt} \\
+		P_{Gen} = P_m - P_{PSk} - P_{POdg}
+			= \num{90115} - \num{38,851} - \num{1006,019}
+			= \SI{89070,13}{\kilo\watt} \\
+	\end{array}
+\end{math}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\node[boiler] (K) at (-1.15,1) {K};
+		\node[reheater] (Kr) at (.5,1) {};
+
+		\draw (Kr.s) -- ++(0,-1) node (KrS) {};
+
+		{ [blue]
+			\draw[stealth-] (K.s) -- ++(0,-1.5)
+				node[pos=.5, left] {$\dot m$}
+				node[pos=.5, right] {$h_{12}$};
+			\draw[-stealth] (K.n) -- ++(0,1.5)
+				node[pos=.5, left] {$\dot m$}
+				node[pos=.5, right] {$h_1$};
+			\draw[stealth-] (KrS.center) -- ++(0,-1.5)
+				node[pos=.5, left] {$\dot m_r$}
+				node[pos=.5, right] {$h_2$};
+			\draw[-stealth] (Kr.n) -- ++(0,1.5)
+				node[pos=.5, left] {$\dot m_r$}
+				node[pos=.5, right] {$h_3$};
+		}
+
+		{ [red, dashed]
+			\draw[stealth-] (K.w) -- ++(-2,0)
+				node[pos=.5, above] {$\dot Q_f$};
+		}
+	\end{tikzpicture}
+
+	\caption{Otoczenie kotła}
+\end{figure}
+
+\begin{math}
+	\begin{array}{l}
+		\dot m ( h_{12} - h_1 ) + (\dot m - \dot m_{u1})( h_2 - h_3 )
+			+ \eta_B Q_f = 0 \\
+		Q_f = \dfrac{\dot m ( h_1 - h_{12} )
+				+ (\dot m - \dot m_{u1})( h_3 - h_2 )
+			}{\eta_B} \\
+
+		Q_f = \dfrac{\num{75,3943} \cdot (\num{3469,74} - \num{946,94})
+				+ (\num{75,3943} - \num{4,8471})
+					\cdot (\num{3548,83} - \num{3119,02})
+			}{\num{0,9}} \\
+		Q_f = \SI{245029,59}{\kilo\watt} \\
+	\end{array}
+\end{math}
