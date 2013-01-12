@@ -2,14 +2,12 @@
 	\centering
 	\subfloat[][Schemat cieplny]{
 		\label{metody-teorii-grafow-przyklad.sch}
-		\begin{tikzpicture}
-			{ [thick]
-				\node[boiler] (K) at (0,3.5) {K};
-				\node[turbine] (T) at (5,4) {T};
-				\node[condenser, font=\scriptsize] (S) at (5.75,2) {Sk};
-				\node[pumpl, font=\scriptsize] (PS) at (4.5,.5) {PS};
-				\node[heatxchg, font=\scriptsize] (R1) at (2.5,.5) {R1};
-			}
+		\begin{tikzpicture}[thick]
+			\node[boiler] (K) at (0,3.5) {K};
+			\node[turbine] (T) at (5,4) {T};
+			\node[condenser, font=\scriptsize] (S) at (5.75,2) {Sk};
+			\node[pumpl, font=\scriptsize] (PS) at (4.5,.5) {PS};
+			\node[heatxchg, font=\scriptsize] (R1) at (2.5,.5) {R1};
 
 			{ [font=\scriptsize]
 				\node[heatnode] (P0) at (0,5) {};
@@ -34,12 +32,13 @@
 				\node[below] at (Pii) {I};
 			}
 
+			\draw (S.s) |- (PS.e);
+			\draw (PS.w) -- (R1.e);
+			\draw (R1.w) -| (K.s);
+
 			{ [-stealth]
 				\draw (K.n) |- (2,5) -| (T.nw);
 				\draw (T.se) -- (S.n);
-				\draw (S.s) |- (PS.e);
-				\draw (PS.w) -- (R1.e);
-				\draw (R1.w) -| (K.s);
 
 				\draw (T.sw) |- (3,3) -| (R1.n);
 				\draw (R1.s) |- (6,-.5) -- ++(0,1.75) -- (S.s);
@@ -74,7 +73,7 @@
 				\node[below] at (Pii) {I};
 			}
 
-			{ [-stealth, shorten >=1mm, shorten <=1mm, font=\scriptsize]
+			{ [thick, -stealth, shorten >=1mm, shorten <=1mm, font=\scriptsize]
 				\draw (P0) -- (P1) node[above, pos=.5] {(rurociąg)};
 				\draw (P1) -- (P6);
 				\draw (P6) -- (P2);
@@ -122,8 +121,8 @@
 	~ %
 	\subfloat[][Wariant węzłowy maszyn]{
 		\label{metody-teorii-grafow-przyklad.w2}
-		\begin{tikzpicture}
-			{ [thick, rectangle, font=\small, minimum size=8mm]
+		\begin{tikzpicture}[thick]
+			{ [rectangle, font=\small, minimum size=8mm]
 				\node[draw] (K) at (0,4) {K};
 				\node[draw] (ru) at (2,4) {ru};
 				\node[draw] (T1) at (4,4) {T$_1$};

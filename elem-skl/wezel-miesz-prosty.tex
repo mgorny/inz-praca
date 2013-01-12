@@ -1,0 +1,64 @@
+\subsubsection{Węzeł mieszający uproszczony}
+
+\begin{figure}[H]
+	\centering
+
+	\begin{tikzpicture}
+		\node[heatnode] (w) at (0,0) {};
+
+		{ [red]
+			\draw (w) -- +(-3,0)
+				node[above, pos=.5] {$\dot m_i$}
+				node[below, pos=.5] {$\mathrm{S}$};
+			\draw[-stealth] (w) |- +(3,0)
+				node[above, sloped, pos=.75] {$\dot m_o$}
+				node[below, sloped, pos=.75] {$\mathrm{S}$};
+		}
+
+		\draw[stealth-, blue] (w.s) |- +(-3,-1.25)
+			node[above, sloped, pos=.75] {$\dot m_i'$}
+			node[below, sloped, pos=.75] {$\mathrm{S}'$};
+	\end{tikzpicture}
+
+	\caption{Schematyczne przedstawienie węzła mieszającego
+		uproszczonego}
+\end{figure}
+
+Węzęł mieszający służy wprowadzaniu dodatkowego strumienia czynnika
+do~strumienia głównego. W~węźle tym pomija~się mieszanie czynników;
+zakłada~się, że~strumień wyjściowy ma~takie same parametry jak~strumień
+wejściowy główny ($\mathrm{S}$).
+
+Uproszczenie to ma na~celu umożliwienie budowy układu równań,
+który~rozwiązany może~zostać bez~wykorzystania metod iteracyjnych.
+Uwzględnienie mieszania czynnika spowodowałoby powstanie zależności
+pomiędzy entalpią właściwą czynnika wyjściowego, a~strumieniami masy
+dopływającymi do~węzła.
+
+Uproszczenie takie jest dopuszczalne, jeżeli spełniony jest jeden
+z~następujących warunków:
+
+\begin{enumerate}
+
+	\item parametry (entalpia właściwa) strumieni wejściowych są
+		zbliżone co do~wartości: \hfill
+
+		\hspace*{\fill} $\mathrm{S} \approx \mathrm{S}'$ \hspace*{\fill}
+
+	\item strumień masy poboczny jest znacznie mniejszy niż~strumień
+		masy główny: \hfill
+
+		\hspace*{\fill} $\dot m_i' \ll \dot m_i$ \hspace*{\fill}
+
+\end{enumerate}
+
+Węzeł mieszający uproszczony dostarcza szereg równań, wyznaczających:
+
+\begin{enumerate}
+
+	\item bilans masowy węzła,
+
+	\item równoważność parametrów czynnika na~wyjściu i~wejściu głównym
+		węzła.
+
+\end{enumerate}

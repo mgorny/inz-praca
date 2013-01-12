@@ -16,6 +16,10 @@
 					node[pos=.5, left] {$\dot m_o$}
 					node[pos=.5, right] {$h_o$}
 					node[pos=1] (ts) {};
+				\draw[stealth-,dashed] (Sk.sw) -- ++(-.25,-.25)
+					-- ++(-1.5,0)
+					node[pos=.5, above] {$\dot m_i''$}
+					node[pos=.5, below] {$h_i''$};
 			}
 
 			{ [green!50!black]
@@ -73,7 +77,7 @@
 
 		\begin{itemize}
 
-			\item \eq$\dot m_i = \dot m_o$,
+			\item \eq$\dot m_i + \dot m_i'' = \dot m_o$,
 
 			\item \eq$\dot m_i' = \dot m_o'$,
 
@@ -87,7 +91,7 @@
 			\item \eq$T_o' = T_i' + \Delta T$,%
 				\label{skraplacz-DT}
 
-			\item \eq$\dot m_i h_i + \dot m_i' h_i'
+			\item \eq$\dot m_i h_i + \dot m_i' h_i' + \dot m_i'' h_i''
 				= \dot m_o h_o + \dot m_o' h_o'$.
 
 		\end{itemize}
@@ -102,3 +106,6 @@ wymusza skroplenie czynnika roboczego (w~obiegu pierwotnym).
 Dla~uproszczenia typowych obliczeń wprowadzona została dodatkowa
 wielkość w~postaci różnicy temperatur czynnika na~początku i~na~końcu
 obiegu chłodzącego. Przyjmuje ona domyślnie wartość \SI{10}{\kelvin}.
+
+Przewidziano również wariant z~dodatkowym strumieniem powrotu skroplin
+z~wymienników regeneracyjnych $S_i''$.

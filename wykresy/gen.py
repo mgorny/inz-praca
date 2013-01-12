@@ -79,18 +79,30 @@ def Pump(st, p2, etai = 1):
 	while p < p2:
 		yield st.expand(p, eff)
 
-		if p < 1:
+		if p > 1:
 			p += 1
-		elif p <= .09:
+		elif p >= .09:
 			p += .6
-		elif p < .009:
+		elif p > .009:
 			p += .06
 		else:
 			p += .006
 
 def Condenser(st):
 	yield st
-	yield h2o.H2O(p=st.p, x=0)
+
+	p = st.p
+	h = st.h
+	en = h2o.H2O(p=p, x=0)
+	h_en = en.h
+	while h > h_en:
+		c = h2o.H2O(p=p, h=h)
+		if c.x < 1:
+			break
+
+		h -= 10
+		yield c
+	yield en
 
 def wr(f, c):
 	with Tab(f) as t:
@@ -113,5 +125,11 @@ s0 = wr('pompa.txt', Pump(s3, s1.p, .8))
 wr('kociol.txt', Boiler(s0, s1.T))
 
 wr('izobara-10.txt', Isobar(s1.p, .5, .55))
+
+wr('podgrz.txt', Condenser(h2o.H2O(p=0.2, h=2989.18)))
+wr('podgrz-2.txt', Boiler(h2o.H2O(0.5, 84.93+273.15), 115.21+273.15))
+
+wr('odgaz.txt', Condenser(h2o.H2O(p=0.5, h=3161.74)))
+wr('odgaz-2.txt', Boiler(h2o.H2O(0.5, 115.21+273.15), 151.84+273.15))
 
 assert(s2.T <= s0.T)

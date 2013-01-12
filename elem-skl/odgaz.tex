@@ -1,0 +1,87 @@
+\subsubsection{Odgazowywacz}
+
+\begin{figure}[H]
+	\centering
+
+	\subfloat[][Symbol]{
+		\begin{tikzpicture}
+			\node[deaerator, font={\scriptsize}] (R) at (0,0) {R};
+
+			{ [blue]
+				\draw[stealth-] (R.n) -- ++(0,1.5)
+					node[pos=.5, left] {$\dot m_i$}
+					node[pos=.5, right] {$h_i$};
+				\draw[stealth-] (R.ne) -- ++(1.5,0)
+					node[pos=.75, above] {$\dot m_i'$}
+					node[pos=.75, below] {$h_i'$};
+				\draw[stealth-,dashed] (R.nw) -- ++(-1.5,0)
+					node[pos=.75, above] {$\dot m_i''$}
+					node[pos=.75, below] {$h_i''$};
+				\draw[-stealth] (R.s) -- ++(0,-1.5)
+					node[pos=.5, left] {$\dot m_o$}
+					node[pos=.5, right] {$h_o$};
+			}
+		\end{tikzpicture}
+	}%
+	~ %
+	\wykresTs{
+		\addplot+[no marks] table[x=s,y=T] {wykresy/odgaz.txt}
+			node[heatnode, pos=0] (st) {}
+			node[pos=.98] (as) {}
+			node[pos=.9805] (ae) {}
+			node[heatnode, pos=1] (en) {};
+		\addplot+[no marks] table[x=s,y=T] {wykresy/odgaz-2.txt}
+			node[heatnode, pos=0] (st2) {}
+			node[pos=.8] (as2) {}
+			node[pos=.9] (ae2) {}
+			node[heatnode, pos=1] (en2) {};
+
+		\node[right] at (st) {$\mathbf{S}_i$};
+		\node[right] at (en) {$\mathbf{S}_o$};
+
+		\draw[red, thick, -latex] (as.center) -- (ae.center);
+		\draw[brown, thick, -latex] (as2.center) -- (ae2.center);
+		\node[below] at (st2) {$\mathbf{S}_i'$};
+	}
+
+	\caption{Model podgrzewacza regeneracyjnego}
+	\label{elem:podgrz}
+\end{figure}
+
+\begin{description}
+
+	\item[Przemiany termodynamiczne:] \hfill
+
+		\begin{itemize}
+
+			\item $\mathbf{S_i} \rightarrow \mathbf{S_o}$,
+				izobaryczne skraplanie czynnika;
+
+			\item $\mathbf{S_i'} \rightarrow \mathbf{S_o}$,
+				izobaryczne ogrzewanie czynnika.
+
+		\end{itemize}
+
+	\item[Równania bilansowe:] \hfill
+
+		\begin{itemize}
+
+			\item \eq$\dot m_i + \dot m_i' + \dot m_i'' = \dot m_o$,
+
+			\item \eq$p_i = p_o$,
+
+			\item \eq$p_i' = p_o$,
+
+			\item \eq$x_o = 0$,%
+				\label{regen-x0}
+
+			\item \eq$\dot m_i h_i + \dot m_i' h_i' + \dot m_i'' h_i''
+				= \dot m_o h_o$.
+
+		\end{itemize}
+
+\end{description}
+
+Odgazowywacz jest szczególnym przypadkiem wymiennika ciepła, w~którym
+następuje mieszanie~się czynników. Zakłada~się, że~skropliny
+opuszczające odgazowywacz mają temperaturę równą temperaturze nasycenia.

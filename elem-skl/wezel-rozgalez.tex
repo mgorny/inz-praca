@@ -1,0 +1,38 @@
+\subsubsection{Węzeł rozgałęźny}
+
+\begin{figure}[H]
+	\centering
+
+	\begin{tikzpicture}
+		\node[heatnode] (w) at (0,0) {};
+
+		{ [blue]
+			\draw (w) -- +(-3,0)
+				node[above, pos=.5] {$Q_i$}
+				node[below, pos=.5] {$\mathrm{S}$};
+			\draw[-stealth] (w) |- +(3,.75)
+				node[above, sloped, pos=.75] {$Q_o$}
+				node[below, sloped, pos=.75] {$\mathrm{S}$};
+			\draw[-stealth] (w) |- +(3,-.75)
+				node[above, sloped, pos=.75] {$Q_o'$}
+				node[below, sloped, pos=.75] {$\mathrm{S}$};
+		}
+	\end{tikzpicture}
+
+	\caption{Schematyczne przedstawienie węzła rozgałęźnego}
+\end{figure}
+
+Węzęł rozgałęźny służy wyprowadzaniu dwóch strumieni energii o~równych
+parametrach z~jednego strumienia wejściowego. Węzły tego typu stosowane
+są do~rozdziału czynnika, energii i~paliwa pomiędzy połączone równolegle
+maszyny.
+
+Węzeł rozgałęźny dostarcza szereg równań, wyznaczających:
+
+\begin{enumerate}
+
+	\item bilans energetyczny (masowy) węzła,
+
+	\item równoważność parametrów po~wszystkich stronach węzła.
+
+\end{enumerate}
