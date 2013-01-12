@@ -21,5 +21,6 @@ inz.pdf: elem-skl/pompa.tex elem-skl/wym-regen.tex elem-skl/odgaz.tex
 inz.pdf: elem-skl/czynnik.tex elem-skl/paliwo.tex
 inz.pdf: elem-skl/wezel-bilans.tex elem-skl/wezel-rozgalez.tex elem-skl/wezel-miesz-prosty.tex
 inz.pdf: test.tex obl.tex
+inz.pdf: abstrakt.tex wstep.tex zakonczenie.tex
 
 .PHONY: show

@@ -56,7 +56,7 @@
 	\begin{array}{l}
 		\dot m ( h_{11} - h_{12} ) + \dot m_{u1} ( h_{u1} - h_{k1} ) = 0 \\
 		h_{11} - h_{12} + \alpha_1 ( h_{u1} - h_{k1} ) = 0;
-			~~~ \alpha_1 = \frac{\dot m_{u1}}{\dot m} \\
+			\;\;\; \alpha_1 = \frac{\dot m_{u1}}{\dot m} \\
 		\alpha_1 = \dfrac{h_{12} - h_{11}}{h_{u1} - h_{k1}}
 			= \dfrac{\num{946,94} - \num{807,53}}{\num{3136,47} - \num{967,87}}
 			= \num{0,06429} \\
@@ -101,7 +101,7 @@
 			+ \dot m_{u2} ( h_{u2} - h_{k2} ) = 0 \\
 		h_{10} - h_{11} + \alpha_1 ( h_{k1} - h_{k2} )
 			+ \alpha_2 ( h_{u2} - h_{k2} ) = 0;
-			~~~ \alpha_2 = \frac{\dot m_{u2}}{\dot m} \\
+			\;\;\; \alpha_2 = \frac{\dot m_{u2}}{\dot m} \\
 
 		\alpha_2 = \dfrac{h_{11} - h_{10} - \alpha_1 (h_{k1} - h_{k2})}{
 				h_{u2} - h_{k2}} \\
@@ -144,7 +144,7 @@
 			+ \dot m_{u3} (h_{u3} - h_8) = 0 \\
 		h_8 - h_9 + (\alpha_1 + \alpha_2)(h_{k2} - k_8)
 			+ \alpha_3 (h_{u3} - h_8) = 0;
-			~~~ \alpha_3 = \frac{\dot m_{u3}}{\dot m} \\
+			\;\;\; \alpha_3 = \frac{\dot m_{u3}}{\dot m} \\
 
 		\alpha_3 = \dfrac{h_9 - h_8 + (\alpha_1 + \alpha_2)(h_8 - h_{k2})
 				}{h_{u3} - h_8} \\
@@ -341,7 +341,7 @@
 \renewcommand{\arraystretch}{1}
 \begin{math}
 	\begin{array}{lrr}
-		~~~~~
+		\;\;\;\;\;
 		& \num{0,06429} \cdot ( \num{3136,47} - \num{2495,38} ) = & \num{41,2157} \\
 		& \num{0,05635} \cdot ( \num{3398,56} - \num{2495,38} ) = & \num{50,8942} \\
 		& \num{0,04304} \cdot ( \num{3161,74} - \num{2495,38} ) = & \num{28,6801} \\
@@ -359,8 +359,8 @@
 			\num{3469,74} - \num{2495,38}
 			+ (1 - \num{0,06429}) \cdot (\num{3548,83} - \num{3119,02})
 			- \num{169,2152}
-		}
-			= \SI{75,3943}{\kilogram\per\second}
+		} \\
+		\dot m = \SI{75,3943}{\kilogram\per\second} \\
 	\end{array}
 \end{math}
 
@@ -561,5 +561,11 @@
 					\cdot (\num{3548,83} - \num{3119,02})
 			}{\num{0,9}} \\
 		Q_f = \SI{245029,59}{\kilo\watt} \\
+		\eta_n = \dfrac{P_m}{Q_f}
+			= \dfrac{\num{90115}}{\num{245029,59}}
+			= \num{0,367772} \\
+		\eta_b = \dfrac{P_{Gen}}{Q_f}
+			= \dfrac{\num{89070,13}}{\num{245029,59}}
+			= \num{0,363508} \\
 	\end{array}
 \end{math}

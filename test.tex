@@ -2,9 +2,9 @@
 
 \subsection{Dane wejściowe}
 
-Do~testowania programu wykorzystano uproszczony model bloku
-\SI{90}{\mega\watt}, oparty na~schemacie cieplnym zawartym
-w~\cite[s.~121]{podstawy_proj}.
+Do~testowania programu wykorzystano uproszczony model
+bloku~\SI{90}{\mega\watt}. Układ techniczny oparty został na~schemacie
+cieplnym zawartym w~\cite[s.~121]{podstawy_proj}.
 
 Wykorzystany schemat cieplny układu wraz z~zaznaczonymi zadanymi
 parametrami przedstawiony został na~rys.~\ref{test-schemat}.
@@ -351,13 +351,6 @@ model obliczeń entalpii rozprężania rzeczywistego dla~upustów.
 		wch & 3115,83 & 3157,40 & 3114,31 & b/d \\
 \end{longtable}
 
-Z~zestawienia strumieni masy, przedstawionego
-w~tabeli~\ref{test-wyniki3} wynika, iż~wartości wyznaczone przez~program
-zgodne są z~wartościami obliczonymi na~podstawie schematu cieplnego
-obiegu. Różnice w~stosunku do~wartości otrzymanych z~programu
-Cycle-Tempo wynikają najprawdopodobniej z~różnic entalpii właściwej
-upustów turbin.
-
 \begin{longtable}{|*{4}{r|}}
 	\caption{Zestawienie porównawcze mocy}
 	\label{test-wyniki4} \\
@@ -403,7 +396,42 @@ upustów turbin.
 		kocioł    & 211337 & 191697,27 & b/d \\
 		przegrzew &  33691 &  30561,38 & b/d \\
 		$\sum$    & 245028 & 222258,65 & 245029,59 \\
-	\hline
 \end{longtable}
+
+\begin{longtable}{|l|*{3}{r|}}
+	\caption{Zestawienie porównawcze sprawności}
+	\label{test-wyniki5} \\
+
+	\hline
+		\multicolumn{1}{|c|}{$\eta$} &
+		\multicolumn{1}{c|}{Program} &
+		\multicolumn{1}{c|}{C-T} &
+		\multicolumn{1}{c|}{Obl.} \\
+	\hline
+	\endfirsthead
+	\caption{Zestawienie porównawcze sprawności (c.d.)} \\
+
+	\hline
+		$\eta$ &
+		\multicolumn{1}{c|}{Program} &
+		\multicolumn{1}{c|}{C-T} &
+		\multicolumn{1}{c|}{Obl.} \\
+	\hline
+	\endhead
+	\hline
+	\endfoot
+		$\eta_n$ & 0,367774 & 0,36999 & 0,367772 \\
+		$\eta_b$ & 0,363505 & 0,36566 & 0,363508 \\
+\end{longtable}
+
+Z~zestawień przedstawionych w~tabelach~\ref{test-wyniki3},
+\ref{test-wyniki4} oraz~\ref{test-wyniki5} wynika, iż~wartości
+wyznaczone przez~program zgodne są w~przybliżeniu z~wartościami
+obliczonymi na~podstawie schematu cieplnego obiegu. Największe błędy
+wystąpiły dla~pomp, ze~względu na~względnie niewielką dokładność
+względną zadanej entalpii właściwej.
+
+Różnice w~stosunku do~wartości otrzymanych z~programu Cycle-Tempo
+wynikają przede~wszystkim z~różnic entalpii właściwej upustów turbin.
 
 \input{obl}

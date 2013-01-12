@@ -1,3 +1,35 @@
 \section{Zakończenie}
 
+W~ramach pracy dyplomowej zaprojektowany i~wykonany został program
+modelowania obiegów cieplnych \textit{plantcalc}. Za~jego pomocą
+wykonany został bilans obiegu siłowni parowej
+o~mocy~\SI{90}{\mega\watt}, a~otrzymane wyniki zostały porównane
+z~wynikami otrzymanymi za~pomocą obliczeń oraz~profesjonalnego programu
+Cycle-Tempo.
 
+Wykonane obliczenia pozwoliły na~naprawienie wszystkich błędów
+w~programie i~potwierdzenie jego poprawnej pracy przy~założonych
+modelach. Wystąpiły różnice w~stosunku do~wyników otrzymanych
+przy~pomocy Cycle-Tempo, przypisać je można jednak innemu sposobowi
+modelowania upustów turbiny. Tym~samym uznać można, że~wykonana
+aplikacja może~być stosowana do~wykonywania obliczeń obiegów cieplnych
+w~zakresie zaimplementowanej funkcjonalności.
+
+Najprawdopodobniej najważniejszym mankamentem programu jest brak wersji
+graficznej. Zarówno schemat obiegu cieplnego, jak~i~zadania,
+wprowadzane~są w~postaci kodu języka \Cpp. Wyniki najczęściej
+wyprowadzane są w~postaci tabel bądź~grafów. Rozwiązanie takie
+charakteryzuje~się znaczną elastycznością, dla~większości potencjalnych
+użytkowników stanowić będzie jednak przeszkodę w~użytkowaniu programu.
+
+Znanym błędem jest~również niedoskonałość algorytmu wykrywania
+nieoznaczoności układu równań. Częstokroć niedostateczna ilość danych
+skutkuje wynikami nieprawidłowymi bądź~wręcz absurdalnymi. Nie~powoduje
+to~jednak problemów przy~pracy z~układami oznaczonymi.
+
+Autor zamierza w~dalszym ciągu pracować nad~programem, a~w~szczególności
+poprawić wyżej wymienione defekty. Do~innych możliwych udoskonaleń
+zaliczyć można wprowadzenie dodatkowych modeli czynnika w~celu
+modelowania organicznego obiegu Rankine'a czy~siłowni jądrowych.
+W~dalszej perspektywie możliwe jest również wprowadzenie możliwości
+modelowania obiegów gazowych.

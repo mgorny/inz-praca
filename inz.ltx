@@ -23,6 +23,7 @@
 	per-mode=fraction}
 
 \setdefaultlanguage{polish}
+\setotherlanguage{english}
 \frenchspacing
 \linespread{1.5}
 \pagestyle{fancy}
@@ -40,6 +41,8 @@
 \numberwithin{figure}{section}
 \numberwithin{table}{section}
 \numberwithin{equation}{section}
+
+\newcommand\Cpp{C{\scriptsize ++}}
 
 \author{Michał Górny}
 \title{Modelowanie obiegu cieplnego turboparowego}
@@ -81,7 +84,8 @@
 \end{minipage}
 \begin{minipage}[t]{.4\textwidth}
 	Prowadził: \\
-	dr~hab.~inż.~Piotr Krzyślak, prof.~PP
+	dr~hab.~inż.~Piotr Krzyślak,\\
+	prof.~PP
 \end{minipage}
 
 \vspace{\fill}
@@ -95,9 +99,12 @@
 
 \end{titlepage}
 
+\include{abstrakt}
+
 %\cleardoublepage
 \tableofcontents
 
+%\clearpage
 %\cleardoublepage
 \include{wstep}
 
@@ -114,13 +121,13 @@
 \include{ukl-rown}
 
 %\clearpage
-%\include{elem-skl}
+\include{elem-skl}
 
 %\clearpage
 \include{test}
 
 %\clearpage
-%\include{zakonczenie}
+\include{zakonczenie}
 
 %\clearpage
 \bibliographystyle{plain}
