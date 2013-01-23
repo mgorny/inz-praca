@@ -1,7 +1,7 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage{polyglossia}
 \usepackage{indentfirst}
-\usepackage[top=2.5cm, bottom=2.5cm, inner=2cm, outer=3cm,
+\usepackage[top=2.5cm, bottom=2.5cm, inner=3cm, outer=2cm,
 	twoside, headheight=1cm, footskip=0cm]{geometry}
 \usepackage{fancyhdr}
 \usepackage{tikz}
@@ -75,16 +75,14 @@
 
 \vspace{\fill}
 
-\begin{minipage}[t]{.4\textwidth}
+\begin{minipage}[t]{.35\textwidth}
 	Wykonał: \\
 	Michał Górny
 \end{minipage}
-\begin{minipage}[t]{.2\textwidth}
-	~
-\end{minipage}
-\begin{minipage}[t]{.4\textwidth}
+\hfill
+\begin{minipage}[t]{.35\textwidth}
 	Prowadził: \\
-	dr~hab.~inż.~Piotr Krzyślak,\\
+	dr~hab.~inż.~Piotr Krzyślak, \\
 	prof.~PP
 \end{minipage}
 
@@ -94,14 +92,18 @@
 \makeatother
 
 \begin{center}
-	Poznań, luty 2012~r.
+	Poznań, luty 2013~r.
 \end{center}
 
 \end{titlepage}
 
+\cleardoublepage
+~ % strona na temat
+
+\cleardoublepage
 \include{abstrakt}
 
-%\cleardoublepage
+\cleardoublepage
 \tableofcontents
 
 %\clearpage

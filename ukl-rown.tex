@@ -20,7 +20,7 @@ rozwiązania układu ponad 150~równań liniowych oraz~wyznaczenia stanu
 czynnika w~15~połączeniach (rurociągach). Wszystko to wiąże łącznie
 ponad~200~zmiennych i~stałych.
 
-Tak znaczne liczby związana są przede~wszystkim z~nadmiarowością
+Tak znaczne liczby związane są przede~wszystkim z~nadmiarowością
 zmiennych. Zastosowanie prostego algorytmu upraszczającego równoważne
 zmienne pozwoliłoby nie~tylko znacznie zmniejszyć liczbę zmiennych,
 ale~również wyeliminować wiele równań, w~tym większość bilansów masy.
@@ -193,13 +193,13 @@ W~zależności od~rodzaju równania, są to:
 
 Wartość zmiennej wynikowej wyznaczana jest~wprost na~podstawie znanych
 wartości zmiennych bądź~przy~pomocy elementarnych przekształceń
-arytmetycznych. Jeśli znana są wartości większej niż~minimalna liczby
+arytmetycznych. Jeśli znane są wartości większej niż~minimalna liczby
 zmiennych, sprawdzana jest słuszność równania (zgodność wyników).
 
 Podstawową zaletą tej~metody jest możliwość jej zastosowania w~stosunku
 do~równań stanu czynnika. Nie~znajdzie ona natomiast zastosowania
-w~przypadku, gdy~określenie wartości zmiennej rozwiązania wzajemnie
-zależnych równań.
+w~przypadku, gdy~określenie wartości zmiennej wymaga rozwiązania
+wzajemnie zależnych równań.
 
 
 \subsubsection{Metoda rozkładu LU}
@@ -214,9 +214,9 @@ układu oznaczonego i~odrzucenia rozwiązań dla~zmiennych należących
 do~równań spoza tego podzbioru.
 
 Wykonywane jest również kontrolne mnożenie macierzy współczynników
-przez~wektor wyników dla~sprawdzenia poprawności rozwiązań. W~przypadku
-zbyt dużej rozbieżności wyniku w~stosunku do~wektora wyrazów wolnych,
-syngalizowana jest sprzeczność układu równań.
+układu równań przez~wektor rozwiązań dla~sprawdzenia ich poprawności.
+W~przypadku zbyt dużej rozbieżności wyniku w~stosunku do~wektora wyrazów
+wolnych, syngalizowana jest sprzeczność układu równań.
 
 Zaletą metody rozkładu~LU jest możliwość rozwiązywania szerokiego zbioru
 układów liniowych. Podstawową wadą --- brak możliwości wykorzystania

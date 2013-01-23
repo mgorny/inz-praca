@@ -1,10 +1,10 @@
-\section{Informacje wstępne}
+\section{Założenia}
 
 \subsection{Wymagania ogólne}
 
-Podstawowym zadaniem postawionym w~tej~pracy jest~wykonanie programu
-modelującego obieg cieplny elektrowni parowej w~celu wykonanie obliczeń
-bilansowych. Dla~wykonania programu o~potencjalnie dużym obszarze
+Podstawowym zadaniem postawionym w~tej~pracy jest~stworzenie programu
+modelującego obieg cieplny elektrowni parowej w~celu wykonania obliczeń
+bilansowych. Dla~uzyskania programu o~potencjalnie dużym obszarze
 zastosowania, postawiono szereg wymagań dodatkowych.
 
 Wykonany program winien charakteryzować~się:
@@ -40,8 +40,8 @@ Rankine'a czy~nawet siłowni opartych o~turbiny gazowe.
 
 \subsubsection{Wymagania}
 
-Język programowania wykorzystany do~wykonania programu powinien wybrany
-zostać ze~względu na~szereg cech projektowych i~eksploatacyjnych. Język
+Język programowania wykorzystany do~wykonania programu powinien zostać
+wybrany ze~względu na~szereg cech projektowych i~eksploatacyjnych. Język
 taki powinien umożliwić realizację wcześniej postawionych zadań w~sposób
 optymalny, nie~stawiając zbędnych wymagań przed~projektantem,
 programistą bądź~użytkownikiem.
@@ -59,7 +59,7 @@ Najważniejsze właściwości z~punktu widzenia programisty to:
 
 \end{enumerate}
 
-Ze~względu na~realizowane przez~program zadania, konieczne staje~się
+wybranye~względu na~realizowane przez~program zadania, konieczne staje~się
 wykorzystanie procedur przeliczeniowych dla~parametrów czynnika
 oraz~funkcji matematycznych dla~rozwiązywania układów równań. Dostępność
 bibliotek realizujących te~funkcje zmniejsza ilość pracy oraz~redukuje
@@ -102,13 +102,14 @@ bez~konieczności wprowadzenia zależności niezwiązanych z~funkcjami
 programu.
 
 Rozpowszechnienie programów wyraża prawdopodobieństwo, że~potencjalny
-użytkownik będzie posiadać zainstalowane niezbędne zależności, tym~samym
-mogąc uruchomić wykonany program bez~dodatkowych czynności.
+użytkownik będzie posiadać zainstalowane niezbędne zależności,
+a~tym~samym będzie mógł uruchomić wykonany program bez~konieczności
+wykonywania dodatkowych czynności.
 
 Stabilność określa przede~wszystkim zmienność struktury języka w~czasie,
 oraz~częstotliwość odnajdywania błędów w~oprogramowaniu towarzyszącym.
 Język mało stabilny może wymagać od~programisty regularnego wprowadzania
-zmian w~programie, zmuszając użytkownika do~niepotrzebnie częstych
+zmian w~programie, co~zmusza użytkownika do~niepotrzebnie częstych
 aktualizacji.
 
 Przenośność najogólniej oznacza zdolność programów do~pracy na~znacznej
@@ -119,7 +120,7 @@ POSIX oraz~systemem Windows.
 
 \subsubsection{Uzasadnienie wyboru}
 
-Ze~względu na~wszystkie wyżej wymienione kryteria, zdecydowanie~się
+Ze~względu na~wszystkie wyżej wymienione kryteria, zdecydowano~się
 na~realizację programu w~języku \Cpp, w~wariancie opisanym normą
 ISO/IEC~14882:1998. Język ten spełnia wszystkie z~postawionych
 postulatów.
@@ -129,7 +130,7 @@ znaczna liczba implementacji, a~biblioteki standardowe niezbędne
 do~uruchamiania aplikacji instalowane są razem z~większością popularnych
 systemów operacyjnych.
 
-\Cpp jest językiem obiektowym oraz~umożliwia budowanie bibliotek. Obie te
+\Cpp~jest językiem obiektowym oraz~umożliwia budowanie bibliotek. Obie te
 cechy pozwalają na~wykonanie programu modularnego, o~strukturze
 umożliwiającej rozszerzanie o~nowe funkcje bez~konieczności wprowadzania
 zmian w~programie.
@@ -140,11 +141,11 @@ pomocnicze:
 \begin{enumerate}
 
 	\item biblioteka funkcji dla~algebry liniowej \textbf{Eigen}, udostępniona
-		na~otwartej licencji MPL2,
+		na~otwartej licencji MPL2\cite{eigen},
 
 	\item biblioteka funkcji stanu dla~pary wodnej \textbf{libh2oxx},
 		wykonana wcześniej przez~autora i~udostępniona na~otwartej
-		licencji BSD.
+		licencji BSD\cite{libh2o}.
 
 \end{enumerate}
 

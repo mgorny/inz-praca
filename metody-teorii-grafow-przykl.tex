@@ -41,8 +41,10 @@
 				\draw (T.se) -- (S.n);
 
 				\draw (T.sw) |- (3,3) -| (R1.n);
-				\draw (R1.s) |- (6,-.5) -- ++(0,1.75) -- (S.s);
 			}
+
+			\path (R1.s) -- ++(0,-.5) node (R1S) {};
+			\draw[stealth-] (S.sw) -- ++(-.25,-.25) |- (R1S.center) -- (R1.s);
 		\end{tikzpicture}
 	}
 
@@ -56,9 +58,8 @@
 				\node[above] at (P1) {1};
 				\node[heatnode] (P2) at (5.75,3) {};
 				\node[above] at (P2) {2};
-				\node[heatnode] (P3k) at (5.75,.75) {};
-				\node[heatnode] (P3) at (5,-.25) {};
-				\node[above] at (P3) {3};
+				\node[heatnode] (P3) at (5.75,.75) {};
+				\node[right] at (P3) {3};
 				\node[heatnode] (P4) at (2.75,.75) {};
 				\node[left] at (P4) {4};
 				\node[heatnode] (P5) at (2.75,3) {};
@@ -77,9 +78,8 @@
 				\draw (P0) -- (P1) node[above, pos=.5] {(rurociąg)};
 				\draw (P1) -- (P6);
 				\draw (P6) -- (P2);
-				\draw (P2) -- (P3k);
-				\draw (P3k) -- (P3);
-				\draw (P3) -| (P4) node[above right, pos=.4] {PS};
+				\draw (P2) -- (P3);
+				\draw (P3) -- ++(0,-1) -| (P4) node[above right, pos=.33] {PS};
 				\draw (P4) -- (P5);
 				\draw (P5) -| (P0) node[above right, pos=.7, font=\small] {K};
 				\draw (P6) -- (P7);
@@ -91,10 +91,7 @@
 				\draw (P6) +(-.1,-.1) rectangle (5.85,5.1);
 				\path (P6) -- (5.85,5.1) node[pos=.5] {T};
 				\draw (P4) +(-.1,-.1) rectangle (4.35,3.1);
-				\draw (P3k) +(-.1,-.1) rectangle (7.35,3.1);
-				\draw (P7) +(-.1,.1) rectangle (5.85,-.35);
-				\path (P7) +(0,-.25) -- (P7 -| P3k)
-					node[pos=.5, font=\scriptsize] {(miesz.)};
+				\draw (P3) +(-.1,-.1) rectangle (7.35,3.1);
 			}
 
 			{ [color=blue, -stealth, shorten >=1mm, shorten <=1mm, font=\small]
@@ -107,9 +104,9 @@
 				\draw (R1c.center) -- (R1c -| P5)
 					node[above, pos=.5, color=red] {R1};
 
-				\path (P3k) ++(0,.75) node (Ska) {};
-				\path (P3k) ++(0,1) node (Skb) {};
-				\path (P3k) ++(0,1.25) node (Skc) {};
+				\path (P3) ++(0,.75) node (Ska) {};
+				\path (P3) ++(0,1) node (Skb) {};
+				\path (P3) ++(0,1.25) node (Skc) {};
 
 				\draw (Ska.center) -- (Ska -| Pi);
 				\draw (Skb.center) -- (Skb -| Pi);
@@ -127,9 +124,8 @@
 				\node[draw] (ru) at (2,4) {ru};
 				\node[draw] (T1) at (4,4) {T$_1$};
 				\node[draw] (T2) at (6,4) {T$_2$};
-				\node[draw] (S) at (6,2) {Sk};
-				\node[draw] (mi) at (6,0) {mi};
-				\node[draw] (PS) at (4,0) {PS};
+				\node[draw] (Sk) at (6,2) {Sk};
+				\node[draw] (PS) at (6,0) {PS};
 				\node[draw] (R1) at (2,0) {R1};
 			}
 
@@ -137,18 +133,20 @@
 				\draw (K.east) -- (ru.west) node[above, pos=.5] {0};
 				\draw (ru.east) -- (T1.west) node[above, pos=.5] {1};
 				\draw (T1.east) -- (T2.west);
-				\draw (T2.south) -- (S.north) node[right, pos=.5] {2};
-				\draw (S.south) -- (mi.north);
-				\draw (mi.west) -- (PS.east) node[above, pos=.5] {3};
+				\draw (T2.south) -- (Sk.north) node[right, pos=.5] {2};
+				\draw (Sk.south) -- (PS.north) node[right, pos=.5] {3};
 				\draw (PS.west) -- (R1.east) node[above, pos=.5] {4};
 				\draw (R1.west) -| (K.south) node[right, pos=.75] {5};
 
+				\path (Sk.west) -- ++(-.5,0) node (SkW) {};
+
 				\draw (T1.south) |- (4,2) -| (R1.north) node[above, pos=.25] {6};
-				\draw (R1.south) |- (4,-1) -| (mi.south) node[above, pos=0] {7};
+				\draw (R1.south) |- (4,-1) -| (SkW.center)
+					-- (Sk.west) node[above, pos=0] {7};
 
 				{ [blue]
-					\draw (S.east) ++(0,.25) -- ++(.75,0) node[above, pos=.5] {II};
-					\draw (S.east) ++(.75,-.25) -- ++(-.75,0) node[above, pos=.5] {I};
+					\draw (Sk.east) ++(0,.25) -- ++(.75,0) node[above, pos=.5] {II};
+					\draw (Sk.east) ++(.75,-.25) -- ++(-.75,0) node[above, pos=.5] {I};
 				}
 			}
 		\end{tikzpicture}

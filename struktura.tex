@@ -77,7 +77,7 @@ umożliwiającą przetwarzanie schematu obiegu cieplnego; algorytm
 ogranicza~się do~przyjęcia danych, rozwiązania układu równań
 oraz~wyprowadzenia wyników obliczeń.
 
-Koszt wykonania programu, korzystającego z~metod statycznych,
+Koszty wykonania programu, korzystającego z~metod statycznych,
 charakteryzują~się względnie mniejszą składową stałą oraz~składową
 zmienną zależną od~złożoności (liczby elementów) rozpatrywanego układu.
 Należy jednak wziąć pod~uwagę, że~każdorazowa zmiana schematu wiązać~się
@@ -91,8 +91,8 @@ wariantu nazywanego ,,metodą zbioru maksimum''. Wówczas układ równań
 nie~jest odnoszony do~rzeczywistego obiegu, lecz do~teoretycznego,
 celowo przewymiarowanego ,,schematu uniwersalnego''. Poprzez właściwy
 dobór parametrów obiegu, możliwe jest skierowanie obliczeniowych
-przepływów przez~część z~maszyn i~,,wyłączenie'' pozostałych, tym~samym
-uzyskując obieg równoważny rzeczywistemu.
+przepływów przez~wybrane z~maszyn i~,,wyłączenie'' pozostałych,
+co~pozwala na~uzyskanie obiegu równoważnego rzeczywistemu.
 
 Wykonany w~tej technice program charakteryzuje~się większą
 elastycznością. Dobór właściwego schematu uniwersalnego pozwala
@@ -135,6 +135,7 @@ Podstawowym pojęciem teorii grafów jest~graf. Każdy graf składa~się
 ze~zbioru wierzchołków i~zbioru krawędzi. Adaptacja grafu do~modelowania
 układu wymaga przypisania wierzchołkom i~krawędziom określonej funkcji.
 
+\vbox{
 Istnieją w~tej kwestii dwa rozwiązania:
 
 \begin{enumerate}
@@ -144,16 +145,17 @@ Istnieją w~tej kwestii dwa rozwiązania:
 	\item modelowanie punktów stanu za~pomocą krawędzi, i~maszyn
 		technicznych za~pomocą węzłów.
 \end{enumerate}
+}
 
 \input{metody-teorii-grafow-przykl}
 
-Pierwsze z~wyliczonych rozwiązań często traktowano jest jako bardziej
+Pierwsze z~wyliczonych rozwiązań często traktowane jest jako bardziej
 naturalne. Wówczas poszczególne węzły modelują statyczny stan czynnika
 w~określonym punkcie układu, a~krawędzie realizują zmianę tego stanu
 wskutek przemian termodynamicznych w~maszynach technicznych
 i~rurociągach.
 
-Niestety, sytuacji komplikuje~się w~odniesieniu do~maszyn przepływowych,
+Niestety, sytuacja komplikuje~się w~odniesieniu do~maszyn przepływowych,
 dla~których rozważany jest więcej niż~jeden obieg czynnika. Przykładem
 takich maszyn są~wymienniki ciepła. Modelowanie tego typu maszyny wymaga
 zastosowania wielu wierzchołków, a~także wprowadzenia dodatkowej
@@ -197,8 +199,8 @@ przykład obiegu cieplnego wyrażonego za~pomocą obu wymienionych metod.
 W~obu przypadkach uwzględniona została strata na~rurociągu
 wyprowadzającym parę świeżą oraz~mieszanie skroplin.
 
-Na~rys.~\ref{metody-teorii-grafow-przyklad.w1} barwą niebieską
-wyróżniono dodatkowe przepływy energii, które musiałyby zostać
+Na~rys.~\ref{metody-teorii-grafow-przyklad.w1} za~pomocą równoległych
+strzałek oznaczono dodatkowe przepływy energii, które musiałyby zostać
 uwzględnione w~bilansie układu. W~wariancie alternatywnym, przepływy te
 zostają zamknięte we~właściwym węźle, co~upraszcza zewnętrzną strukturę
 układu i~tym~samym kod programu. Jest to~główna przyczyna, dla~której
@@ -239,7 +241,7 @@ z~maszyn na~jego podstawie stworzonych.
 Istotną zaletą takiego rozwiązania jest~uniezależnienie zasadniczego
 kodu programu od~implementacji maszyn. Możliwe staje~się wprowadzenie
 modeli nowych maszyn bez~konieczności ingerencji w~kod zasadniczej
-części programu bądź~innych maszyn. Za~sprawą dziediczenia jest możliwe
+części programu bądź~innych maszyn. Za~sprawą dziedziczenia jest możliwe
 również rozszerzanie modeli istniejących maszyn.
 
 Zalety te~sprawiły, iż~zdecydowano~się wykonać program w~technice
@@ -248,7 +250,7 @@ obiektowej.
 
 \subsubsection{Modelowanie podstawowych elementów obiegu}
 
-Dla~zamodelowania obiegu termodynamicznego konieczne w~wybranej technice
+Dla~zamodelowania obiegu termodynamicznego w~wybranej technice
 konieczne jest wykonanie przynajmniej dwóch klas podstawowych ---
 reprezentujących odpowiednio wierzchołki i~krawędzie grafu,
 bądź~urządzenia i~połączenia pomiędzy nimi.
@@ -257,7 +259,7 @@ Klasa podstawowa \textit{Urządzenie} (\textit{Device}) może
 reprezentować dowolną maszynę pracującą w~obiegu. W~tym celu umożliwia
 dostarczenie zbioru zmiennych charakterystycznych dla~maszyny oraz
 układu równań, wiążącego je ze~zmiennymi stanu czynnika i~energii
-wpływającej i~wypływającej z~maszyny.
+wpływającej do~maszyny i~z~niej wypływającej.
 
 Klasa podstawowa \textit{Połączenie} (\textit{Connection}) stanowi
 skierowane powiązanie pomiędzy dwoma maszynami. Operuje na~zmiennych
@@ -362,10 +364,10 @@ obiegu cieplnego wykonany w~oparciu o~model trzech klas. Zaprezentowane
 zostały trzy wybrane urządzenia, każde posiadające szereg wyprowadzeń
 oraz~parametrów.
 
-Należy zwrócić uwagę, iż~zmienne stanu czynnika (w~tym strumień masy) są
-cechą wyprowadzenia. Tym~samym, na~obu końcach połączenia występują inne
-zmienne stanu. Są one równe co do~wartości, lecz wielkości strumieni
-mają przeciwny znak.
+Należy jednak zwrócić uwagę, iż~zmienne stanu czynnika (w~tym strumień
+masy) są cechą wyprowadzenia. Tym~samym, na~obu końcach połączenia
+występują inne zmienne stanu. Są one równe co do~wartości, lecz
+wielkości strumieni mają przeciwny znak.
 
 W~praktyce pozwala to na~założenie, że~ujemne wartości strumieni
 oznaczają energię wpływającą do~maszyny (zużywaną), zaś~dodatnie ---

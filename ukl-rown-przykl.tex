@@ -4,23 +4,24 @@
 		\node[boiler] (K) at (0,3.5) {K};
 		\node[turbine] (T1) at (2,4) {T$_1$};
 		\node[turbine] (T2) at (5,4) {T$_2$};
-		\node[condenser, font=\scriptsize] (S) at (5.75,2) {Sk};
+		\node[condenser, font=\scriptsize] (Sk) at (5.75,2) {Sk};
 		\node[pumpl, font=\scriptsize] (PS) at (4.5,.5) {PS};
 		\node[heatxchg, font=\scriptsize] (R1) at (2.75,.5) {R1};
-		\node[heatnode] (T1s) at (2.75,2.75) {};
-		\node[heatnode] (Sm) at (5.75,1.25) {};
 
-		\draw (S.s) |- (PS.e);
+		\draw (Sk.s) |- (PS.e);
 		\draw (PS.w) -- (R1.e);
 		\draw (R1.w) -| (K.s);
 
+		\path (Sk.sw) -- ++(-.25,-.25) node (SkW) {};
+		\path (T1.nw) -- ++(0,.65) node[heatnode] (T1r) {};
+
 		{ [-stealth]
-			\draw (K.n) |- (1,5) -| (T1.nw);
-			\draw (T1s.center) -| (3.75,5) -| (T2.nw);
-			\draw (T2.se) -- (S.n);
+			\draw (K.n) |- (T1r) -- (T1.nw);
+			\draw (T1r.center) -| (T2.nw);
+			\draw (T2.se) -- (Sk.n);
 
 			\draw (T1.se) -| (R1.n);
-			\draw (R1.s) |- (6,-.5) |- (Sm.e);
+			\draw (R1.s) -- ++(0,-.5) -| (SkW.center) -- (Sk.sw);
 		}
 	\end{tikzpicture}
 
