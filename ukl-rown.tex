@@ -77,30 +77,6 @@ zmiennych.
 
 \subsection{Rodzaje równań}
 
-\subsubsection{Równanie stanu czynnika}
-
-Równania stanu czynnika stanowią szczególną grupę równań, określających
-zależności pomiędzy właściwościami termodynamicznymi czynnika roboczego.
-W~odniesieniu do~pary wodnej, równania te mają postać złożonych
-wielomianów.
-
-Ze~względów praktycznych, równania stanu czynnika nie~są rozpatrywane
-przez~program w~pełnej postaci. Są one traktowane jako~abstrakcyjny
-rodzaj równania, którego rozwiązanie zostaje zlecone zewnętrznej
-bibliotece.
-
-Równania stanu czynnika opisywane są w~programie za~pomocą funkcji:
-
-\begin{itemize}
-	\item $\mathbf{S}(p, T)$,
-	\item $\mathbf{S}(p, h)$,
-	\item $\mathbf{S}(p, s)$,
-	\item $\mathbf{S}(h, s)$,
-	\item $\mathbf{S}(p, x)$,
-	\item $\mathbf{S}(T, x)$.
-\end{itemize}
-
-
 \subsubsection{Równanie liniowo-iloczynowe}
 
 Równania liniowo-iloczynowe wykorzystywane są do~modelowania większości
@@ -125,6 +101,30 @@ równanie tego typu sprowadzić można do~równania liniowego:
 \begin{equation}
 	\sum_{k=1}^N C_k C_k' x_k = 0
 \end{equation}
+
+
+\subsubsection{Równanie stanu czynnika}
+
+Równania stanu czynnika stanowią szczególną grupę równań, określających
+zależności pomiędzy właściwościami termodynamicznymi czynnika roboczego.
+W~odniesieniu do~pary wodnej, równania te mają postać złożonych
+wielomianów.
+
+Ze~względów praktycznych, równania stanu czynnika nie~są rozpatrywane
+przez~program w~pełnej postaci. Są one traktowane jako~abstrakcyjny
+rodzaj równania, którego rozwiązanie zostaje zlecone zewnętrznej
+bibliotece.
+
+Równania stanu czynnika opisywane są w~programie za~pomocą funkcji:
+
+\begin{itemize}
+	\item $\mathbf{S}(p, T)$,
+	\item $\mathbf{S}(p, h)$,
+	\item $\mathbf{S}(p, s)$,
+	\item $\mathbf{S}(h, s)$,
+	\item $\mathbf{S}(p, x)$,
+	\item $\mathbf{S}(T, x)$.
+\end{itemize}
 
 
 \subsection{Metody rozwiązywania układów równań}
