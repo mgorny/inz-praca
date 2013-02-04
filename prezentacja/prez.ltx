@@ -55,7 +55,7 @@
 \begin{frame}
 	\frametitle{Plan prezentacji}
 
-	\tableofcontents
+	\tableofcontents[pausesections]
 \end{frame}
 
 \section{Cel pracy}
@@ -63,11 +63,15 @@
 \begin{frame}
 	\frametitle{Cel pracy}
 
+	\pause
+
 	\begin{block}{Cel główny}
 		Zaprojektowanie, wykonanie i~przetestowanie programu,
 		umożliwiającego wykonywanie obliczeń bilansowych parowych obiegów
 		cieplnych.
 	\end{block}
+
+	\pause
 
 	\begin{block}{Cel drugorzędny}
 		Zestawienie problemów związanych z~komputerowym modelowaniem
@@ -93,20 +97,26 @@
 				\node (schc) at (-3,5) {Schemat cieplny};
 				\node (dwej) at (1.5,5) {Dane wejściowe};
 
-				\node (mukl) at (-3,3.5) {Model układu};
-				\node (urow) at (-3,2) {Układ równań};
+				\uncover<2->{\node (mukl) at (-3,3.5) {Model układu};}
+				\uncover<3->{\node (urow) at (-3,2) {Układ równań};}
 
-				\node (rozw) at (-3,.5) {Rozwiązanie};
+				\uncover<4->{\node (rozw) at (-3,.5) {Rozwiązanie};}
 			\end{scope}
 
 			\begin{scope}[-stealth]
-				\draw (schc) -- (mukl);
-				\draw (dwej) |- (mukl);
+				\uncover<2->{
+					\draw (schc) -- (mukl);
+					\draw (dwej) |- (mukl);
+				}
 
-				\draw (mukl) -- (urow);
-				\draw (dwej) |- (urow);
+				\uncover<3->{
+					\draw (mukl) -- (urow);
+					\draw (dwej) |- (urow);
+				}
 
-				\draw (urow) -- (rozw);
+				\uncover<4->{
+					\draw (urow) -- (rozw);
+				}
 			\end{scope}
 		\end{tikzpicture}
 	\end{figure}
@@ -198,22 +208,41 @@
 			\end{scope}
 
 			\begin{scope}[thick, draw=green!50!black!50]
-				\draw (a.south west) ++(.015,0) -- ++(0,-1.1);
+				\uncover<2-2>{
+					\draw (a.south west) ++(.015,0) -- ++(0,-.5);
+				}
+				\uncover<3->{
+					\draw (a.south west) ++(.015,0) -- ++(0,-1.1);
+				}
+
 				\begin{scope}[-stealth]
-					\draw (a.south west) ++(.015,-.5) -- ++(.25,0)
-						node[right] {model obiegu};
-					\draw (a.south west) ++(.015,-1.1) |- ++(.25,0)
-						node[right] {model uniwersalny};
+					\uncover<2->{
+						\draw (a.south west) ++(.015,-.5) -- ++(.25,0)
+							node[right] {model obiegu};
+					}
+					\uncover<3->{
+						\draw (a.south west) ++(.015,-1.1) |- ++(.25,0)
+							node[right] {model uniwersalny};
+					}
 				\end{scope}
 			\end{scope}
 
 			\begin{scope}[thick, draw=red!50!black!50]
-				\draw (b.south west) ++(.015,0) -- ++(0,-1.1);
+				\uncover<4-4>{
+					\draw (b.south west) ++(.015,0) -- ++(0,-.55);
+				}
+				\uncover<5->{
+					\draw (b.south west) ++(.015,0) -- ++(0,-1.1);
+				}
 				\begin{scope}[-stealth]
-					\draw (b.south west) ++(.015,-.5) -- ++(.25,0)
-						node[right] {teoria grafów};
-					\draw (b.south west) ++(.015,-1.1) |- ++(.25,0)
-						node[right] {macierze strukturalne};
+					\uncover<4->{
+						\draw (b.south west) ++(.015,-.5) -- ++(.25,0)
+							node[right] {teoria grafów};
+					}
+					\uncover<5->{
+						\draw (b.south west) ++(.015,-1.1) |- ++(.25,0)
+							node[right] {macierze strukturalne};
+					}
 				\end{scope}
 			\end{scope}
 		\end{tikzpicture}
@@ -228,23 +257,6 @@
 				text width=2.5cm, align=center,
 				level 1/.style={sibling distance=5cm}
 			]
-
-			\begin{scope}[
-				-stealth,
-				every node/.style={
-					inner sep=2mm,
-					rectangle,
-					thick,
-					draw=blue!50!black!50,
-					top color=white,
-					bottom color=blue!50!black!20
-				}
-			]
-				\node (a) at (0,-3) {Graf}
-					child { node {węzły} }
-					child { node {krawędzie} };
-			\end{scope}
-
 			\begin{scope}[
 				-stealth,
 				every node/.style={
@@ -256,13 +268,41 @@
 					bottom color=green!50!black!20
 				}
 			]
-				\node (b) at (0,0) {Obieg cieplny}
-					child { node {maszyny} }
-					child { node {rurociągi} };
+				\uncover<1-2>{
+					\node (b) at (0,0) {Obieg cieplny};
+				}
+				\uncover<3->{
+					\node (b) at (0,0) {Obieg cieplny}
+						child { node {maszyny} }
+						child { node {rurociągi} };
+				}
 			\end{scope}
 
-			\draw[double, -stealth, red,
-					shorten >=1mm, shorten <=1mm] (b) -- (a);
+			\uncover<2->{
+				\begin{scope}[
+					-stealth,
+					every node/.style={
+						inner sep=2mm,
+						rectangle,
+						thick,
+						draw=blue!50!black!50,
+						top color=white,
+						bottom color=blue!50!black!20
+					}
+				]
+					\uncover<2-3>{
+						\node (a) at (0,-3) {Graf};
+					}
+					\uncover<4->{
+						\node (a) at (0,-3) {Graf}
+							child { node {węzły} }
+							child { node {krawędzie} };
+					}
+				\end{scope}
+
+				\draw[double, -stealth, red,
+						shorten >=1mm, shorten <=1mm] (b) -- (a);
+			}
 		\end{tikzpicture}
 	\end{figure}
 \end{frame}
@@ -320,19 +360,31 @@
 				\path (P7) ++(0,1) node (R1b) {};
 				\path (P7) ++(0,1.25) node (R1c) {};
 
-				\draw (R1a.center) -- (R1a -| P5);
-				\draw (R1b.center) -- (R1b -| P5);
-				\draw (R1c.center) -- (R1c -| P5)
-					node[above, pos=.5, color=red] {R1};
+				\uncover<-1>{
+					\path (R1c.center) -- (R1c -| P5)
+						node[above, pos=.5, color=red] {R1};
+				}
+				\uncover<2->{
+					\draw (R1a.center) -- (R1a -| P5);
+					\draw (R1b.center) -- (R1b -| P5);
+					\draw (R1c.center) -- (R1c -| P5)
+						node[above, pos=.5, color=red] {R1};
+				}
 
 				\path (P3) ++(0,.75) node (Ska) {};
 				\path (P3) ++(0,1) node (Skb) {};
 				\path (P3) ++(0,1.25) node (Skc) {};
 
-				\draw (Ska.center) -- (Ska -| Pi);
-				\draw (Skb.center) -- (Skb -| Pi);
-				\draw (Skc.center) -- (Skc -| Pi)
-					node[above, pos=.5, color=red] {Sk};
+				\uncover<-1>{
+					\path (Skc.center) -- (Skc -| Pi)
+						node[above, pos=.5, color=red] {Sk};
+				}
+				\uncover<2->{
+					\draw (Ska.center) -- (Ska -| Pi);
+					\draw (Skb.center) -- (Skb -| Pi);
+					\draw (Skc.center) -- (Skc -| Pi)
+						node[above, pos=.5, color=red] {Sk};
+				}
 			}
 		\end{tikzpicture}
 
@@ -432,19 +484,19 @@
 					node[pos=.225, right] {$h_o'$};
 			}
 
-			\matrix[ampersand replacement=\&, matrix of nodes,
+			\matrix[ampersand replacement=\&,
 				left delimiter=\{, right,
 				every node/.style={anchor=west}
 			]
 				at (3.5,0)
 			{
-				$\dot m_i = \dot m_o$ \\
-				$\dot m_i' = \dot m_o'$ \\
-				$p_i = p_o$ \\
-				$p_i' = p_o'$ \\
-				$x_o = 0$ \\
-				$T_o' = T_i' + \Delta T$ \\
-				$\dot m_i h_i + \dot m_i' h_i' = \dot m_o h_o + \dot m_o' h_o'$ \\
+				\uncover<2->{ \node{ $\dot m_i = \dot m_o$ }; } \\
+				\uncover<2->{ \node{ $\dot m_i' = \dot m_o'$ }; } \\
+				\uncover<3->{ \node{ $p_i = p_o$ }; } \\
+				\uncover<3->{ \node{ $p_i' = p_o'$ }; } \\
+				\uncover<4->{ \node{ $x_o = 0$ }; } \\
+				\uncover<5->{ \node{ $T_o' = T_i' + \Delta T$ }; } \\
+				\uncover<6->{ \node{ $\dot m_i h_i + \dot m_i' h_i' = \dot m_o h_o + \dot m_o' h_o'$ }; } \\
 			};
 		\end{tikzpicture}
 
@@ -455,7 +507,7 @@
 \begin{frame}
 	\frametitle{Rodzaje równań}
 
-	\begin{enumerate}
+	\begin{enumerate}[<+->]
 		\item równania liniowo-iloczynowe
 
 			\begin{equation}
@@ -469,7 +521,7 @@
 \begin{frame}
 	\frametitle{Metody rozwiązywania układu równań}
 
-	\begin{enumerate}
+	\begin{enumerate}[<+->]
 		\item rozwiązywanie pojedynczych równań,
 
 		\item rozwiązywanie liniowego układu równań metodą rozkładu LU.
@@ -713,7 +765,7 @@
 \begin{frame}
 	\frametitle{Podsumowanie}
 
-	\begin{itemize}
+	\begin{itemize}[<+->]
 		\item poprawność obliczeń: błąd względny poniżej \SI{0,1}{\percent},
 
 		\item inny sposób modelowania upustów turbiny niż~w~Cycle-Tempo
@@ -721,12 +773,12 @@
 
 		\item elastyczna konstrukcja,
 
-		\item brak interfejsu graficznego.
+		\item<3-> brak interfejsu graficznego.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Przyszłe rozwiązania}
+	\frametitle{Możliwości rozbudowy}
 
 	\begin{itemize}
 		\item uwzględnienie większej liczby rodzajów strat,
